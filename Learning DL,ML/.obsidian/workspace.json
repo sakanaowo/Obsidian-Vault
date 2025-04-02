@@ -8,13 +8,17 @@
         "type": "tabs",
         "children": [
           {
-            "id": "f2eeb9853733e7f1",
+            "id": "105a9adf37dfe681",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Convolutional Neural Network/Convolutional Neural Network.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Convolutional Neural Network"
             }
           }
         ]
@@ -36,7 +40,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical",
+                "sortOrder": "byModifiedTimeReverse",
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
@@ -74,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 204.5
+    "width": 200
   },
   "right": {
     "id": "ae95f377b707bd71",
@@ -162,8 +166,36 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "c5a7e2d7cabeccb8",
+  "active": "105a9adf37dfe681",
   "lastOpenFiles": [
+    "Neural Network/bias.md",
+    "Neural Network/Neural Network.md",
+    "Neural Network/Feedforward.md",
+    "Linear Regression/Linear Regression.md",
+    "Logistic Regression/Logistic Regression.md",
+    "bias.md",
+    "Convolutional Neural Network/Convolutional Neural Network.md",
+    "Xử lí ảnh/Xử lí ảnh.md",
+    "Xử lí ảnh",
+    "Logistic Regression/Logistic Regression 1c7bd9fab3c380ffb9b9c9e9d14dd96c/Quy tắc chuỗi.md",
+    "Neural Network/Neural Network img",
+    "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image.png",
+    "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 4.png",
+    "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 3.png",
+    "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 2.png",
+    "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 1.png",
+    "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277",
+    "Linear Regression",
+    "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277.md",
+    "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image.png",
+    "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 4.png",
+    "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 3.png",
+    "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 2.png",
+    "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 1.png",
+    "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277",
+    "e5f822a5-4b52-43d6-9f87-8669c55ad18a_Export-b6fc3c69-458a-4d68-8206-d9d6fea4b7b6.zip",
+    "Unconfirmed 272027.crdownload",
+    "Convolutional Neural Network",
     "Learning DL,ML/Neural Network",
     "temp.md",
     "pages/_chat.md",
@@ -181,24 +213,6 @@
     "data/cache/chat_history.md",
     "data/index_storage/image_vector_store.md",
     "data/index_storage/graph_store.md",
-    "data/index_storage/docstore.md",
-    "data/index_storage/default_vector_store.md",
-    "data/cache/pipeline_cache.md",
-    "src/index_builder.md",
-    "src/authenticate.md",
-    "data/ingestion_storage/dsm-5-cac-tieu-chuan-chan-doan.pdf",
-    "pages/_chat",
-    "build_data.md",
-    "data/ingestion_storage",
-    "data/index_storage/default__vector_store.json",
-    "data/index_storage/image__vector_store.json",
-    "data/index_storage/index_store.json",
-    "data/index_storage/graph_store.json",
-    "data/index_storage/docstore.json",
-    "data/index_storage",
-    "data/user_storage",
-    "data/Untitled.md",
-    "data/Untitled 1.md",
-    "Home.md"
+    "data/ingestion_storage/dsm-5-cac-tieu-chuan-chan-doan.pdf"
   ]
 }
