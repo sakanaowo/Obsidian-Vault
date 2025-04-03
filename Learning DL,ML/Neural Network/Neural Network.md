@@ -7,6 +7,7 @@ tags:
   - layer
   - activation-function
   - bias
+  - neural-network
 Requirement:
   - "[[Linear Regression]]"
   - "[[Logistic Regression]]"

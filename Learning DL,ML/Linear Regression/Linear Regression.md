@@ -174,7 +174,7 @@ g&h
 $$
 
 $$
-=>A\otimes B=\begin{bmatrix}aB&bB\\cB&dB\end{bmatrix}=
+=>A\otimes B=\begin{bmatrix}aB&bB\\ cB&dB\end{bmatrix}=
 \begin{bmatrix}ae&af&be&bf\\
 ag&ah&bg&bh\\
 ce&cf&de&df\\
@@ -187,7 +187,7 @@ $$
 Do với mỗi điểm $x_i,y_i$ ta cần tính $(w_0+w_1*x_i-y_i)$ → sử dụng ma trận biểu diễn:
 
 $$
-X=\begin{bmatrix}1&x_1 \\... \ &...\\1&x_n\end{bmatrix}, Y=\begin{bmatrix}y_1\\...\\y_n\end{bmatrix},W=\begin{bmatrix}w_0\\w_1\end{bmatrix}
+X=\begin{bmatrix}1&x_{1}\\ ... \ &...\\ 1&x_n\end{bmatrix}, Y=\begin{bmatrix}y_{1}\\ ...\\ y_n\end{bmatrix},W=\begin{bmatrix}w_{0}\\w_{1}\end{bmatrix}
 $$
 
 $$
@@ -196,7 +196,7 @@ $$
 
 Tạo hàm $Sum(X)$  là hàm tính tổng phần tử trong ma trận $X$ ở trên 
 
-→ $Sum(X[:,1])=x_1+x_2+...+x_n$ với $X[:,1]=\begin{bmatrix}x_1\\...\\x_n\end{bmatrix}$
+→ $Sum(X[:,1])=x_1+x_2+...+x_n$ với $X[:,1]=\begin{bmatrix}x_{1}\\ ...\\ x_{n}\end{bmatrix}$
 
 ⇒ $\frac{dJ}{dw_0}=Sum(\hat Y-Y)$, $\frac{dJ}{dw_1}=Sum(X[:,1] \circ(\hat Y -Y))$
 

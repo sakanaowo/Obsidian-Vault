@@ -1,3 +1,9 @@
+---
+aliases:
+  - Logistic Regression
+tags:
+---
+
 # Logistic Regression
 
 # Bài toán

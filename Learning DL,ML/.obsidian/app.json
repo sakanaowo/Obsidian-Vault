@@ -2,5 +2,6 @@
   "spellcheck": false,
   "alwaysUpdateLinks": true,
   "showLineNumber": false,
-  "readableLineLength": true
+  "readableLineLength": true,
+  "useMarkdownLinks": true
 }

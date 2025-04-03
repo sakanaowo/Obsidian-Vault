@@ -6,6 +6,8 @@ tags:
   - gray-scale
   - tensor
   - kernel
+  - padding
+  - stride
 Requirement:
 ---
 ---
@@ -20,8 +22,29 @@ Requirement:
 - Ảnh màu kích thước 800x600 pixel có thể biểu diễn dưới dạng ma trận 600x800 
 	$$\begin{bmatrix}w_{1,1}&w_{1,2}&...&w_{1,800}\\ w_{2,1}&w_{2,2}&...&w_{2,800} \\ ...&...&...&... \\ w_{600,1}&w_{600,2}&...&w_{600,800} \end{bmatrix}$$
 - Trong đó, mỗi $w_{ij}$ là một pixel: $$w_{ij}=(r_{ij},g_{ij},b_{ij})$$
-- Tổng quát: $$\begin{bmatrix}w_{1,1}&w_{1,2}&...&w_{1,800}\\ w_{2,1}&w_{2,2}&...&w_{2,800} \\ ...&...&...&... \\ w_{600,1}&w_{600,2}&...&w_{600,800} \end{bmatrix}=
-  \begin{bmatrix} (r_{1,1},g_{1,1},b_{1,1})& (r_{1,2},g_{1,2},b_{1,2})&...& (r_{1,800},g_{1,800},b_{1,800})\\ (r_{2,1},g_{2,1},b_{2,1})& (r_{2,2},g_{2,2},b_{2,2})&...& (r_{2,800},g_{2,800},b_{2,800}) \\ ...&...&...&... \\ (r_{600,1},g_{600,1},b_{600,1})& (r_{600,2},g_{600,2},b_{600,2})&...& (r_{600,800},g_{600,800},b_{600,800}) \end{bmatrix}$$
+- Tổng quát: $$
+\begin{bmatrix}
+w_{1,1} & w_{1,2} & \dots & w_{1,800} \\
+w_{2,1} & w_{2,2} & \dots & w_{2,800} \\
+\vdots & \vdots & \ddots & \vdots \\
+w_{600,1} & w_{600,2} & \dots & w_{600,800}
+\end{bmatrix}
+=
+\begin{bmatrix}
+(r_{1,1},g_{1,1},b_{1,1}) & (r_{1,2},g_{1,2},b_{1,2}) & \dots & (r_{1,800},g_{1,800},b_{1,800}) \\
+(r_{2,1},g_{2,1},b_{2,1}) & (r_{2,2},g_{2,2},b_{2,2}) & \dots & (r_{2,800},g_{2,800},b_{2,800}) \\
+\vdots & \vdots & \ddots & \vdots \\
+(r_{600,1},g_{600,1},b_{600,1}) & (r_{600,2},g_{600,2},b_{600,2}) & \dots & (r_{600,800},g_{600,800},b_{600,800})
+\end{bmatrix}
+
+
+
+\Rightarrow
+\begin{bmatrix} R \end{bmatrix}, 
+\begin{bmatrix} G \end{bmatrix}, 
+\begin{bmatrix} B \end{bmatrix}
+
+$$
 $$=>\begin{bmatrix}R\end{bmatrix},\begin{bmatrix}G\end{bmatrix},\begin{bmatrix}B\end{bmatrix}$$
 ## Tensor là gì
 
@@ -60,7 +83,6 @@ Kí hiệu: $\otimes$
 		- $I$ là kích thước đầu vào, Input
 		- $K$ kernel 
 		- $S$ : stride
-- 
 ## Ý nghĩa 
 - Mục đích của convolution trên ảnh:
 	- Làm mờ

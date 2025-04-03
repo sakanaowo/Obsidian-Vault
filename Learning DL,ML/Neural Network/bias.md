@@ -1,3 +1,12 @@
+---
+aliases:
+  - bias
+tags:
+  - bias
+  - neural-network
+Requirement:
+---
+
 ### **Bias trong Machine Learning & Neural Networks**
 
 **Bias (độ lệch)** là một giá trị thêm vào trong mô hình **học máy** hoặc **mạng nơ-ron** để giúp dịch chuyển kết quả của hàm kích hoạt, giúp mô hình học được tốt hơn.

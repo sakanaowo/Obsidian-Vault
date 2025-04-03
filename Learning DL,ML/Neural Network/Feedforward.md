@@ -4,6 +4,8 @@ aliases:
   - lan truyền tiến
 tags:
   - bias
+  - activation-function
+  - layer
 ---
 ### **Feedforward trong Mạng Nơ-ron Nhân tạo**
 
@@ -21,7 +23,7 @@ Giả sử ta có một mạng nơ-ron nhiều lớp (Multilayer Perceptron - ML
     
 - **$W^{(k)}$ là ma trận trọng số tại lớp kk
     
-- $b^{(k)}$ **là bias tại lớp `k`**
+- $b^{(k)}$ **là [[bias]] tại lớp `k`** 
     
 - σ **là hàm kích hoạt (activation function)**
     

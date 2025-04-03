@@ -53,8 +53,8 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
-                "matchingCase": false,
+                "query": "tag:#bias",
+                "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "ae95f377b707bd71",
@@ -140,16 +141,17 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "Xử lí ảnh/Xử lí ảnh.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of Xử lí ảnh"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -168,14 +170,15 @@
   },
   "active": "105a9adf37dfe681",
   "lastOpenFiles": [
-    "Neural Network/bias.md",
+    "Xử lí ảnh/Xử lí ảnh.md",
+    "Logistic Regression/Logistic Regression.md",
+    "Linear Regression/Linear Regression.md",
+    "Convolutional Neural Network/Convolutional Neural Network.md",
     "Neural Network/Neural Network.md",
     "Neural Network/Feedforward.md",
-    "Linear Regression/Linear Regression.md",
-    "Logistic Regression/Logistic Regression.md",
+    "Neural Network/bias.md",
+    "Untitled.canvas",
     "bias.md",
-    "Convolutional Neural Network/Convolutional Neural Network.md",
-    "Xử lí ảnh/Xử lí ảnh.md",
     "Xử lí ảnh",
     "Logistic Regression/Logistic Regression 1c7bd9fab3c380ffb9b9c9e9d14dd96c/Quy tắc chuỗi.md",
     "Neural Network/Neural Network img",
@@ -212,7 +215,6 @@
     "data/user_storage/scores.md",
     "data/cache/chat_history.md",
     "data/index_storage/image_vector_store.md",
-    "data/index_storage/graph_store.md",
     "data/ingestion_storage/dsm-5-cac-tieu-chuan-chan-doan.pdf"
   ]
 }
