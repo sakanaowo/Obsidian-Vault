@@ -170,6 +170,13 @@
   },
   "active": "105a9adf37dfe681",
   "lastOpenFiles": [
+    "Code/NumberImageReg/IMGreg.ipynb",
+    "Code/NumberImageReg/Untitled.ipynb",
+    "Code/NumberImageReg/IMGREG.py~",
+    "Code/NumberImageReg/IMGREG.py",
+    "Code/NumberImageReg",
+    "Code/CV",
+    "Code/Untitled Folder",
     "Xử lí ảnh/Xử lí ảnh.md",
     "Logistic Regression/Logistic Regression.md",
     "Linear Regression/Linear Regression.md",
@@ -195,11 +202,6 @@
     "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 3.png",
     "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 2.png",
     "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 1.png",
-    "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277",
-    "e5f822a5-4b52-43d6-9f87-8669c55ad18a_Export-b6fc3c69-458a-4d68-8206-d9d6fea4b7b6.zip",
-    "Unconfirmed 272027.crdownload",
-    "Convolutional Neural Network",
-    "Learning DL,ML/Neural Network",
     "temp.md",
     "pages/_chat.md",
     "pages/_user.md",
@@ -214,7 +216,6 @@
     "data/user_storage/users.md",
     "data/user_storage/scores.md",
     "data/cache/chat_history.md",
-    "data/index_storage/image_vector_store.md",
-    "data/ingestion_storage/dsm-5-cac-tieu-chuan-chan-doan.pdf"
+    "data/index_storage/image_vector_store.md"
   ]
 }
