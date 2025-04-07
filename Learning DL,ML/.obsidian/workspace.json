@@ -20,8 +20,33 @@
               "icon": "lucide-file",
               "title": "Convolutional Neural Network"
             }
+          },
+          {
+            "id": "f957ab892db2ae51",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Transformer/Attention is all you need.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Attention is all you need"
+            }
+          },
+          {
+            "id": "908c159d2a81b4f8",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -78,8 +103,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "ae95f377b707bd71",
@@ -168,8 +192,14 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "105a9adf37dfe681",
+  "active": "908c159d2a81b4f8",
   "lastOpenFiles": [
+    "Transformer/Attention is all you need.md",
+    "Transformer/Vanishing Gradient.md",
+    "Transformer/ReLU.md",
+    "Transformer/Transformer.md",
+    "Transformer",
+    "Convolutional Neural Network/Convolutional Neural Network.md",
     "Code/NumberImageReg/IMGreg.ipynb",
     "Code/NumberImageReg/Untitled.ipynb",
     "Code/NumberImageReg/IMGREG.py~",
@@ -180,7 +210,6 @@
     "Xử lí ảnh/Xử lí ảnh.md",
     "Logistic Regression/Logistic Regression.md",
     "Linear Regression/Linear Regression.md",
-    "Convolutional Neural Network/Convolutional Neural Network.md",
     "Neural Network/Neural Network.md",
     "Neural Network/Feedforward.md",
     "Neural Network/bias.md",
@@ -194,8 +223,6 @@
     "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 3.png",
     "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 2.png",
     "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 1.png",
-    "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277",
-    "Linear Regression",
     "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277.md",
     "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image.png",
     "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 4.png",
@@ -213,9 +240,6 @@
     "src/slide_bar.md",
     "src/prompts.md",
     "data/index_storage/index_store.md",
-    "data/user_storage/users.md",
-    "data/user_storage/scores.md",
-    "data/cache/chat_history.md",
-    "data/index_storage/image_vector_store.md"
+    "data/user_storage/users.md"
   ]
 }
