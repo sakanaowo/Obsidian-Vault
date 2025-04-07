@@ -3,5 +3,6 @@
   "enabledCssSnippets": [
     "bg"
   ],
-  "cssTheme": "Border"
+  "cssTheme": "Border",
+  "theme": "obsidian"
 }
