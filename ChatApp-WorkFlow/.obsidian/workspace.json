@@ -25,10 +25,14 @@
             "id": "5e15f3d70e3037ba",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "frontend/src/components/AuthImagePattern.jsx.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "AuthImagePattern.jsx"
             }
           }
         ],
@@ -179,6 +183,16 @@
   },
   "active": "5e15f3d70e3037ba",
   "lastOpenFiles": [
+    "temp/test.js",
+    "temp/tét",
+    "temp/test.py~",
+    "temp/test.py",
+    "temp",
+    "frontend/src/components/skeletons/SidebarSkeletons.jsx.md",
+    "frontend/src/components/AuthImagePattern.jsx.md",
+    "frontend/src/components/skeletons/MessageSkeleton.jsx.md",
+    "frontend/src/components/skeletons",
+    "frontend/src/components",
     "frontend/public/vite.svg.md",
     "backend/src/BE-src-index.js.md",
     "frontend/public/avatar.png.md",
@@ -199,21 +213,11 @@
     "backend/src/Untitled 1.md",
     "backend/src/routes",
     "backend/src/models",
-    "backend/src/middleware",
-    "backend/src/lib",
-    "backend/src/controller",
     "backend/src/Untitled.md",
-    "backend/src",
-    "frontend",
-    "backend",
     "temp.md",
     "pages/_chat.md",
     "pages/_user.md",
     "evaluate.md",
-    "2025-03-28.md",
-    "src/conversation_engine.md",
-    "src/global_settings.md",
-    "src/ingest_pipeline.md",
-    "src/slide_bar.md"
+    "2025-03-28.md"
   ]
 }

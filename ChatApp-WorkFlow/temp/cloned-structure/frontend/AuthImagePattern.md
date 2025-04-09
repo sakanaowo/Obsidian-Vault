@@ -1,0 +1,1 @@
+# AuthImagePattern.md
