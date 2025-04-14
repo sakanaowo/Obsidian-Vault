@@ -1,6 +1,27 @@
 {
-  "cascadeColors": false,
-  "colorBackground": false,
-  "palette": [],
+  "cascadeColors": true,
+  "colorBackground": true,
+  "palette": [
+    {
+      "id": "XWSW1IZ-UDD4987X5MOjV",
+      "name": "",
+      "value": "#26d9c4"
+    },
+    {
+      "id": "fJRu83DOTdq4oz-UgiJNt",
+      "name": "",
+      "value": "#3d3aee"
+    },
+    {
+      "id": "kUN8bSmQkhowg45QkWfxv",
+      "name": "",
+      "value": "#17de49"
+    },
+    {
+      "id": "UGefa77JtLAwHVhnIfeRh",
+      "name": "",
+      "value": "#c26b19"
+    }
+  ],
   "fileColors": []
 }

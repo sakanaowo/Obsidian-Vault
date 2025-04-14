@@ -73,7 +73,7 @@ Bài toán: Input ảnh màu 64x64, output ảnh có chứa mặt người hay k
 ![](https://i.imgur.com/WqljRjf.png)
 
 - Với mỗi ma trận trên vùng kích thước $K*K$ thì tìm **maximum** hoặc **AVG**
-- Hầu hết khi dùng pooling layer thì sẽ dùng size = 2x2, stride=2, padding=0 -> output width và height của dữ liệu sẽ giảm đi 1 nửa, depth giữ nguyên 
+- Hầu hết khi dùng #pooling-layer  thì sẽ dùng size = 2x2, stride=2, padding=0 -> output width và height của dữ liệu sẽ giảm đi 1 nửa, depth giữ nguyên 
 ![](https://i.imgur.com/2lb1rSd.png)
 
 ## Fully Connected Layer

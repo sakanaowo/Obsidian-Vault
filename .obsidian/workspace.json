@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "Learning DL,ML/Xử lí ảnh/Xử lí ảnh.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "Xử lí ảnh"
             }
           }
         ]
@@ -179,7 +179,12 @@
   },
   "active": "f2eeb9853733e7f1",
   "lastOpenFiles": [
+    "Learning DL,ML/Transformer/ReLU.md",
+    "Learning DL,ML/Transformer/Vanishing Gradient.md",
+    "Learning DL,ML/Xử lí ảnh/Xử lí ảnh.md",
+    "Learning DL,ML/Logistic Regression/Logistic Regression.md",
     "README.md",
+    "AI",
     "ChatApp WorkFlow",
     "Learning DL,ML/Neural Network",
     "temp.md",
@@ -205,15 +210,10 @@
     "src/authenticate.md",
     "data/ingestion_storage/dsm-5-cac-tieu-chuan-chan-doan.pdf",
     "pages/_chat",
-    "build_data.md",
     "data/ingestion_storage",
     "data/index_storage/default__vector_store.json",
     "data/index_storage/image__vector_store.json",
     "data/index_storage/index_store.json",
-    "data/index_storage/graph_store.json",
-    "data/index_storage/docstore.json",
-    "data/Untitled.md",
-    "data/Untitled 1.md",
-    "Home.md"
+    "data/index_storage/graph_store.json"
   ]
 }

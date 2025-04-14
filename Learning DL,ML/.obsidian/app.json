@@ -3,5 +3,6 @@
   "alwaysUpdateLinks": true,
   "showLineNumber": false,
   "readableLineLength": true,
-  "useMarkdownLinks": true
+  "useMarkdownLinks": true,
+  "promptDelete": false
 }

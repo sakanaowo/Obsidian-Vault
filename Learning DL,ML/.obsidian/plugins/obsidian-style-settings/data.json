@@ -119,5 +119,9 @@
   "Editor@@h1-divider-on": true,
   "Editor@@bold-color@@light": "#00ECFF",
   "Editor@@italic-color@@light": "#EB9898",
-  "Editor@@text-highlight-bg@@light": "#F2E249"
+  "Editor@@text-highlight-bg@@light": "#F2E249",
+  "Plugin@@colorful-checkbox": true,
+  "Editor@@h4-accent-color@@dark": "#1C9ADE",
+  "Editor@@h4-divider-on": true,
+  "Editor@@h4-color-select": "h4-color-designated"
 }

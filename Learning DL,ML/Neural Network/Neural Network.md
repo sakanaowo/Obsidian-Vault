@@ -14,7 +14,7 @@ Requirement:
   - "[[Feedforward|Feedforward]]"
   - "[[bias]]"
 ---
----
+
 
 # Neural Network là gì
 ## Hoạt động của neuron
