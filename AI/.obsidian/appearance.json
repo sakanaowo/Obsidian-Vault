@@ -5,5 +5,8 @@
   ],
   "cssTheme": "Border",
   "theme": "obsidian",
-  "nativeMenus": false
+  "nativeMenus": false,
+  "showRibbon": true,
+  "showViewHeader": true,
+  "baseFontSizeAction": false
 }

@@ -7,7 +7,10 @@
     background-color: transparent;
 }
 .horizontal-main-container { /* below is the background image. Change it to whatever you want */
-    background: url(https://i.imgur.com/XSmm93q.png);
+    /*background: url(https://i.imgur.com/XSmm93q.png);
+    */
+    background: url(https://i.imgur.com/8hCAeGs.jpeg);
+    
     background-size: cover;
 }
 .workspace-split.mod-root {

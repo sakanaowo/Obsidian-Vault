@@ -1,6 +1,6 @@
 Dưới đây là bản dịch toàn bộ bài báo **"Semantic Connection-Based Learning for Dragon Fruit Disease Classification"** sang tiếng Việt:
 
----
+
 
 ## Học Dựa Trên Kết Nối Ngữ Nghĩa Cho Phân Loại Bệnh Trên Cây Thanh Long
 
@@ -31,7 +31,7 @@ Tuy nhiên, một thách thức lớn là cây thanh long có thể bị nhiều
 
 ---
 
-### 1. Giới thiệu
+# 1. Giới thiệu
 
 Trong những năm gần đây, ứng dụng của học sâu trong nông nghiệp đã đạt nhiều thành tựu. Đặc biệt, trong việc phát hiện sâu bệnh hại trên lá cây, nhiều nhà nghiên cứu đã ứng dụng AI và deep learning.
 
@@ -45,7 +45,7 @@ Một số mô hình hiện nay giải quyết vấn đề này bằng cách lư
 
 ---
 
-### 1.1. Các nghiên cứu liên quan
+## 1.1. Các nghiên cứu liên quan
 
 Một số mô hình học sâu có khả năng học thêm lớp mới mà không ảnh hưởng đến lớp cũ, ví dụ như lưu đặc trưng cũ vào cơ sở dữ liệu hoặc điều chỉnh tham số mô hình. Một hướng tiếp cận khác là mô hình giáo viên – học sinh (teacher-student) để cân bằng khả năng dự đoán giữa lớp cũ và lớp mới.
 
@@ -53,7 +53,7 @@ Các yếu tố ảnh hưởng chính đến việc mở rộng mô hình là: (
 
 ---
 
-### 1.2. Động lực và đóng góp
+## 1.2. Động lực và đóng góp
 
 Chúng tôi đề xuất mô hình **Học Dựa Trên Kết Nối Ngữ Nghĩa (SCL)** nhằm:
 
@@ -66,13 +66,13 @@ Chúng tôi đề xuất mô hình **Học Dựa Trên Kết Nối Ngữ Nghĩa 
 
 ---
 
-### 2. Phương pháp đề xuất
+# 2. Phương pháp đề xuất
 
-#### 2.1. Định nghĩa bài toán
+## 2.1. Định nghĩa bài toán
 
 Giả sử ta có một tập huấn luyện gồm nhiều lớp: $L=L_1,L_2,...,L_N$, trong đó mỗi lớp $L_i = (X, y_i)$, với $y_i$ là nhãn của lớp $i$. Mục tiêu là đảm bảo mô hình vẫn phân loại chính xác khi thêm lớp mới vào.
 
-#### 2.2. Kiến trúc mô hình
+## 2.2. Kiến trúc mô hình
 
 Mô hình SCL hoạt động theo các bước:
 
@@ -83,15 +83,15 @@ Mô hình SCL hoạt động theo các bước:
 - Áp dụng học chuyển giao (transfer learning) và kết nối ngữ nghĩa giữa lớp mới – lớp cũ.
     
 
-#### 2.3. Mục tiêu tiền huấn luyện
+## 2.3. Mục tiêu tiền huấn luyện
 
 Thay vì huấn luyện lại từ đầu, mô hình sử dụng các mô hình đã huấn luyện trước để tiết kiệm chi phí. Một số lớp được “đóng băng”, chỉ học thêm phần cần thiết.
 
 ---
 
-### 3. Mô tả mô hình
+# 3. Mô tả mô hình
 
-#### 3.1. Học dựa trên kết nối ngữ nghĩa
+## 3.1. Học dựa trên kết nối ngữ nghĩa
 
 - Từ backbone CNN, trích xuất đặc trưng thành **vector embedding**.
     
@@ -100,14 +100,14 @@ Thay vì huấn luyện lại từ đầu, mô hình sử dụng các mô hình 
 - Khi thêm lớp mới, tính **độ tương đồng (similarity)** giữa prototype mới và cũ để cập nhật kết nối trong không gian làm việc.
     
 
-#### 3.2. Không gian làm việc
+## 3.2. Không gian làm việc
 
 - Là nơi kết nối đặc trưng của ảnh đầu vào với các prototype để hỗ trợ dự đoán.
     
 - Mỗi không gian làm việc chỉ lưu các prototype (không lưu embedding đầy đủ), giúp giảm chi phí lưu trữ.
     
 
-#### 3.3. Hàm mất mát
+## 3.3. Hàm mất mát
 
 Gồm hai hàm chính:
 
@@ -118,16 +118,16 @@ Gồm hai hàm chính:
 
 ---
 
-### 4. Kết quả thực nghiệm và phân tích
+# 4. Kết quả thực nghiệm và phân tích
 
-#### 4.1. Mô tả bộ dữ liệu
+## 4.1. Mô tả bộ dữ liệu
 
 - Bộ dữ liệu **D-Dragon** gồm **12 nhãn** (11 loại bệnh + 1 nhãn khỏe mạnh), mỗi nhãn khoảng **500 ảnh**.
     
 - Dữ liệu được chia làm nhiều pha huấn luyện: ban đầu huấn luyện 5 lớp, sau đó thêm dần lớp mới.
     
 
-#### 4.2. Cài đặt thực nghiệm
+## 4.2. Cài đặt thực nghiệm
 
 - Thực nghiệm trên GPU Nvidia RTX 4090, framework PyTorch.
     
@@ -136,21 +136,21 @@ Gồm hai hàm chính:
 - Tốc độ hội tụ tốt sau 38 epoch, learning rate = 0.001.
     
 
-#### 4.3. So sánh hiệu suất mô hình
+## 4.3. So sánh hiệu suất mô hình
 
 So sánh mô hình SCL với các phương pháp khác như iCaRL, DER, MEMO, EASE. Kết quả:
 
-|Phương pháp|ImageNet-mini (%)|D-Dragon (%)|
-|---|---|---|
-|iCaRL|70.56|82.64|
-|DER|78.25|89.73|
-|MEMO|73.84|85.68|
-|EASE|79.67|90.24|
-|**SCL**|**80.34**|**91.89**|
+| Phương pháp | ImageNet-mini (%) | D-Dragon (%) |
+| ----------- | ----------------- | ------------ |
+| iCaRL       | 70.56             | 82.64        |
+| DER         | 78.25             | 89.73        |
+| MEMO        | 73.84             | 85.68        |
+| EASE        | 79.67             | 90.24        |
+| **SCL**     | **80.34**         | **91.89**    |
 
 SCL vượt trội hơn 1–2% so với các phương pháp tốt nhất hiện tại.
 
-#### 4.4. Nghiên cứu định tính
+## 4.4. Nghiên cứu định tính
 
 - Mô hình SCL được đánh giá với ảnh thực tế gồm các bệnh phổ biến như: **Đốm nâu**, **Mắt cá**, **Nấm cành**, **Đốm đen**, **Thối đầu trái**.
     
@@ -159,7 +159,7 @@ SCL vượt trội hơn 1–2% so với các phương pháp tốt nhất hiện 
 
 ---
 
-### 5. Kết luận
+# 5. Kết luận
 
 Chúng tôi đề xuất mô hình SCL giúp mở rộng khả năng học phân loại bệnh mới trên cây thanh long mà vẫn giữ độ chính xác cao. Mô hình tận dụng kết nối ngữ nghĩa để tạo không gian học mới mà không ảnh hưởng dữ liệu cũ.
 

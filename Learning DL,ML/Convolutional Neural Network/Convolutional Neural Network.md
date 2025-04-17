@@ -14,7 +14,7 @@ Requirement:
   - "[[Neural Network]]"
   - "[[Xử lí ảnh|Xử lý ảnh]]"
 ---
----
+
 # Thiết lập bài toán
 Bài toán: Input ảnh màu 64x64, output ảnh có chứa mặt người hay không
 # Convolutional Neural Network 

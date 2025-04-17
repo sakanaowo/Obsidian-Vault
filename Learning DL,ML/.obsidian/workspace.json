@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Convolutional Neural Network/Convolutional Neural Network.md",
+                "file": "Models/SCL/Tổng quan mô hình SCL.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Convolutional Neural Network"
+              "title": "Tổng quan mô hình SCL"
             }
           },
           {
@@ -27,16 +27,15 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DragonFruit Paper/Paper.md",
+                "file": "Math/Phương sai.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Paper"
+              "title": "Phương sai"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -68,7 +67,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:ReLU",
+                "query": "tag:#deep-neural-network",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -163,9 +162,19 @@
               "icon": "lucide-list",
               "title": "Outline of Xử lí ảnh"
             }
+          },
+          {
+            "id": "d066986cd52ae5fc",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {},
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -179,23 +188,28 @@
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "f957ab892db2ae51",
+  "active": "105a9adf37dfe681",
   "lastOpenFiles": [
-    "Resnet/Resnet Overview.md",
-    "Resnet/Batch Normalization.md",
     "DragonFruit Paper/Paper.md",
+    "Models/SCL/Tổng quan mô hình SCL.md",
+    "Models/SCL",
+    "Models",
+    "Convolutional Neural Network/Convolutional Neural Network.md",
+    "Models/Resnet/Batch Normalization.md",
+    "Models/Resnet/Resnet Overview.md",
+    "Math/Phương sai.md",
+    "Xử lí ảnh/Xử lí ảnh.md",
+    "Convolutional Neural Network/Pooling layer.md",
     "DragonFruit Paper/dragon_fruit_translation.md",
     "DragonFruit Paper/Unconfirmed 678920.crdownload",
     "DragonFruit Paper",
     "Transformer/ReLU.md",
-    "Math/Phương sai.md",
     "Math",
-    "Convolutional Neural Network/Pooling layer.md",
     "Untitled.canvas",
-    "Convolutional Neural Network/Convolutional Neural Network.md",
     "Linear Regression/Linear Regression.md",
     "Logistic Regression/Logistic Regression.md",
     "Neural Network/Feedforward.md",
@@ -203,17 +217,14 @@
     "Neural Network/Neural Network.md",
     "Transformer/Attention is all you need.md",
     "Resnet/test.md",
-    "Vision Transformer/Cross Entropy.md",
-    "Resnet",
-    "Vision Transformer/Vit-Scratch",
+    "Models/Vision Transformer/Cross Entropy.md",
+    "Models/Resnet",
+    "Models/Vision Transformer/Vit-Scratch",
     "Transformer/Vanishing Gradient.md",
     "Transformer/Transformer.md",
-    "Vision Transformer",
+    "Models/Vision Transformer",
     "Transformer",
     "Code/NumberImageReg/IMGreg.ipynb",
-    "Code/NumberImageReg/Untitled.ipynb",
-    "Code/NumberImageReg/IMGREG.py~",
-    "Xử lí ảnh/Xử lí ảnh.md",
     "bias.md",
     "Logistic Regression/Logistic Regression 1c7bd9fab3c380ffb9b9c9e9d14dd96c/Quy tắc chuỗi.md",
     "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image.png",
@@ -229,7 +240,6 @@
     "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 1.png",
     "temp.md",
     "pages/_chat.md",
-    "pages/_user.md",
-    "evaluate.md"
+    "pages/_user.md"
   ]
 }

@@ -123,5 +123,9 @@
   "Plugin@@colorful-checkbox": true,
   "Editor@@h4-accent-color@@dark": "#1C9ADE",
   "Editor@@h4-divider-on": true,
-  "Editor@@h4-color-select": "h4-color-designated"
+  "Editor@@h4-color-select": "h4-color-designated",
+  "Editor@@table-width-select": "table-width-default",
+  "Editor@@table-header-color@@dark": "#1BBAAD",
+  "Editor@@table-header-color@@light": "#1D2C25",
+  "Editor@@table-header-background-dark": "#324861"
 }
