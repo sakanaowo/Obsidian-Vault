@@ -6,6 +6,11 @@ tags:
   - CNN
   - RNN
   - vanishing-gradient
+  - Multi-head
+Reference:
+  - "[[Transformer]]"
+  - "[[Convolutional Neural Network|CNN]]"
+  - "[[Vanishing Gradient|vanishing gradient]]"
 ---
 ---
 # 1. Intro

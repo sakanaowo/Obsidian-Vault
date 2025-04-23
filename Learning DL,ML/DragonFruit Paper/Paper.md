@@ -167,6 +167,3 @@ Tuy nhiên, hạn chế là chi phí bộ nhớ cao. Trong tương lai, nhóm s�
 
 ---
 
-### Lời cảm ơn
-
-Nghiên cứu này được tài trợ bởi đề tài khoa học mã số **KC-4.0-11/19-25** của Bộ Khoa học và Công nghệ Việt Nam.
