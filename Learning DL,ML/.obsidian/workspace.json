@@ -22,18 +22,6 @@
             }
           },
           {
-            "id": "458dd61d3759e560",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.8.10"
-              },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.8.10"
-            }
-          },
-          {
             "id": "230e0809ec2221ab",
             "type": "leaf",
             "state": {
@@ -61,8 +49,7 @@
               "title": "Phương sai"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -94,7 +81,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#pooling-layer",
+                "query": "",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -219,13 +206,17 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "458dd61d3759e560",
+  "active": "105a9adf37dfe681",
   "lastOpenFiles": [
+    "Transformer/Positional Encoding.md",
+    "Transformer/Self-Attention.md",
+    "Transformer/Multi-head Attention.md",
+    "Linear Regression/Linear Regression.md",
+    "2025-04-25.md",
+    "Convolutional Neural Network/Pooling layer.md",
     "MSAIL/Tổng quan MSAIL.md",
     "DragonFruit Paper/Paper.md",
-    "Convolutional Neural Network/Pooling layer.md",
     "Transformer/Attention is all you need.md",
-    "Transformer/Self-Attention.md",
     "MSAIL",
     "temp.md",
     "Models/SCL/Tổng quan mô hình SCL.md",
@@ -242,7 +233,6 @@
     "Transformer/ReLU.md",
     "Math",
     "Untitled.canvas",
-    "Linear Regression/Linear Regression.md",
     "Logistic Regression/Logistic Regression.md",
     "Neural Network/Feedforward.md",
     "Neural Network/bias.md",
@@ -255,14 +245,11 @@
     "Transformer/Transformer.md",
     "Models/Vision Transformer",
     "Transformer",
-    "bias.md",
-    "Logistic Regression/Logistic Regression 1c7bd9fab3c380ffb9b9c9e9d14dd96c/Quy tắc chuỗi.md",
     "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image.png",
     "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 4.png",
     "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 3.png",
     "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 2.png",
     "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 1.png",
-    "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277.md",
     "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image.png",
     "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 4.png",
     "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 3.png",
