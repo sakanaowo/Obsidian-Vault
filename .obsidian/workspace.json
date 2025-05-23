@@ -4,17 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "5b938cf92cd9124a",
+        "id": "618088f2535024a2",
         "type": "tabs",
         "children": [
           {
-            "id": "f2eeb9853733e7f1",
+            "id": "b6c36373130c918a",
             "type": "leaf",
             "state": {
-              "type": "graph",
+              "type": "empty",
               "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
         ]
@@ -172,7 +172,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "f2eeb9853733e7f1",
+  "active": "fd43552517850091",
   "lastOpenFiles": [
     "Learning DL,ML/Xử lí ảnh/Xử lí ảnh.md",
     "Learning DL,ML/Transformer/ReLU.md",

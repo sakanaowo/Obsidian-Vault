@@ -16,9 +16,10 @@
 
 ### **2.2. Kiến trúc mô hình**
 
+![Hình 1](https://i.ibb.co/5X9hY7p7/image.png)
 
 
-Như minh họa trong **Hình 1**, chúng tôi đề xuất một **mô hình học kết nối ngữ nghĩa (SCL)** để tăng cường khả năng học cho cả **nhãn cũ và mới**.
+Như minh họa , chúng tôi đề xuất một **mô hình học kết nối ngữ nghĩa (SCL)** để tăng cường khả năng học cho cả **nhãn cũ và mới**.
 
 Ban đầu, mô hình được **huấn luyện với tập dữ liệu đã gán nhãn**. Khi có thêm dữ liệu mới, mô hình mới được **khởi tạo**, tích hợp các **nhãn mới vào không gian làm việc**. Mô hình **SCL được huấn luyện để tạo ra không gian làm việc** không thiên vị giữa nhãn cũ và mới, cho phép mô hình **học song song cả hai**.
 
@@ -32,19 +33,17 @@ Ngoài ra, mô hình **tổng hợp các nhãn chưa gán** để hỗ trợ **h
 
 Trong bối cảnh hiện nay, việc **tái sử dụng mô hình đã huấn luyện trước (pre-trained)** rất phổ biến. Thay vì huấn luyện lại từ đầu, chúng ta có thể **kế thừa trọng số quan trọng** hoặc **sao chép các lớp then chốt**, rồi **tùy chỉnh các lớp cuối** để phù hợp với bài toán hiện tại:
 
-ini
 
-Copy code
-
-`model_old = copy_layer(model_pretrain(Li))     (1)`
+```lua
+model_old = copy_layer(model_pretrain(Li))     (1)
+```
 
 Sau khi có mô hình tiền huấn luyện, để tránh xung đột với lớp cũ, chúng tôi **đóng băng một số lớp**, và **mở rộng mô hình** bằng cách kết nối giữa các mô hình cũ:
 
-ini
 
-Copy code
-
-`model_new = working_space(keep(model_old1, model_old2, ..., model_oldN), model_old(Li))     (2)`
+```lua
+model_new = working_space(keep(model_old1, model_old2, ..., model_oldN), model_old(Li))     (2)
+```
 
 Sau khi mô hình mới được tạo, **không gian làm việc sẽ cập nhật thông tin về các nhiệm vụ**, nhằm **dự đoán chính xác trong tương lai** và **tránh ghi đè thông tin nhãn mới lên nhãn cũ**. Điều này giúp **tối ưu hóa chi phí huấn luyện** và **nâng cao khả năng mở rộng trong tương lai**.
 
