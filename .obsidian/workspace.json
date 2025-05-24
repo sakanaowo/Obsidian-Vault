@@ -11,10 +11,14 @@
             "id": "b6c36373130c918a",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "README"
             }
           }
         ]
@@ -172,8 +176,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "fd43552517850091",
+  "active": "b6c36373130c918a",
   "lastOpenFiles": [
+    "Untitled.md",
     "Learning DL,ML/Xử lí ảnh/Xử lí ảnh.md",
     "Learning DL,ML/Transformer/ReLU.md",
     "Learning DL,ML/Transformer/Vanishing Gradient.md",
@@ -202,7 +207,6 @@
     "data/index_storage/default_vector_store.md",
     "data/cache/pipeline_cache.md",
     "src/index_builder.md",
-    "src/authenticate.md",
     "data/ingestion_storage/dsm-5-cac-tieu-chuan-chan-doan.pdf",
     "pages/_chat",
     "data/ingestion_storage",

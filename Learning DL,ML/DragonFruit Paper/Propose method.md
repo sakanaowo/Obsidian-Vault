@@ -48,3 +48,5 @@ model_new = working_space(keep(model_old1, model_old2, ..., model_oldN), model_o
 Sau khi mô hình mới được tạo, **không gian làm việc sẽ cập nhật thông tin về các nhiệm vụ**, nhằm **dự đoán chính xác trong tương lai** và **tránh ghi đè thông tin nhãn mới lên nhãn cũ**. Điều này giúp **tối ưu hóa chi phí huấn luyện** và **nâng cao khả năng mở rộng trong tương lai**.
 
 > **Từ khóa:** `mô hình tiền huấn luyện`, `sao chép lớp`, `không gian làm việc`, `đóng băng lớp`, `tránh xung đột`, `tối ưu chi phí`
+
+![](Pasted%20image%2020250524201200.png)
