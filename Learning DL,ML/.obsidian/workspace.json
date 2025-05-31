@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DragonFruit Paper/Propose method.md",
+                "file": "DragonFruit Paper/Conclusion.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Propose method"
+              "title": "Conclusion"
             }
           },
           {
@@ -237,17 +237,19 @@
   },
   "active": "8ffc12810ca7d28f",
   "lastOpenFiles": [
+    "DragonFruit Paper/Experimental result and analysis.md",
+    "Attachments/Pasted image 20250531162911.png",
+    "DragonFruit Paper/Model Description.md",
+    "Attachments/Pasted image 20250531160320.png",
+    "DragonFruit Paper/Propose method.md",
     "Attachments/Pasted image 20250524201200.png",
     "Attachments",
     "Pasted image 20250523115224.png",
-    "DragonFruit Paper/Propose method.md",
     "Pasted image 20250523114901.png",
     "Pasted image 20250523114346.png",
     "DragonFruit Paper/Introduction.md",
     "DragonFruit Paper/Paper.md",
     "DragonFruit Paper/Conclusion.md",
-    "DragonFruit Paper/Experimental result and analysis.md",
-    "DragonFruit Paper/Model Description.md",
     "Transformer/ReLU.md",
     "Transformer/Self-Attention.md",
     "Transformer/Positional Encoding.md",
@@ -280,9 +282,6 @@
     "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image.png",
     "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 4.png",
     "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 3.png",
-    "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 2.png",
-    "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 1.png",
-    "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image.png",
-    "Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 4.png"
+    "Linear Regression/Linear Regression 1c7bd9fab3c380938f85e3c9e261d277/image 2.png"
   ]
 }
