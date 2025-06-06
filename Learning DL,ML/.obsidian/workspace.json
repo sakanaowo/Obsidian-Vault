@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PlantXVit/Xây dựng mô hình.md",
+                "file": "PlantXVit/Chuẩn bị môi trường.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Xây dựng mô hình"
+              "title": "Chuẩn bị môi trường"
             }
           }
         ],
@@ -93,8 +93,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "ae95f377b707bd71",
@@ -196,12 +195,12 @@
   },
   "active": "a37741dbb2e3e3e4",
   "lastOpenFiles": [
-    "PlantXVit/WorkFlow PantXViT.md",
     "PlantXVit/Chuẩn bị dữ liệu.md",
+    "PlantXVit/Xây dựng mô hình.md",
+    "PlantXVit/WorkFlow PantXViT.md",
     "PlantXVit/Chuẩn bị môi trường.md",
     "PlantXVit/Đánh giá mô hình.md",
     "PlantXVit/Cấu hình huấn luyện.md",
-    "PlantXVit/Xây dựng mô hình.md",
     "PlantXVit/Paper.md",
     "DragonFruit Paper/SCL implement/Kiến trúc mô hình.md",
     "PlantXVit",
