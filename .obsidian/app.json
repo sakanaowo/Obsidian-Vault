@@ -1,5 +1,8 @@
 {
   "promptDelete": false,
   "spellcheck": false,
-  "alwaysUpdateLinks": true
+  "alwaysUpdateLinks": true,
+  "showUnsupportedFiles": true,
+  "attachmentFolderPath": "assets/attachments",
+  "newFileLocation": "current"
 }

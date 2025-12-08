@@ -1,6 +1,0 @@
----
-required:
-  - Server
-  - http
-  - express
----

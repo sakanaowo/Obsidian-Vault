@@ -1,6 +1,0 @@
----
-aliases:
-  - User
-required:
-  - mongoose
----

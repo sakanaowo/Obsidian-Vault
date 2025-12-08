@@ -1,8 +1,12 @@
 {
   "accentColor": "",
   "enabledCssSnippets": [
-    "bg"
+    "bg",
+    "terminal-font"
   ],
   "cssTheme": "Border",
-  "theme": "obsidian"
+  "theme": "obsidian",
+  "monospaceFontFamily": "SpaceMono Nerd Font Mono",
+  "interfaceFontFamily": "SF Pro",
+  "textFontFamily": "SF Pro"
 }
