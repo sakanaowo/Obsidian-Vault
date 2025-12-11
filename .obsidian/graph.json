@@ -1,22 +1,44 @@
 {
   "collapse-filter": false,
   "search": "",
-  "showTags": true,
-  "showAttachments": true,
+  "showTags": false,
+  "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
   "collapse-color-groups": false,
-  "colorGroups": [],
+  "colorGroups": [
+    {
+      "query": "path:\"AI/Prompt Engineering for Generative AI\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 14701138
+      }
+    },
+    {
+      "query": "path:\"Learning DL,ML-deprecated\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 14725458
+      }
+    },
+    {
+      "query": "path:kepano-obsidian-main  ",
+      "color": {
+        "a": 1,
+        "rgb": 11657298
+      }
+    }
+  ],
   "collapse-display": false,
   "showArrow": false,
-  "textFadeMultiplier": -0.3,
-  "nodeSizeMultiplier": 1.2484375,
-  "lineSizeMultiplier": 2.83072916666667,
+  "textFadeMultiplier": 0,
+  "nodeSizeMultiplier": 1.325,
+  "lineSizeMultiplier": 1,
   "collapse-forces": false,
-  "centerStrength": 0.432291666666667,
-  "repelStrength": 8.4375,
+  "centerStrength": 0.518713248970312,
+  "repelStrength": 10,
   "linkStrength": 1,
-  "linkDistance": 360,
-  "scale": 0.8635406266155843,
+  "linkDistance": 250,
+  "scale": 0.2807131894625557,
   "close": false
 }
