@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AI/Prompt Engineering for Generative AI/00_Book_Notes/Chapter 02 - Introduction to Large Language Models for Text Generation.md",
+                "file": "AI/Prompt Engineering for Generative AI/02_Models_Architecture/Large Language Models.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -29,7 +29,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Chapter 02 - Introduction to Large Language Models for Text Generation"
+              "title": "Large Language Models"
             }
           }
         ]
@@ -273,10 +273,14 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "6d7455f7521f0399",
+  "active": "648f18da187ffd66",
   "lastOpenFiles": [
-    "AI/Prompt Engineering for Generative AI/00_Book_Notes/Chapter 02 - Introduction to Large Language Models for Text Generation.md",
+    "AI/Prompt Engineering for Generative AI/02_Models_Architecture/Large Language Models.md",
+    "kepano-obsidian-main/Composability.md",
+    "kepano-obsidian-main/Readme.md",
+    "kepano-obsidian-main/Untitled.md",
     "kepano-obsidian-main/Templates/Coffee Template.md",
+    "AI/Prompt Engineering for Generative AI/00_Book_Notes/Chapter 02 - Introduction to Large Language Models for Text Generation.md",
     "kepano-obsidian-main/Templates/Video Game Genre Template.md",
     "GEMINI.md",
     "AI/Prompt Engineering for Generative AI/00_Book_Notes/Chapter 03 - Standard Practices for Text Generation with ChatGPT.md",
@@ -298,11 +302,7 @@
     "AI/Prompt Engineering for Generative AI/02_Models_Architecture/Google Gemini.md",
     "AI/Prompt Engineering for Generative AI/02_Models_Architecture/GPT-4.md",
     "AI/Prompt Engineering for Generative AI/02_Models_Architecture/Low-Rank Adaptation (LoRA).md",
-    "AI/Prompt Engineering for Generative AI/02_Models_Architecture/Quantization.md",
-    "Learning DL,ML-deprecated/Convolutional Neural Network/Convolutional Neural Network.md",
     "kepano-obsidian-main/Templates/Bases/Templates.base",
-    "Byte-Pair Encoding (BPE).md",
-    "LangChain.md",
     "kepano-obsidian-main/Templates/Bases/Trips.base",
     "kepano-obsidian-main/Templates/Bases/Shows.base",
     "kepano-obsidian-main/Templates/Bases/Related.base",
