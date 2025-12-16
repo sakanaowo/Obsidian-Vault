@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/00_Book_Notes/Chapter 03 - Standard Practices for Text Generation with ChatGPT.md",
+                "file": "GEMINI.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -29,7 +29,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Chapter 03 - Standard Practices for Text Generation with ChatGPT"
+              "title": "GEMINI"
             }
           }
         ]
@@ -328,6 +328,7 @@
   },
   "active": "10273e99b4d6f5cd",
   "lastOpenFiles": [
+    "GEMINI.md",
     "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/00_Book_Notes/Chapter 03 - Standard Practices for Text Generation with ChatGPT.md",
     "progress.md",
     "20_Areas/Data/Concepts/YAML.md",
@@ -339,7 +340,6 @@
     "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/05_Challenges/AI Hallucination.md",
     "20_Areas/AI/Concepts/Sentiment Analysis.md",
     "20_Areas/AI/Concepts/Divide Labor.md",
-    "GEMINI.md",
     "20_Areas/AI/Concepts/Retrieval Augmented Generation (RAG).md",
     "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/03_Techniques_Strategies/Retrieval Augmented Generation (RAG).md",
     "20_Areas/AI/Concepts/Chain of Thought.md",
