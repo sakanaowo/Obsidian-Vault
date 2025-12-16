@@ -2,8 +2,8 @@
   "accentColor": "",
   "enabledCssSnippets": [
     "terminal-font",
-    "bg",
-    "latex-style"
+    "latex-style",
+    "bg"
   ],
   "cssTheme": "Border",
   "theme": "obsidian",

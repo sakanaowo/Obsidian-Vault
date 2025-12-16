@@ -6,7 +6,7 @@
       {
         "id": "b77b14f0cc5b9278",
         "type": "tabs",
-        "dimension": 55.8645707376058,
+        "dimension": 53.100775193798455,
         "children": [
           {
             "id": "5ebc2dfc4290627f",
@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AI/Prompt Engineering for Generative AI/02_Models_Architecture/Large Language Models.md",
+                "file": "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/00_Book_Notes/Chapter 03 - Standard Practices for Text Generation with ChatGPT.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -29,7 +29,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Large Language Models"
+              "title": "Chapter 03 - Standard Practices for Text Generation with ChatGPT"
             }
           }
         ]
@@ -37,12 +37,12 @@
       {
         "id": "9af9aa918003ce79",
         "type": "split",
-        "dimension": 44.13542926239419,
+        "dimension": 46.89922480620155,
         "children": [
           {
             "id": "ba581c9535727aee",
             "type": "tabs",
-            "dimension": 40.38461538461539,
+            "dimension": 48.003472222222214,
             "children": [
               {
                 "id": "648f18da187ffd66",
@@ -61,7 +61,7 @@
           {
             "id": "2c5bcf374ab27ae8",
             "type": "tabs",
-            "dimension": 59.61538461538461,
+            "dimension": 51.996527777777786,
             "children": [
               {
                 "id": "6d7455f7521f0399",
@@ -102,10 +102,63 @@
                   },
                   "pinned": true,
                   "icon": "terminal",
+                  "title": "Terminal: Gemini - Obsidian-Vault"
+                }
+              },
+              {
+                "id": "10273e99b4d6f5cd",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "terminal:terminal",
+                  "state": {
+                    "terminal:terminal": {
+                      "cwd": null,
+                      "focus": false,
+                      "profile": {
+                        "args": [],
+                        "executable": "/bin/zsh",
+                        "name": "",
+                        "platforms": {
+                          "darwin": true,
+                          "linux": true
+                        },
+                        "pythonExecutable": "python3",
+                        "restoreHistory": false,
+                        "rightClickAction": "copyPaste",
+                        "successExitCodes": [
+                          "0",
+                          "SIGINT",
+                          "SIGTERM"
+                        ],
+                        "terminalOptions": {
+                          "cursorStyle": "underline",
+                          "fontFamily": "SpaceMono Nerd Font Mono, SpaceMono Nerd Font, monospace",
+                          "documentOverride": null
+                        },
+                        "type": "integrated",
+                        "useWin32Conhost": true
+                      },
+                      "serial": null
+                    }
+                  },
+                  "pinned": true,
+                  "icon": "terminal",
                   "title": "Terminal: sakana@SakanaLaptop:~/Code/Obsidian-Vault"
                 }
+              },
+              {
+                "id": "6388cc6e823475b6",
+                "type": "leaf",
+                "state": {
+                  "type": "empty",
+                  "state": {},
+                  "icon": "lucide-file",
+                  "title": "New tab"
+                }
               }
-            ]
+            ],
+            "currentTab": 1
           }
         ],
         "direction": "horizontal"
@@ -120,7 +173,7 @@
       {
         "id": "65b399a6b11295ac",
         "type": "tabs",
-        "dimension": 44.61805555555556,
+        "dimension": 69.01041666666667,
         "children": [
           {
             "id": "c5a7e2d7cabeccb8",
@@ -141,7 +194,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#categories",
+                "query": "Few-Shot Learning",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -167,7 +220,7 @@
       {
         "id": "949a69fda9e928fd",
         "type": "tabs",
-        "dimension": 55.38194444444444,
+        "dimension": 30.989583333333336,
         "children": [
           {
             "id": "fd43552517850091",
@@ -273,47 +326,54 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "648f18da187ffd66",
+  "active": "10273e99b4d6f5cd",
   "lastOpenFiles": [
-    "AI/Prompt Engineering for Generative AI/02_Models_Architecture/Large Language Models.md",
-    "kepano-obsidian-main/Composability.md",
-    "kepano-obsidian-main/Readme.md",
-    "kepano-obsidian-main/Untitled.md",
-    "kepano-obsidian-main/Templates/Coffee Template.md",
-    "AI/Prompt Engineering for Generative AI/00_Book_Notes/Chapter 02 - Introduction to Large Language Models for Text Generation.md",
-    "kepano-obsidian-main/Templates/Video Game Genre Template.md",
+    "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/00_Book_Notes/Chapter 03 - Standard Practices for Text Generation with ChatGPT.md",
+    "progress.md",
+    "20_Areas/Data/Concepts/YAML.md",
+    "20_Areas/Data/Concepts/JSON.md",
+    "20_Areas/Data/Concepts",
+    "20_Areas/Data",
+    "20_Areas/AI/Concepts/Vector Databases.md",
+    "20_Areas/AI/Concepts/Hallucination.md",
+    "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/05_Challenges/AI Hallucination.md",
+    "20_Areas/AI/Concepts/Sentiment Analysis.md",
+    "20_Areas/AI/Concepts/Divide Labor.md",
     "GEMINI.md",
-    "AI/Prompt Engineering for Generative AI/00_Book_Notes/Chapter 03 - Standard Practices for Text Generation with ChatGPT.md",
-    "AI/Prompt Engineering for Generative AI/02_Models_Architecture/Mistral AI.md",
-    "AI/Prompt Engineering for Generative AI/00_Book_Notes/Untitled.base",
-    "AI/Prompt Engineering for Generative AI/05_Challenges/AI Hallucination.md",
-    "AI/Prompt Engineering for Generative AI/03_Techniques_Strategies/Least-to-Most Prompting.md",
-    "AI/Prompt Engineering for Generative AI/03_Techniques_Strategies/Role Prompting.md",
-    "AI/Prompt Engineering for Generative AI/03_Techniques_Strategies/Meta Prompting.md",
-    "AI/Prompt Engineering for Generative AI/03_Techniques_Strategies/Text Chunking.md",
-    "AI/Prompt Engineering for Generative AI/03_Techniques_Strategies/Chain of Thought (CoT).md",
-    "Learning DL,ML-deprecated/Transformer/Self-Attention.md",
-    "AI/Prompt Engineering for Generative AI/01_Foundations/Self-Attention.md",
-    "kepano-obsidian-main/Daily/2023-09-12.md",
-    "AI/Prompt Engineering for Generative AI/02_Models_Architecture/Multimodal Models.md",
-    "AI/Prompt Engineering for Generative AI/02_Models_Architecture/Anthropic Claude.md",
-    "AI/Prompt Engineering for Generative AI/00_Book_Notes/Chapter 01 - Nam Nguyen Tac Cua Prompting.md",
-    "AI/Prompt Engineering for Generative AI/02_Models_Architecture/Meta Llama.md",
-    "AI/Prompt Engineering for Generative AI/02_Models_Architecture/Google Gemini.md",
-    "AI/Prompt Engineering for Generative AI/02_Models_Architecture/GPT-4.md",
-    "AI/Prompt Engineering for Generative AI/02_Models_Architecture/Low-Rank Adaptation (LoRA).md",
-    "kepano-obsidian-main/Templates/Bases/Templates.base",
-    "kepano-obsidian-main/Templates/Bases/Trips.base",
-    "kepano-obsidian-main/Templates/Bases/Shows.base",
-    "kepano-obsidian-main/Templates/Bases/Related.base",
-    "kepano-obsidian-main/Templates/Bases/Recipes.base",
-    "kepano-obsidian-main/Templates/Bases/Ratings.base",
-    "kepano-obsidian-main/Templates/Bases/Projects.base",
-    "kepano-obsidian-main/Templates/Bases/Products.base",
-    "kepano-obsidian-main/Templates/Bases/Posts.base",
-    "kepano-obsidian-main/Attachments/out-of-control.jpg",
-    "Learning DL,ML-deprecated/Attachments/Pasted image 20250524201200.png",
-    "Learning DL,ML-deprecated/Attachments/Pasted image 20250531160320.png",
-    "Learning DL,ML-deprecated/Attachments/Pasted image 20250531162911.png"
+    "20_Areas/AI/Concepts/Retrieval Augmented Generation (RAG).md",
+    "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/03_Techniques_Strategies/Retrieval Augmented Generation (RAG).md",
+    "20_Areas/AI/Concepts/Chain of Thought.md",
+    "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/03_Techniques_Strategies/Chain of Thought.md",
+    "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/03_Techniques_Strategies/Chain of Thought (CoT).md",
+    "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/03_Techniques_Strategies/Few-Shot Learning.md",
+    "Reinforcement Learning from Human Feedback (RLHF).md",
+    "20_Areas/AI/Concepts/Few-Shot Learning.md",
+    "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/02_Models_Architecture/Google Gemini.md",
+    "20_Areas/AI/Models/Google Gemini.md",
+    "assets/documents/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library).pdf",
+    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/p423_img123.png",
+    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/p1_img1.png",
+    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/fig_1-1_How_the_response_breaks_down_into_tokens_LLMs_are_.png",
+    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/Prompt_Engineering_for_Generative_AI_Future-Proof_Inputs_for_Reliable_Al_Outputs_(James_Phoenix,_Mike_Taylor)_(Z-Library_images.md",
+    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/images_metadata.json",
+    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/fig_10-6_Gradio_user_interface_When_you_run_gradio,_you_get.png",
+    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/fig_10-5_A_seamless_collage_or_mosaic_of_diverse_cultural_e.png",
+    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/fig_10-4_Corporate_Memphis_“websites_being_linked_together”.png",
+    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/fig_10-3_Example_AB_test_results_after_manually_evaluating_.png",
+    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/fig_10-2_A_simple_thumbs-up_and_thumbs-down_rating_system_A.png",
+    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/fig_9-35_Aspect_ratios_Summary_In_this_chapter,_you_learned.png",
+    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/fig_9-34_Anime_cat_girl_with_SDXL_base_model_versus_refiner.png",
+    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)",
+    "30_Resources/Raw_Data/Roadmap_SH_Dump/subtopic/binance-smart-chain.md",
+    "assets/documents/AIO_Exercise_Book_v2025.pdf",
+    "assets/AIO_Exercise_Book_v2025.pdf",
+    "plugins/AIO_Exercise_Book_v2025.pdf",
+    "plugins/pdf_image_extractor.py",
+    "plugins/extract_for_obsidian.py",
+    "20_Areas/AI/_MOCs/Prompt Engineering MOC.md",
+    "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/01_Foundations/Latent Space.md",
+    "20_Areas/AI/Concepts/Diffusion Models.md",
+    "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/01_Foundations/Self-Attention.md",
+    "Untitled.canvas"
   ]
 }
