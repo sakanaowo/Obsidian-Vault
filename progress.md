@@ -35,3 +35,13 @@ các_bước:
   - Rewrite: Đã hoàn tất viết lại Book Note Chapter 03 theo Protocol v2.0.
   - Cleanup: Đã hoàn tất kiểm tra và xác nhận không có file trùng lặp hoặc rác phát sinh từ quy trình này.
 ---
+---
+tác vụ: Process Chapter 04 & Workflow Update - 2026-01-04
+trạng thái: completed
+nội dung: Cập nhật workflow xử lý PDF và hoàn thành Chapter 04.
+chi tiết:
+  - **New Rule:** Đã cập nhật `GEMINI.md` với quy trình sử dụng `pdf_chapter_extractor.py` cho tài liệu dài.
+  - **Extraction:** Đã tách toàn bộ PDF "Prompt Engineering..." thành 10 chapters riêng biệt.
+  - **Concepts:** Đã tạo mới các concept quan trọng: [[LangChain]], [[Function Calling]], [[Prompt Chaining]], [[Few-Shot Prompting]], [[LLM Evaluation]].
+  - **Book Note:** Đã hoàn thành [[Chapter 04 - Advanced Techniques for Text Generation with LangChain]] với đầy đủ hình ảnh minh họa và liên kết concept.
+---

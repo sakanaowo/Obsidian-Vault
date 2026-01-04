@@ -69,7 +69,10 @@ Phân biệt rõ ràng giữa "Ghi chú nguồn" và "Ghi chú khái niệm":
 
 ### PDF PROCESSING WORKFLOW
 Khi xử lý tài liệu PDF (Sách, Paper):
-1. **Image Extraction:** Sử dụng `plugins/pdf_image_extractor.py` để trích xuất hình ảnh và biểu đồ.
+1. **Chapter Extraction:** Đối với sách hoặc tài liệu dài (> 50 trang), bắt buộc sử dụng `plugins/pdf_chapter_extractor.py` để tách nhỏ file theo chương.
+   - **Command:** `python plugins/pdf_chapter_extractor.py <path/to/document.pdf>`
+   - **Output:** Thư mục `<doc_name>_chapters/` chứa các file PDF con.
+2. **Image Extraction:** Sử dụng `plugins/pdf_image_extractor.py` để trích xuất hình ảnh và biểu đồ (có thể chạy trên file gốc hoặc từng chapter).
    - **Output Rule:** Ảnh trích xuất phải được lưu vào `assets/<PDF_Name>/`.
    - **Command:** `python plugins/pdf_image_extractor.py <path/to/document.pdf> -o assets/attachment/<document's name>`
-1. **Content Integration:** Kết hợp văn bản từ PDF và hình ảnh đã trích xuất để tạo lại nội dung (Source Note/Concept Note) phong phú và trực quan.
+3. **Content Integration:** Kết hợp văn bản từ PDF (đã tách chương) và hình ảnh đã trích xuất để tạo lại nội dung (Source Note/Concept Note) phong phú và trực quan.

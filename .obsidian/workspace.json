@@ -4,164 +4,188 @@
     "type": "split",
     "children": [
       {
-        "id": "b77b14f0cc5b9278",
-        "type": "tabs",
-        "dimension": 53.100775193798455,
-        "children": [
-          {
-            "id": "5ebc2dfc4290627f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "GEMINI.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "GEMINI"
-            }
-          }
-        ]
-      },
-      {
-        "id": "9af9aa918003ce79",
+        "id": "426dae90b4826b49",
         "type": "split",
-        "dimension": 46.89922480620155,
+        "dimension": 58.99234693877551,
         "children": [
           {
-            "id": "ba581c9535727aee",
+            "id": "b77b14f0cc5b9278",
             "type": "tabs",
-            "dimension": 48.003472222222214,
             "children": [
               {
-                "id": "648f18da187ffd66",
+                "id": "5ebc2dfc4290627f",
                 "type": "leaf",
-                "pinned": true,
                 "state": {
-                  "type": "graph",
-                  "state": {},
-                  "pinned": true,
-                  "icon": "lucide-git-fork",
-                  "title": "Graph view"
+                  "type": "markdown",
+                  "state": {
+                    "file": "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/00_Book_Notes/Chapter 03 - Standard Practices for Text Generation with ChatGPT.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Chapter 03 - Standard Practices for Text Generation with ChatGPT"
+                }
+              },
+              {
+                "id": "a1792566850beea7",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "GEMINI.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "GEMINI"
                 }
               }
             ]
           },
           {
-            "id": "2c5bcf374ab27ae8",
+            "id": "90570262afd6d76c",
             "type": "tabs",
-            "dimension": 51.996527777777786,
             "children": [
               {
-                "id": "6d7455f7521f0399",
+                "id": "e46c57a3d706fede",
                 "type": "leaf",
                 "pinned": true,
                 "state": {
-                  "type": "terminal:terminal",
+                  "type": "pdf",
                   "state": {
-                    "terminal:terminal": {
-                      "cwd": null,
-                      "focus": false,
-                      "profile": {
-                        "args": [],
-                        "executable": "/bin/zsh",
-                        "name": "",
-                        "platforms": {
-                          "darwin": true,
-                          "linux": true
-                        },
-                        "pythonExecutable": "python3",
-                        "restoreHistory": false,
-                        "rightClickAction": "copyPaste",
-                        "successExitCodes": [
-                          "0",
-                          "SIGINT",
-                          "SIGTERM"
-                        ],
-                        "terminalOptions": {
-                          "cursorStyle": "underline",
-                          "fontFamily": "SpaceMono Nerd Font Mono, SpaceMono Nerd Font, monospace",
-                          "documentOverride": null
-                        },
-                        "type": "integrated",
-                        "useWin32Conhost": true
-                      },
-                      "serial": null
-                    }
+                    "file": "assets/documents/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library).pdf"
                   },
                   "pinned": true,
-                  "icon": "terminal",
-                  "title": "Terminal: Gemini - Obsidian-Vault"
-                }
-              },
-              {
-                "id": "10273e99b4d6f5cd",
-                "type": "leaf",
-                "pinned": true,
-                "state": {
-                  "type": "terminal:terminal",
-                  "state": {
-                    "terminal:terminal": {
-                      "cwd": null,
-                      "focus": false,
-                      "profile": {
-                        "args": [],
-                        "executable": "/bin/zsh",
-                        "name": "",
-                        "platforms": {
-                          "darwin": true,
-                          "linux": true
-                        },
-                        "pythonExecutable": "python3",
-                        "restoreHistory": false,
-                        "rightClickAction": "copyPaste",
-                        "successExitCodes": [
-                          "0",
-                          "SIGINT",
-                          "SIGTERM"
-                        ],
-                        "terminalOptions": {
-                          "cursorStyle": "underline",
-                          "fontFamily": "SpaceMono Nerd Font Mono, SpaceMono Nerd Font, monospace",
-                          "documentOverride": null
-                        },
-                        "type": "integrated",
-                        "useWin32Conhost": true
-                      },
-                      "serial": null
-                    }
-                  },
-                  "pinned": true,
-                  "icon": "terminal",
-                  "title": "Terminal: sakana@SakanaLaptop:~/Code/Obsidian-Vault"
-                }
-              },
-              {
-                "id": "6388cc6e823475b6",
-                "type": "leaf",
-                "state": {
-                  "type": "empty",
-                  "state": {},
-                  "icon": "lucide-file",
-                  "title": "New tab"
+                  "icon": "lucide-file-text",
+                  "title": "Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)"
                 }
               }
-            ],
-            "currentTab": 1
+            ]
           }
         ],
         "direction": "horizontal"
+      },
+      {
+        "id": "2c5bcf374ab27ae8",
+        "type": "tabs",
+        "dimension": 41.00765306122449,
+        "children": [
+          {
+            "id": "6d7455f7521f0399",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "terminal:terminal",
+              "state": {
+                "terminal:terminal": {
+                  "cwd": null,
+                  "focus": false,
+                  "profile": {
+                    "args": [],
+                    "executable": "/bin/zsh",
+                    "name": "",
+                    "platforms": {
+                      "darwin": true,
+                      "linux": true
+                    },
+                    "pythonExecutable": "python3",
+                    "restoreHistory": false,
+                    "rightClickAction": "copyPaste",
+                    "successExitCodes": [
+                      "0",
+                      "SIGINT",
+                      "SIGTERM"
+                    ],
+                    "terminalOptions": {
+                      "cursorStyle": "underline",
+                      "fontFamily": "SpaceMono Nerd Font Mono, SpaceMono Nerd Font, monospace",
+                      "documentOverride": null
+                    },
+                    "type": "integrated",
+                    "useWin32Conhost": true
+                  },
+                  "serial": null
+                }
+              },
+              "pinned": true,
+              "icon": "terminal",
+              "title": "Terminal: Gemini - Obsidian-Vault"
+            }
+          },
+          {
+            "id": "10273e99b4d6f5cd",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "terminal:terminal",
+              "state": {
+                "terminal:terminal": {
+                  "cwd": null,
+                  "focus": false,
+                  "profile": {
+                    "args": [],
+                    "executable": "/bin/zsh",
+                    "name": "",
+                    "platforms": {
+                      "darwin": true,
+                      "linux": true
+                    },
+                    "pythonExecutable": "python3",
+                    "restoreHistory": false,
+                    "rightClickAction": "copyPaste",
+                    "successExitCodes": [
+                      "0",
+                      "SIGINT",
+                      "SIGTERM"
+                    ],
+                    "terminalOptions": {
+                      "cursorStyle": "underline",
+                      "fontFamily": "SpaceMono Nerd Font Mono, SpaceMono Nerd Font, monospace",
+                      "documentOverride": null
+                    },
+                    "type": "integrated",
+                    "useWin32Conhost": true
+                  },
+                  "serial": null
+                }
+              },
+              "pinned": true,
+              "icon": "terminal",
+              "title": "Terminal: Gemini - Obsidian-Vault"
+            }
+          },
+          {
+            "id": "6388cc6e823475b6",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
+          }
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -236,7 +260,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 280.5
+    "width": 251.5
   },
   "right": {
     "id": "ae95f377b707bd71",
@@ -326,15 +350,30 @@
       "terminal:Open terminal": false
     }
   },
-  "active": "10273e99b4d6f5cd",
+  "active": "c5a7e2d7cabeccb8",
   "lastOpenFiles": [
-    "GEMINI.md",
+    "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/00_Book_Notes/Chapter 04 - Advanced Techniques for Text Generation with LangChain.md",
+    "20_Areas/AI/Concepts/LLM Evaluation.md",
+    "20_Areas/AI/Concepts/Few-Shot Prompting.md",
+    "20_Areas/AI/Concepts/Prompt Chaining.md",
+    "20_Areas/AI/Concepts/Function Calling.md",
+    "20_Areas/AI/Concepts/LangChain.md",
+    "assets/documents/Prompt_Engineering_Chapters/chapters_info.json",
+    "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_10.pdf",
+    "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_9.pdf",
+    "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_8.pdf",
+    "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_7.pdf",
+    "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_6.pdf",
+    "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_5.pdf",
+    "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_4.pdf",
+    "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_3.pdf",
+    "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_2.pdf",
     "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/00_Book_Notes/Chapter 03 - Standard Practices for Text Generation with ChatGPT.md",
+    "GEMINI.md",
+    "30_Resources/Books/NLPBook/README.md",
     "progress.md",
     "20_Areas/Data/Concepts/YAML.md",
     "20_Areas/Data/Concepts/JSON.md",
-    "20_Areas/Data/Concepts",
-    "20_Areas/Data",
     "20_Areas/AI/Concepts/Vector Databases.md",
     "20_Areas/AI/Concepts/Hallucination.md",
     "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/05_Challenges/AI Hallucination.md",
@@ -349,13 +388,9 @@
     "Reinforcement Learning from Human Feedback (RLHF).md",
     "20_Areas/AI/Concepts/Few-Shot Learning.md",
     "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/02_Models_Architecture/Google Gemini.md",
-    "20_Areas/AI/Models/Google Gemini.md",
-    "assets/documents/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library).pdf",
     "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/p423_img123.png",
     "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/p1_img1.png",
     "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/fig_1-1_How_the_response_breaks_down_into_tokens_LLMs_are_.png",
-    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/Prompt_Engineering_for_Generative_AI_Future-Proof_Inputs_for_Reliable_Al_Outputs_(James_Phoenix,_Mike_Taylor)_(Z-Library_images.md",
-    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/images_metadata.json",
     "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/fig_10-6_Gradio_user_interface_When_you_run_gradio,_you_get.png",
     "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/fig_10-5_A_seamless_collage_or_mosaic_of_diverse_cultural_e.png",
     "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/fig_10-4_Corporate_Memphis_“websites_being_linked_together”.png",
@@ -363,17 +398,6 @@
     "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/fig_10-2_A_simple_thumbs-up_and_thumbs-down_rating_system_A.png",
     "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/fig_9-35_Aspect_ratios_Summary_In_this_chapter,_you_learned.png",
     "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)/fig_9-34_Anime_cat_girl_with_SDXL_base_model_versus_refiner.png",
-    "assets/attachments/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)",
-    "30_Resources/Raw_Data/Roadmap_SH_Dump/subtopic/binance-smart-chain.md",
-    "assets/documents/AIO_Exercise_Book_v2025.pdf",
-    "assets/AIO_Exercise_Book_v2025.pdf",
-    "plugins/AIO_Exercise_Book_v2025.pdf",
-    "plugins/pdf_image_extractor.py",
-    "plugins/extract_for_obsidian.py",
-    "20_Areas/AI/_MOCs/Prompt Engineering MOC.md",
-    "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/01_Foundations/Latent Space.md",
-    "20_Areas/AI/Concepts/Diffusion Models.md",
-    "30_Resources/Books/Prompt_Engineering_Phoenix_Taylor/01_Foundations/Self-Attention.md",
     "Untitled.canvas"
   ]
 }

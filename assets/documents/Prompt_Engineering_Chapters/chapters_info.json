@@ -1,0 +1,99 @@
+{
+  "source_pdf": "assets/documents/Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library).pdf",
+  "source_name": "Prompt Engineering for Generative AI Future-Proof Inputs for Reliable Al Outputs (James Phoenix, Mike Taylor) (Z-Library)",
+  "total_pages": 423,
+  "total_chapters": 10,
+  "output_dir": "assets/documents/Prompt_Engineering_Chapters",
+  "chapters": [
+    {
+      "filename": "Prompt_Engineering_for_Generative_AI_Fut_chapter_1.pdf",
+      "path": "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_1.pdf",
+      "chapter_num": 1,
+      "title": "Chapter 1. The Five Principles of Prompting",
+      "start_page": 21,
+      "end_page": 60,
+      "page_count": 40
+    },
+    {
+      "filename": "Prompt_Engineering_for_Generative_AI_Fut_chapter_2.pdf",
+      "path": "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_2.pdf",
+      "chapter_num": 2,
+      "title": "Chapter 2. Introduction to Large Language Models for Text Generation",
+      "start_page": 61,
+      "end_page": 76,
+      "page_count": 16
+    },
+    {
+      "filename": "Prompt_Engineering_for_Generative_AI_Fut_chapter_3.pdf",
+      "path": "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_3.pdf",
+      "chapter_num": 3,
+      "title": "Chapter 3. Standard Practices for Text Generation with ChatGPT",
+      "start_page": 77,
+      "end_page": 144,
+      "page_count": 68
+    },
+    {
+      "filename": "Prompt_Engineering_for_Generative_AI_Fut_chapter_4.pdf",
+      "path": "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_4.pdf",
+      "chapter_num": 4,
+      "title": "Chapter 4. Advanced Techniques for Text Generation with LangChain",
+      "start_page": 145,
+      "end_page": 204,
+      "page_count": 60
+    },
+    {
+      "filename": "Prompt_Engineering_for_Generative_AI_Fut_chapter_5.pdf",
+      "path": "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_5.pdf",
+      "chapter_num": 5,
+      "title": "Chapter 5. Vector Databases with FAISS and Pinecone",
+      "start_page": 205,
+      "end_page": 242,
+      "page_count": 38
+    },
+    {
+      "filename": "Prompt_Engineering_for_Generative_AI_Fut_chapter_6.pdf",
+      "path": "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_6.pdf",
+      "chapter_num": 6,
+      "title": "Chapter 6. Autonomous Agents with \nMemory and Tools",
+      "start_page": 243,
+      "end_page": 286,
+      "page_count": 44
+    },
+    {
+      "filename": "Prompt_Engineering_for_Generative_AI_Fut_chapter_7.pdf",
+      "path": "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_7.pdf",
+      "chapter_num": 7,
+      "title": "Chapter 7. Introduction to Diffusion Models for \nImage Generation",
+      "start_page": 287,
+      "end_page": 302,
+      "page_count": 16
+    },
+    {
+      "filename": "Prompt_Engineering_for_Generative_AI_Fut_chapter_8.pdf",
+      "path": "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_8.pdf",
+      "chapter_num": 8,
+      "title": "Chapter 8. Standard Practices for Image Generation with Midjourney",
+      "start_page": 303,
+      "end_page": 338,
+      "page_count": 36
+    },
+    {
+      "filename": "Prompt_Engineering_for_Generative_AI_Fut_chapter_9.pdf",
+      "path": "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_9.pdf",
+      "chapter_num": 9,
+      "title": "Chapter 9. Advanced Techniques for Image Generation with Stable Diffusion",
+      "start_page": 339,
+      "end_page": 386,
+      "page_count": 48
+    },
+    {
+      "filename": "Prompt_Engineering_for_Generative_AI_Fut_chapter_10.pdf",
+      "path": "assets/documents/Prompt_Engineering_Chapters/Prompt_Engineering_for_Generative_AI_Fut_chapter_10.pdf",
+      "chapter_num": 10,
+      "title": "Chapter 10. Building AI-Powered Applications",
+      "start_page": 387,
+      "end_page": 410,
+      "page_count": 24
+    }
+  ]
+}
