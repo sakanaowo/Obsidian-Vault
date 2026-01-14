@@ -1,66 +1,52 @@
 ---
 tags:
-  - vector-database
-  - embeddings
-  - rag
-  - information-retrieval
-status: in_progress
-created: 2025-12-10
-source:
-  - Prompt Engineering for Generative AI (James Phoenix, Mike Taylor)
-  - RAG roadmap.pdf
+  - AI/Infrastructure
+  - Data/Database
+  - Concept
+aliases:
+  - Vector DB
+  - Vector Store
+created: 2026-01-04
 ---
 
-# Vector Databases (Cơ sở dữ liệu Vector)
+### Định nghĩa
 
-## Định nghĩa
+**Vector Database** là một loại cơ sở dữ liệu chuyên dụng để lưu trữ, quản lý và truy vấn các vector embedding ([[Embeddings]]). Khác với database truyền thống (SQL, NoSQL) tối ưu cho việc tìm kiếm chính xác (exact match), Vector Database được tối ưu cho **Similarity Search** (tìm kiếm tương đồng) trong không gian nhiều chiều.
 
-**Vector Databases** là một loại cơ sở dữ liệu chuyên biệt được thiết kế để lưu trữ, quản lý và truy vấn hiệu quả các [[Vector Representations]] (hay còn gọi là vector embeddings) của dữ liệu. Thay vì lưu trữ dữ liệu truyền thống theo bảng hoặc tài liệu, các cơ sở dữ liệu này tập trung vào các vector số, cho phép tìm kiếm dựa trên độ tương đồng ngữ nghĩa.
+Đây là thành phần "bộ nhớ dài hạn" (Long-term Memory) quan trọng cho các ứng dụng AI, đặc biệt là trong kiến trúc [[Retrieval Augmented Generation (RAG)]].
 
-## Vai trò trong RAG và AI
+### Tại sao cần Vector Database?
 
-Vector Databases là một thành phần cốt lõi của các hệ thống [[Retrieval Augmented Generation (RAG)]], cũng như nhiều ứng dụng AI khác.
+Việc tính toán khoảng cách (như Cosine Similarity) giữa một vector truy vấn và hàng triệu vector trong database theo cách vét cạn (Brute-force) là quá chậm. Vector Database sử dụng các thuật toán **Indexing** đặc biệt để tăng tốc độ tìm kiếm này lên gấp nhiều lần mà vẫn giữ độ chính xác chấp nhận được (Approximate Nearest Neighbor - ANN).
 
-*   **Lưu trữ Embeddings:** Chúng lưu trữ các vector embeddings đã được tạo từ văn bản, hình ảnh, âm thanh, hoặc bất kỳ loại dữ liệu nào mà [[Large Language Models]] (LLMs) có thể xử lý.
-*   **Tìm kiếm độ tương đồng (Similarity Search):** Chức năng chính của Vector Databases là tìm kiếm nhanh chóng các vector tương tự với một vector truy vấn. Các thuật toán tìm kiếm hàng xóm gần nhất (Nearest Neighbor Search) được sử dụng để xác định các mục có ý nghĩa tương tự.
-*   **Context cho LLM:** Trong RAG, khi người dùng đưa ra một câu hỏi, câu hỏi đó được chuyển đổi thành một vector truy vấn. Vector Database sau đó tìm kiếm các chunk tài liệu có vector tương tự nhất, và các chunk này được đưa trở lại làm ngữ cảnh cho LLM để tạo ra câu trả lời. Điều này giúp giảm thiểu [[Hallucination]] và cung cấp thông tin cập nhật.
+### Các thuật toán Indexing phổ biến
 
-## Cách hoạt động
+*   **HNSW (Hierarchical Navigable Small World):** Phổ biến nhất hiện nay. Tạo ra một cấu trúc đồ thị phân cấp, cho phép "nhảy cóc" nhanh chóng đến vùng dữ liệu quan trọng. Tương tự như việc tìm đường đi ngắn nhất trên bản đồ.
+*   **IVF (Inverted File Index):** Chia không gian vector thành các cụm (clusters) (như Voronoi cells). Khi tìm kiếm, chỉ cần tìm trong các cụm gần nhất thay vì toàn bộ không gian.
+*   **PQ (Product Quantization):** Nén vector để giảm dung lượng bộ nhớ, chấp nhận giảm một chút độ chính xác để đổi lấy tốc độ và khả năng lưu trữ lớn hơn.
 
-1.  **Chuyển đổi thành Vector:** Dữ liệu phi cấu trúc hoặc có cấu trúc (văn bản, hình ảnh) được chuyển đổi thành các [[Vector Representations]] (embeddings) bằng cách sử dụng các mô hình embedding chuyên biệt.
-2.  **Lập chỉ mục (Indexing):** Các vector này được lập chỉ mục trong cơ sở dữ liệu. Quá trình lập chỉ mục sử dụng các thuật toán như HNSW (Hierarchical Navigable Small World) để tổ chức các vector theo cách cho phép tìm kiếm hiệu quả theo độ tương đồng. HNSW tạo ra một cấu trúc nhiều lớp, giống như một "hệ thống đường cao tốc" cho các vector, giúp tăng tốc độ tìm kiếm mặc dù là tìm kiếm gần đúng (approximate).
-3.  **Truy vấn (Querying):** Khi có một câu hỏi hoặc yêu cầu, nó cũng được chuyển đổi thành một vector truy vấn. Cơ sở dữ liệu sử dụng vector này để tìm kiếm các vector đã lưu trữ có khoảng cách ([[Distance Metrics]]) gần nhất.
-4.  **Trả về kết quả:** Cơ sở dữ liệu trả về các vector (và siêu dữ liệu liên quan) giống nhất, sau đó có thể được sử dụng bởi LLM.
+### Phân loại công cụ: Library vs Database
 
-## Lợi ích của Vector Databases
+Chương 5 phân biệt rõ hai nhóm công cụ chính:
 
-*   **Giảm Hallucination:** Cung cấp ngữ cảnh đáng tin cậy cho LLM, ngăn chặn việc mô hình tạo ra thông tin bịa đặt.
-*   **Tiếp cận kiến thức cập nhật:** Cho phép LLM truy cập thông tin bên ngoài đã được cập nhật mà không cần huấn luyện lại toàn bộ mô hình.
-*   **Xử lý dữ liệu phi cấu trúc:** Giúp làm việc hiệu quả với các loại dữ liệu không dễ dàng phù hợp với cơ sở dữ liệu quan hệ truyền thống.
-*   **Mở rộng quy mô:** Có thể xử lý hàng tỷ vector và thực hiện tìm kiếm độ tương đồng trong thời gian thực hoặc gần thời gian thực.
-*   **Cải thiện trải nghiệm người dùng:** Cho phép các ứng dụng cung cấp thông tin liên quan và cá nhân hóa hơn.
+1.  **Vector Libraries (ví dụ: [[FAISS]]):**
+    *   **Bản chất:** Là thư viện mã nguồn mở, chạy local (in-process).
+    *   **Ưu điểm:** Cực nhanh, tối ưu hóa sâu, hỗ trợ GPU, miễn phí.
+    *   **Nhược điểm:** Dữ liệu thường lưu trong RAM (dễ mất), không có tính năng quản lý database đầy đủ (như replication, sharding), khó mở rộng (scale) nếu không tự xây dựng hạ tầng bao quanh.
 
-## Các nhà cung cấp và Thư viện phổ biến
+2.  **Vector Databases (ví dụ: [[Pinecone]], Weaviate, ChromaDB):**
+    *   **Bản chất:** Là một hệ quản trị cơ sở dữ liệu đầy đủ (thường là Cloud Service).
+    *   **Ưu điểm:** Cung cấp đầy đủ tính năng CRUD, quản lý metadata, scaling tự động, bảo mật, và độ bền dữ liệu (persistence). Dễ tích hợp vào ứng dụng production.
+    *   **Nhược điểm:** Có thể tốn chi phí và độ trễ mạng (network latency).
 
-### 1. Hosted Vector Databases (Dịch vụ đám mây)
+### Quy trình hoạt động (CRUD)
 
-*   **Pinecone:** Một trong những nhà cung cấp hàng đầu, được quản lý hoàn toàn và dễ bắt đầu sử dụng.
-*   **Weaviate:** Cung cấp tìm kiếm lai mạnh mẽ, mã nguồn mở.
-*   **Chroma:** Mã nguồn mở, dễ sử dụng, thường được dùng cho các thử nghiệm.
-*   **Milvus:** Có khả năng mở rộng cao, phổ biến trong các ứng dụng doanh nghiệp.
+1.  **Insert (Upsert):** Lưu vector cùng với ID và Metadata (ví dụ: `{"text": "Nội dung...", "source": "page_1"}`).
+2.  **Query:** Gửi vector truy vấn -> Trả về danh sách vector tương đồng nhất (Top-K) + Metadata kèm theo.
+3.  **Update/Delete:** Cập nhật hoặc xóa vector dựa trên ID. Lưu ý rằng việc update index vector phức tạp hơn nhiều so với B-Tree index truyền thống.
 
-### 2. Open Source & Tích hợp
+### Metadata Filtering (Self-Querying)
 
-*   **FAISS (Facebook AI Similarity Search):** Một thư viện mã nguồn mở của Facebook AI để tìm kiếm độ tương đồng hiệu quả và phân cụm vector. Thường được sử dụng cục bộ.
-*   **pgvector:** Một tiện ích mở rộng cho PostgreSQL, biến cơ sở dữ liệu quan hệ truyền thống thành một vector database.
-*   **Elasticsearch, Redis:** Có thể tích hợp khả năng tìm kiếm vector.
-
-## Các loại Metric khoảng cách (Distance Metrics)
-
-Khi tìm kiếm vector tương đồng, các Vector Databases sử dụng các metric khoảng cách để đo lường "sự gần gũi" giữa các vector:
-
-*   **Cosine Similarity (Độ tương đồng Cosine):** Đo góc giữa hai vector. Phổ biến nhất trong RAG, có giá trị từ -1 đến 1.
-*   **Euclidean Distance (Khoảng cách Euclidean - L2):** Đo khoảng cách đường thẳng giữa hai vector.
-*   **Dot Product (Tích vô hướng):** Liên quan đến Cosine Similarity nhưng cũng tính đến độ lớn của vector.
-
-Vector Databases là một công nghệ then chốt để xây dựng các hệ thống AI mạnh mẽ và đáng tin cậy, đặc biệt là trong các ứng dụng cần truy xuất thông tin ngữ nghĩa và tạo sinh nội dung chất lượng cao.
+Một tính năng quan trọng là **Self-Querying**: Kết hợp tìm kiếm vector với lọc theo metadata.
+*   **Ví dụ:** "Tìm các văn bản về 'AI' (Vector search) nhưng chỉ trong các tài liệu xuất bản năm '2023' (Metadata filter)".
+*   Quá trình này có thể diễn ra trước (pre-filtering) hoặc sau (post-filtering) khi tìm kiếm vector, ảnh hưởng lớn đến hiệu năng và độ chính xác.

@@ -1,0 +1,53 @@
+{
+  "source_pdf": "../Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang.pdf",
+  "chapters": [
+    {
+      "chapter": 1,
+      "start_page": 1,
+      "end_page": 24,
+      "page_count": 24
+    },
+    {
+      "chapter": 2,
+      "start_page": 25,
+      "end_page": 59,
+      "page_count": 35
+    },
+    {
+      "chapter": 3,
+      "start_page": 60,
+      "end_page": 80,
+      "page_count": 21
+    },
+    {
+      "chapter": 4,
+      "start_page": 81,
+      "end_page": 108,
+      "page_count": 28
+    },
+    {
+      "chapter": 5,
+      "start_page": 109,
+      "end_page": 147,
+      "page_count": 39
+    },
+    {
+      "chapter": 6,
+      "start_page": 148,
+      "end_page": 170,
+      "page_count": 23
+    },
+    {
+      "chapter": 7,
+      "start_page": 171,
+      "end_page": 208,
+      "page_count": 38
+    },
+    {
+      "chapter": 8,
+      "start_page": 209,
+      "end_page": 226,
+      "page_count": 18
+    }
+  ]
+}

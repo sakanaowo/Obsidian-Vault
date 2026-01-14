@@ -9,5 +9,6 @@
   "theme": "obsidian",
   "monospaceFontFamily": "SpaceMono Nerd Font Mono",
   "interfaceFontFamily": "SF Pro",
-  "textFontFamily": "SF Pro"
+  "textFontFamily": "SF Pro",
+  "baseFontSize": 18
 }

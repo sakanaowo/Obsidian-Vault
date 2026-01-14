@@ -5,14 +5,14 @@
 }
 
 .theme-dark .workspace {
-    backdrop-filter: brightness(0.3) blur(3px);
+    backdrop-filter: brightness(0.35) blur(2px);
     /* filter for dark mode */
     background-color: transparent;
 }
 
 .horizontal-main-container {
     /* below is the background image. Change it to whatever you want */
-    background: url(https://cdn.imgchest.com/files/738f44fc3923.jpeg);
+    background: url(https://cdn.imgchest.com/files/63dbd3d032f5.jpg);
     background-size: cover;
 }
 
