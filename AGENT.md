@@ -23,7 +23,7 @@ Khi viết hoặc tạo mới tài liệu, bạn phải tuân thủ các quy t�
 - **Layered Explanation Template (ELI5 → Deep):** Khi giải thích, ưu tiên cấu trúc 2 tầng:
     1) `> [!NOTE] ELI5` (2–5 câu, từ vựng tối giản, ví dụ đời thường),
     2) Phần phân tích sâu (First Principles, cơ chế, nuance, công thức nếu cần).
-- **Linking:** Khi nhắc đến khái niệm X, nếu chưa có file, hãy tạo nội dung sơ khởi cho [[X]] thay vì để link chết.
+- **Linking:** Khi nhắc đến khái niệm X, nếu chưa có file concept, hãy tạo nội dung sơ khởi cho [[X]] thay vì để link chết, và đi kèm là TODO ở cuối file concept đó để có thể tiếp tục phát triển sau này.
 
 ### WORKFLOW & PROGRESS TRACKING
 1.  **Context Check:** Trước khi thực hiện tác vụ, LUÔN tìm và đọc file `progress.md` trong thư mục hiện tại (nếu có) để nắm ngữ cảnh.
