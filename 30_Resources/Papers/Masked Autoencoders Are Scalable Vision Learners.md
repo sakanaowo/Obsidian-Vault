@@ -1,588 +1,374 @@
 ---
-type: paper
-title: Masked Autoencoders Are Scalable Vision Learners
-venue: CVPR
+title: "Masked Autoencoders Are Scalable Vision Learners"
+aliases:
+  - MAE Paper
+  - He et al. 2022
+type: source-note
+source: CVPR
 year: 2022
 authors:
   - Kaiming He
   - Xinlei Chen
   - Saining Xie
   - Yanghao Li
-  - Piotr Dollar
+  - Piotr Dollár
   - Ross Girshick
+pdf: assets/Library/7. He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022_paper.pdf
+assets_dir: assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022
+original_text: 30_Resources/Papers/Masked Autoencoders Are Scalable Vision Learners (Original).md
 tags:
-  - papers
+  - paper
   - computer-vision
   - self-supervised-learning
   - autoencoders
   - transformers
-source_pdf: assets/Library/7. He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022_paper.pdf
-assets_dir: assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022
-original_text: 30_Resources/Papers/Masked Autoencoders Are Scalable Vision Learners (Original).md
-aliases:
-  - MAE Paper
-  - Masked Autoencoders
 ---
 
-> [!NOTE] Phạm vi & nguyên tắc trình bày
-> Ghi chú này **giải thích từng đoạn** trong bài báo gốc, đối chiếu trực tiếp với văn bản tiếng Anh. Mỗi phần bao gồm: (1) **Trích dẫn gốc** (quote block), (2) **Dịch nghĩa**, và (3) **Giải thích sâu** theo chuẩn First Principles. Các khái niệm nền được liên kết tới [[Masked Autoencoders (MAE)]], [[Vision Transformers (ViT)]], [[Self-Supervised Learning (Computer Vision)]], [[Autoencoders]], [[Transformer Architecture]].
+# Tóm tắt (Abstract)
 
----
+Bài báo này chứng minh rằng **masked autoencoders (MAE)** là phương pháp học tự giám sát có khả năng mở rộng (**scalable**) cho thị giác máy tính. Cách tiếp cận MAE rất đơn giản: che ngẫu nhiên các **patch** của ảnh đầu vào và yêu cầu mô hình tái tạo lại các pixel bị thiếu.
 
-## 0. Định vị bài báo trong hệ thống tri thức
+Thiết kế dựa trên hai ý chính. Thứ nhất, tác giả xây dựng kiến trúc **encoder–decoder bất đối xứng**, trong đó encoder chỉ hoạt động trên tập patch nhìn thấy (không đưa mask token vào encoder), còn decoder nhẹ chịu trách nhiệm tái tạo ảnh gốc từ biểu diễn ẩn và các mask token. Thứ hai, việc che một tỉ lệ rất lớn ảnh đầu vào (ví dụ 75%) tạo ra một nhiệm vụ tự giám sát vừa khó vừa có ý nghĩa. Kết hợp hai thiết kế này cho phép huấn luyện mô hình lớn hiệu quả: tăng tốc huấn luyện (≥3×) và cải thiện độ chính xác. ViT-Huge "vanilla" đạt **87.8%** trên [[ImageNet]]-1K — tốt nhất trong nhóm chỉ dùng dữ liệu ImageNet-1K. Hiệu năng transfer learning vượt supervised pre-training.
 
-**Masked Autoencoders (MAE)** là phương pháp **self-supervised learning** cho thị giác máy tính, lấy cảm hứng từ thành công của **BERT** trong NLP. Ý tưởng cốt lõi: che (**mask**) một lượng lớn patch trong ảnh (75%+), yêu cầu mô hình tái tạo pixel bị thiếu. Điểm đặc biệt của MAE so với các phương pháp trước:
-
-1. **Asymmetric encoder-decoder**: Encoder chỉ xử lý patch nhìn thấy (không có mask token), decoder nhẹ chịu trách nhiệm tái tạo.
-2. **High masking ratio**: 75% patch bị loại bỏ, tạo bài toán khó buộc mô hình học cấu trúc toàn cục.
-3. **Pixel reconstruction**: Không cần tokenizer phức tạp (như dVAE trong BEiT), chỉ dùng MSE loss trên pixel.
+> [!TIP] ELI5 — Giải thích như cho trẻ 5 tuổi
+> Hãy tưởng tượng bạn đang chơi trò ghép hình, nhưng thay vì ghép từ từ, ai đó giấu đi 3/4 số mảnh ghép và hỏi bạn: "Bức tranh hoàn chỉnh trông như thế nào?". Để trả lời đúng, bạn phải hiểu bức tranh đang vẽ cái gì — có phải là con mèo, ngôi nhà, hay bầu trời? Bạn không thể chỉ nhìn một mảnh nhỏ và đoán màu của mảnh bên cạnh. MAE dạy máy tính học theo cách này: giấu phần lớn ảnh, bắt máy đoán phần còn lại.
 
 ---
 
-## 1. Abstract — Tóm tắt
+# 1. Giới thiệu (Introduction)
 
-### 1.1 Văn bản gốc
+## 1.1 Bối cảnh: Sự bùng nổ kiến trúc và nhu cầu dữ liệu
 
-> *"This paper shows that masked autoencoders (MAE) are scalable self-supervised learners for computer vision. Our MAE approach is simple: we mask random patches of the input image and reconstruct the missing pixels. It is based on two core designs. First, we develop an asymmetric encoder-decoder architecture, with an encoder that operates only on the visible subset of patches (without mask tokens), along with a lightweight decoder that reconstructs the original image from the latent representation and mask tokens. Second, we find that masking a high proportion of the input image, e.g., 75%, yields a nontrivial and meaningful self-supervisory task. Coupling these two designs enables us to train large models efficiently and effectively: we accelerate training (by 3× or more) and improve accuracy. Our scalable approach allows for learning high-capacity models that generalize well: e.g., a vanilla ViT-Huge model achieves the best accuracy (87.8%) among methods that use only ImageNet-1K data. Transfer performance in downstream tasks outperforms supervised pre-training and shows promising scaling behavior."*
+Deep learning đã chứng kiến sự bùng nổ của các kiến trúc có năng lực và dung lượng ngày càng tăng. Nhờ tiến bộ phần cứng nhanh chóng, các mô hình ngày nay dễ dàng overfit trên một triệu ảnh và bắt đầu đòi hỏi hàng trăm triệu ảnh có nhãn — thường không công khai. Nhu cầu dữ liệu này đã được giải quyết thành công trong NLP bằng **pre-training tự giám sát**. Các giải pháp dựa trên mô hình ngôn ngữ tự hồi quy như [[GPT]] và masked autoencoding như [[BERT]] có ý tưởng đơn giản: loại bỏ một phần dữ liệu và học dự đoán phần bị loại. Các phương pháp này cho phép huấn luyện mô hình NLP tổng quát với hơn 100 tỉ tham số.
 
-### 1.2 Dịch nghĩa
+Ý tưởng masked autoencoders, một dạng [[Denoising Autoencoders]] tổng quát hơn, rất tự nhiên và có thể áp dụng trong thị giác máy tính. Thực tế, các nghiên cứu liên quan trong vision đã có trước [[BERT]]. Tuy nhiên, dù có sự quan tâm đáng kể sau thành công của BERT, tiến bộ của các phương pháp autoencoding trong vision vẫn tụt hậu so với NLP.
 
-Bài báo chứng minh rằng **masked autoencoders (MAE)** là phương pháp học tự giám sát có khả năng mở rộng (**scalable**) cho thị giác máy tính. Cách tiếp cận MAE đơn giản: che ngẫu nhiên các **patch** của ảnh đầu vào và tái tạo lại các pixel bị thiếu. Thiết kế dựa trên hai ý chính:
+Tác giả đặt câu hỏi: **Điều gì khiến masked autoencoding khác nhau giữa vision và language?** Họ trả lời theo ba góc nhìn.
 
-1. **Kiến trúc encoder-decoder bất đối xứng**: encoder chỉ hoạt động trên tập patch nhìn thấy (không dùng **mask token**), còn decoder nhẹ chịu trách nhiệm tái tạo ảnh gốc từ biểu diễn ẩn và các mask token.
-2. **Tỉ lệ che cao**: che 75% ảnh đầu vào tạo ra nhiệm vụ tự giám sát vừa khó vừa có ý nghĩa.
+## 1.2 Ba khác biệt giữa Vision và Language
 
-Kết hợp hai thiết kế này cho phép huấn luyện mô hình lớn hiệu quả: tăng tốc huấn luyện (≥3×) và cải thiện độ chính xác. ViT-Huge "vanilla" đạt **87.8%** trên ImageNet-1K (tốt nhất trong nhóm chỉ dùng dữ liệu ImageNet-1K). Hiệu năng transfer learning vượt supervised pre-training và cho thấy xu hướng scale hứa hẹn.
+### (i) Khác biệt kiến trúc
 
-### 1.3 Giải thích sâu
+Cho đến gần đây, kiến trúc trong vision khác với NLP. Mạng tích chập (CNN) thống trị trong thập kỷ qua. CNN thường hoạt động trên lưới đều và không dễ tích hợp các "chỉ báo" như mask token hay [[Positional Embedding]]. Tuy nhiên, rào cản kiến trúc này đã được giải quyết với sự xuất hiện của [[Vision Transformers (ViT)]] và không còn là trở ngại.
 
-**Tại sao "scalable" là đặc tính quan trọng?**
+> [!TIP] ELI5
+> CNN giống như đọc sách bằng cách nhìn từng ô vuông nhỏ — nó không có khái niệm "vị trí trong câu". Transformer giống như đọc cả câu cùng lúc và biết từ nào ở đâu. Vì vậy, "giấu một từ" dễ làm với Transformer hơn CNN.
 
-Từ "scalable" ở đây có hai chiều nghĩa:
-- **Model scaling**: Khi tăng kích thước mô hình (nhiều layer, chiều ẩn lớn hơn), hiệu năng vẫn tăng chứ không bão hòa.
-- **Compute efficiency**: Dù mô hình lớn, ta vẫn huấn luyện được với chi phí hợp lý.
+### (ii) Khác biệt mật độ thông tin
 
-MAE đạt được cả hai nhờ cơ chế **encoder thưa** (sparse encoder):
-$$
-\text{Compute}_{\text{attention}} \propto n^2 \cdot d
-$$
+Ngôn ngữ là tín hiệu do con người tạo ra, **giàu ngữ nghĩa và nén thông tin**. Khi huấn luyện mô hình dự đoán chỉ vài từ bị thiếu trong một câu, nhiệm vụ này dường như kích thích việc hiểu ngôn ngữ sâu sắc. Ngược lại, hình ảnh là tín hiệu tự nhiên với **dư thừa không gian lớn** — ví dụ, một patch bị thiếu có thể được phục hồi từ các patch lân cận với ít sự hiểu biết về đối tượng hay cảnh. Để khắc phục điều này và khuyến khích học các đặc trưng hữu ích, tác giả cho thấy một chiến lược đơn giản hoạt động tốt: **che một tỉ lệ rất cao các patch ngẫu nhiên**.
 
-Với $n$ là số token, $d$ là hidden dimension. Nếu masking ratio $r = 0.75$, số token vào encoder chỉ còn $(1-r) \cdot N = 0.25 \cdot N$. Chi phí attention giảm còn:
-$$
-\frac{(0.25N)^2}{N^2} = \frac{1}{16}
-$$
+> [!TIP] ELI5
+> Trong một câu tiếng Việt, nếu giấu từ "mèo" trong "Con ___ đang ngủ", bạn cần hiểu ngữ cảnh để đoán. Nhưng trong ảnh, nếu giấu một mảnh nhỏ bầu trời xanh, bạn chỉ cần nhìn mảnh bên cạnh (cũng màu xanh) và tô tiếp — không cần hiểu gì cả! Vì vậy MAE giấu **75%** ảnh để máy không thể "tô màu theo lân cận".
 
-Đây là lý do MAE có thể **tăng tốc 3–4×** trong thực tế (bao gồm cả MLP, I/O, decoder).
+### (iii) Vai trò decoder khác nhau
+
+Trong vision, decoder tái tạo pixel, do đó đầu ra của nó có mức ngữ nghĩa thấp hơn các tác vụ nhận dạng thông thường. Điều này trái ngược với language, nơi decoder dự đoán các từ bị thiếu chứa thông tin ngữ nghĩa phong phú. Trong khi decoder của BERT có thể đơn giản (một MLP), tác giả phát hiện rằng trong ảnh, **thiết kế decoder đóng vai trò quan trọng** trong việc xác định mức ngữ nghĩa của biểu diễn ẩn học được.
+
+> [!TIP] ELI5
+> Trong tiếng Anh, đoán từ "cat" là đoán một khái niệm có nghĩa. Trong ảnh, đoán pixel (255, 128, 64) chỉ là đoán một con số — không mang nghĩa gì cả! Vì vậy phần "dịch ngược" (decoder) trong ảnh phải được thiết kế cẩn thận để không kéo phần học chính (encoder) xuống mức "tô màu".
 
 ---
 
-## 2. Introduction — Giới thiệu
+# 2. Các công trình liên quan (Related Work)
 
-### 2.1 Bối cảnh: Sự bùng nổ kiến trúc và nhu cầu dữ liệu
+## 2.1 Masked Language Modeling và GPT
 
-#### Văn bản gốc
+Masked language modeling (BERT) và các đối tác tự hồi quy (GPT) là các phương pháp pre-training rất thành công trong NLP. Các phương pháp này giữ lại một phần chuỗi đầu vào và huấn luyện mô hình dự đoán nội dung bị thiếu. Chúng đã cho thấy khả năng scale tuyệt vời và bằng chứng dồi dào cho thấy các biểu diễn pre-trained này tổng quát tốt cho nhiều downstream tasks.
 
-> *"Deep learning has witnessed an explosion of architectures of continuously growing capability and capacity [33, 25, 57]. Aided by the rapid gains in hardware, models today can easily overfit one million images [13] and begin to demand hundreds of millions of—often publicly inaccessible—labeled images [16]."*
+## 2.2 Autoencoding
 
-#### Dịch nghĩa
+[[Autoencoders]] là phương pháp cổ điển để học biểu diễn. Nó có một encoder ánh xạ đầu vào sang biểu diễn ẩn và một decoder tái tạo đầu vào. Ví dụ, PCA và k-means là autoencoders. [[Denoising Autoencoders]] (DAE) là một lớp autoencoders làm hỏng tín hiệu đầu vào và học tái tạo tín hiệu gốc không bị hỏng. Một loạt phương pháp có thể được coi là DAE tổng quát với các loại corruption khác nhau: che pixel, loại bỏ kênh màu, v.v. MAE là một dạng denoising autoencoding, nhưng khác với DAE cổ điển theo nhiều cách.
 
-Deep learning đã chứng kiến sự bùng nổ các kiến trúc có năng lực và dung lượng ngày càng tăng. Nhờ tiến bộ phần cứng, các mô hình ngày nay dễ dàng overfit trên một triệu ảnh và bắt đầu đòi hỏi hàng trăm triệu ảnh có nhãn — thường không công khai.
+## 2.3 Masked Image Encoding
 
-#### Giải thích sâu
+Các phương pháp masked image encoding học biểu diễn từ ảnh bị làm hỏng bằng masking. Công trình tiên phong trình bày masking như một loại nhiễu trong DAE. Context Encoder inpaint các vùng lớn bị thiếu bằng CNN. Các phương pháp gần đây dựa trên Transformer bao gồm iGPT (hoạt động trên chuỗi pixel và dự đoán pixel chưa biết), ViT paper (nghiên cứu masked patch prediction), và [[BEiT]] (dự đoán discrete tokens). Các phương pháp [[Contrastive Learning]] (SimCLR, MoCo) theo hướng khái niệm khác — mô hình hóa sự tương đồng giữa các views của ảnh.
 
-Đây là **paradox của deep learning hiện đại**: mô hình càng lớn, càng mạnh, nhưng cũng càng cần nhiều dữ liệu gán nhãn. Các tập dữ liệu như **JFT-300M** (Google, 300 triệu ảnh có nhãn) không công khai, tạo ra bất bình đẳng trong nghiên cứu. MAE giải quyết vấn đề này bằng cách học từ **ảnh không nhãn**.
-
----
-
-### 2.2 NLP đã giải quyết vấn đề này như thế nào
-
-#### Văn bản gốc
-
-> *"This appetite for data has been successfully addressed in natural language processing (NLP) by self-supervised pre-training. The solutions, based on autoregressive language modeling in GPT [47, 48, 4] and masked autoencoding in BERT [14], are conceptually simple: they remove a portion of the data and learn to predict the removed content. These methods now enable training of generalizable NLP models containing over one hundred billion parameters [4]."*
-
-#### Dịch nghĩa
-
-Nhu cầu dữ liệu này đã được giải quyết thành công trong NLP bằng **pre-training tự giám sát**. Các giải pháp dựa trên **mô hình ngôn ngữ tự hồi quy** (GPT) và **masked autoencoding** (BERT) có ý tưởng đơn giản: loại bỏ một phần dữ liệu và học dự đoán phần bị loại. Các phương pháp này cho phép huấn luyện mô hình NLP tổng quát với hơn 100 tỉ tham số.
-
-#### Giải thích sâu
-
-Cả GPT và BERT đều dựa trên nguyên lý **"giấu rồi dự đoán"** (hide and predict):
-- **GPT** (autoregressive): Dự đoán token tiếp theo dựa trên các token trước.
-- **BERT** (masked language model): Che 15% token, dự đoán token bị che.
-
-Câu hỏi đặt ra: **Tại sao cách tiếp cận tương tự chưa thành công trong vision?**
+> [!NOTE] Suy luận thêm
+> MAE đại diện cho nhánh "generative/reconstruction" trong self-supervised learning, đối lập với nhánh "contrastive". Contrastive phụ thuộc mạnh vào [[Data Augmentation]] để tạo positive pairs; MAE có thể hoạt động với augmentation tối giản.
 
 ---
 
-### 2.3 Ba khác biệt giữa Vision và Language
-
-#### 2.3.1 Khác biệt kiến trúc
-
-##### Văn bản gốc
-
-> *"(i) Until recently, architectures were different. In vision, convolutional networks [34] were dominant over the last decade [33]. Convolutions typically operate on regular grids and it is not straightforward to integrate 'indicators' such as mask tokens [14] or positional embeddings [57] into convolutional networks. This architectural gap, however, has been addressed with the introduction of Vision Transformers (ViT) [16] and should no longer present an obstacle."*
-
-##### Dịch nghĩa
-
-Cho đến gần đây, kiến trúc trong vision khác với NLP. Trong thập kỷ qua, CNN thống trị. CNN hoạt động trên lưới đều và không dễ tích hợp các "chỉ báo" như **mask token** hay **positional embedding**. Tuy nhiên, rào cản này đã được giải quyết với sự xuất hiện của **Vision Transformers (ViT)**.
-
-##### Giải thích sâu
-
-CNN có **inductive bias cố định** (locality, translation equivariance) được thiết kế vào kiến trúc. Transformer không có bias này, nhưng linh hoạt hơn — có thể thêm mask token, positional embedding như trong NLP.
-
-```
-CNN: input → conv layers → output
-     (không có khái niệm "token" rõ ràng)
-
-ViT: input → patch embedding → [CLS] token + patches → Transformer → output
-     (có thể thêm [MASK] token tự nhiên)
-```
-
----
-
-#### 2.3.2 Khác biệt mật độ thông tin
-
-##### Văn bản gốc
-
-> *"(ii) Information density is different between language and vision. Languages are human-generated signals that are highly semantic and information-dense. When training a model to predict only a few missing words per sentence, this task appears to induce sophisticated language understanding. Images, on the contrary, are natural signals with heavy spatial redundancy—e.g., a missing patch can be recovered from neighboring patches with little high-level understanding of parts, objects, and scenes."*
-
-##### Dịch nghĩa
-
-Mật độ thông tin khác nhau giữa ngôn ngữ và hình ảnh:
-- **Ngôn ngữ**: Do con người tạo ra, giàu ngữ nghĩa và nén thông tin. Che vài từ trong câu đã tạo nhiệm vụ đòi hỏi hiểu ngữ nghĩa sâu.
-- **Hình ảnh**: Tín hiệu tự nhiên với dư thừa không gian lớn. Một patch bị che có thể được phục hồi từ patch lân cận mà không cần hiểu về đối tượng/cảnh.
-
-##### Giải thích sâu
-
-Đây là **insight quan trọng nhất** của bài báo. Nếu coi ảnh như biến ngẫu nhiên $X$:
-$$
-p(X_{\text{mask}} \mid X_{\text{vis}})
-$$
-
-- **Masking ratio thấp** (như BERT 15%): $X_{\text{mask}}$ gần như được quyết định bởi $X_{\text{vis}}$ qua **interpolation cục bộ**. Mô hình có thể đạt loss thấp bằng heuristic như "điền texture lân cận".
-- **Masking ratio cao** (MAE 75%): $X_{\text{mask}}$ trở nên **thiếu thông tin thực sự**. Mô hình buộc phải học cấu trúc toàn cục (gestalt) để dự đoán hợp lý.
-
-> [!IMPORTANT] Nguyên lý cốt lõi
-> **Masking ratio cao là cách "ép" mô hình học ngữ nghĩa thông qua bài toán tái tạo pixel.** Pixel tự thân không phải đơn vị ngữ nghĩa, nhưng việc dự đoán chúng dưới che phủ lớn đòi hỏi hiểu về đối tượng/cảnh.
-
----
-
-#### 2.3.3 Vai trò decoder khác nhau
-
-##### Văn bản gốc
-
-> *"(iii) The autoencoder's decoder, which maps the latent representation back to the input, plays a different role between reconstructing text and images. In vision, the decoder reconstructs pixels, hence its output is of a lower semantic level than common recognition tasks. This is in contrast to language, where the decoder predicts missing words that contain rich semantic information. While in BERT the decoder can be trivial (an MLP) [14], we found that for images, the decoder design plays a key role in determining the semantic level of the learned latent representations."*
-
-##### Dịch nghĩa
-
-Decoder có vai trò khác nhau giữa văn bản và hình ảnh:
-- **Vision**: Decoder tái tạo pixel (mức ngữ nghĩa thấp hơn recognition tasks).
-- **Language**: Decoder dự đoán từ bị thiếu (giàu ngữ nghĩa).
-
-Trong BERT, decoder có thể đơn giản (MLP). Nhưng trong ảnh, **thiết kế decoder quyết định mức ngữ nghĩa của latent representation**.
-
-##### Giải thích sâu
-
-Nếu decoder quá yếu, encoder buộc phải gánh việc tái tạo pixel → representation thiên về chi tiết thấp tầng. Nếu decoder đủ mạnh, nó hấp thụ tính chuyên biệt tái tạo → encoder có thể học representation trừu tượng hơn.
-
-```
-Decoder yếu: Encoder → [latent chứa cả low-level details] → Decoder → pixels
-Decoder mạnh: Encoder → [latent semantic] → Decoder (gánh low-level) → pixels
-```
-
----
-
-## 3. Approach — Phương pháp
-
-### 3.1 Masking Strategy
-
-#### Văn bản gốc
-
-> *"Following ViT [16], we divide an image into regular non-overlapping patches. Then we sample a subset of patches and mask (i.e., remove) the remaining ones. Our sampling strategy is straightforward: we sample random patches without replacement, following a uniform distribution. We simply refer to this as 'random sampling'."*
-
-> *"Random sampling with a high masking ratio (i.e., the ratio of removed patches) largely eliminates redundancy, thus creating a task that cannot be easily solved by extrapolation from visible neighboring patches."*
-
-#### Dịch nghĩa
-
-Theo ViT, chia ảnh thành các patch không chồng lấp. Lấy mẫu một tập con patch và che (loại bỏ) các patch còn lại. Chiến lược lấy mẫu: **random sampling không hoàn lại** theo phân phối đều.
-
-Random sampling với masking ratio cao loại bỏ phần lớn dư thừa, tạo bài toán không thể giải đơn giản bằng ngoại suy từ patch lân cận.
-
-#### Giải thích sâu + Hình minh họa
+# 3. Phương pháp (Approach)
 
 ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/img-001.png]]
-*Figure 1 (tái tạo): Kiến trúc MAE. Trong pre-training, 75% patch bị che. Encoder chỉ xử lý patch nhìn thấy. Mask token được thêm sau encoder, và toàn bộ set được xử lý bởi decoder nhẹ để tái tạo ảnh gốc.*
+*Figure 1: Kiến trúc MAE. Trong pre-training, 75% patch bị che. Encoder chỉ xử lý patch nhìn thấy. Mask token được thêm sau encoder, và toàn bộ set được xử lý bởi decoder nhẹ để tái tạo ảnh gốc. Sau pre-training, decoder bị bỏ đi và encoder được áp dụng cho ảnh đầy đủ.*
 
-**Tại sao random sampling?**
-- **Block masking** (che vùng liên tục): Mô hình có thể inpaint theo statistics vùng lân cận.
-- **Grid masking** (giữ lại theo pattern đều): Bài toán dễ hơn, loss thấp hơn nhưng representation yếu hơn.
-- **Random masking**: Phân tán vùng thiếu trên toàn ảnh → đòi hỏi suy luận toàn cục.
+[[Masked Autoencoders (MAE)]] là một phương pháp autoencoding đơn giản tái tạo tín hiệu gốc từ quan sát bộ phận. Như tất cả autoencoders, MAE có encoder ánh xạ tín hiệu quan sát được sang biểu diễn ẩn, và decoder tái tạo tín hiệu gốc. Khác với autoencoders cổ điển, MAE sử dụng **thiết kế bất đối xứng** cho phép encoder chỉ hoạt động trên tín hiệu bộ phận đã quan sát (không có mask token) và decoder nhẹ tái tạo toàn bộ tín hiệu.
 
----
+## 3.1 Masking
 
-### 3.2 MAE Encoder
+Theo ViT, ảnh được chia thành các patch không chồng lấp đều đặn. Sau đó lấy mẫu một tập con patch và che (loại bỏ) các patch còn lại. Chiến lược lấy mẫu rất đơn giản: **lấy mẫu ngẫu nhiên các patch không hoàn lại**, theo phân phối đều — gọi là "random sampling".
 
-#### Văn bản gốc
+Random sampling với **masking ratio cao** (tỉ lệ patch bị loại) loại bỏ phần lớn dư thừa, tạo ra nhiệm vụ không thể giải quyết dễ dàng bằng ngoại suy từ các patch lân cận. Phân phối đều ngăn chặn bias tiềm năng về tâm ảnh (nhiều patch bị che gần tâm hơn). Cuối cùng, đầu vào thưa cao tạo cơ hội thiết kế encoder hiệu quả.
 
-> *"Our encoder is a ViT [16] but applied only on visible, unmasked patches. Just as in a standard ViT, our encoder embeds patches by a linear projection with added positional embeddings, and then processes the resulting set via a series of Transformer blocks. However, our encoder only operates on a small subset (e.g., 25%) of the full set. Masked patches are removed; no mask tokens are used. This allows us to train very large encoders with only a fraction of compute and memory."*
+> [!TIP] ELI5
+> Bạn có một ảnh ghép 196 mảnh (14×14). MAE giấu ngẫu nhiên 147 mảnh (75%), chỉ để lại 49 mảnh. Các mảnh được chọn ngẫu nhiên, không theo pattern — nên máy không thể "gian lận" bằng cách nhớ pattern.
 
-#### Dịch nghĩa
+## 3.2 MAE Encoder
 
-Encoder là ViT nhưng chỉ áp dụng trên patch nhìn thấy. Như ViT chuẩn, encoder nhúng patch bằng linear projection + positional embedding, rồi xử lý qua các Transformer block. Tuy nhiên, encoder chỉ xử lý 25% patch. **Patch bị che bị loại bỏ hoàn toàn; không dùng mask token.**
+Encoder là một [[Vision Transformers (ViT)]] nhưng chỉ áp dụng trên các patch nhìn thấy, không bị che. Giống ViT chuẩn, encoder nhúng các patch bằng linear projection với [[Positional Embedding]], sau đó xử lý qua các Transformer block. Tuy nhiên, encoder chỉ hoạt động trên tập con nhỏ (ví dụ 25%) của toàn bộ set. **Các patch bị che bị loại bỏ; không sử dụng mask token.** Điều này cho phép huấn luyện encoder rất lớn với chỉ một phần compute và memory.
 
-#### Giải thích sâu
+> [!TIP] ELI5
+> Encoder chỉ nhìn 49 mảnh ghép thay vì 196 mảnh. Vì [[Self-Attention]] có chi phí tăng theo bình phương số mảnh, nhìn ít hơn 4 lần nghĩa là nhanh hơn khoảng 16 lần! Đây là lý do MAE huấn luyện nhanh.
 
-> [!IMPORTANT] Tại sao không đưa mask token vào encoder?
-> Nếu encoder thấy [MASK] token trong pre-training nhưng downstream thấy ảnh đầy đủ patch → **distribution mismatch** làm giảm chất lượng transfer. MAE cố tình "ép" encoder chỉ nhìn patch thật.
+## 3.3 MAE Decoder
 
-Về mặt compute:
-- ViT-L có 24 block, mỗi block có self-attention $O(n^2)$.
-- Với 75% masking, $n$ giảm 4×, attention giảm 16×.
-- Thực tế speedup ~3-4× vì còn MLP, I/O.
+Đầu vào của decoder là **toàn bộ set tokens** gồm: (i) các patch đã encode, và (ii) mask tokens. Mỗi mask token là một vector học được, chia sẻ, chỉ ra sự hiện diện của patch cần dự đoán. [[Positional Embedding]] được thêm vào tất cả tokens trong set đầy đủ — nếu không, mask tokens sẽ không có thông tin về vị trí trong ảnh. Decoder có một loạt Transformer block khác.
 
----
+Decoder chỉ được sử dụng trong pre-training để thực hiện tái tạo ảnh — chỉ encoder được dùng để tạo biểu diễn ảnh cho recognition. Do đó, kiến trúc decoder có thể được thiết kế linh hoạt, độc lập với encoder. Thực nghiệm với decoder rất nhỏ, hẹp và nông hơn encoder. Ví dụ, decoder mặc định có **<10% computation/token** so với encoder. Với thiết kế bất đối xứng này, toàn bộ tokens chỉ được xử lý bởi decoder nhẹ, giảm đáng kể thời gian pre-training.
 
-### 3.3 MAE Decoder
+> [!TIP] ELI5
+> Encoder là "bộ não chính" — lớn và mạnh. Decoder là "bộ vẽ" — nhỏ và chỉ dùng để tô màu. Sau khi học xong, ta vứt bộ vẽ đi, chỉ giữ bộ não để làm việc thực sự (nhận dạng ảnh).
 
-#### Văn bản gốc
+## 3.4 Mục tiêu tái tạo (Reconstruction Target)
 
-> *"The input to the MAE decoder is the full set of tokens consisting of (i) encoded visible patches, and (ii) mask tokens. Each mask token [14] is a shared, learned vector that indicates the presence of a missing patch to be predicted. We add positional embeddings to all tokens in this full set; without this, mask tokens would have no information about their location in the image. The decoder has another series of Transformer blocks."*
+MAE tái tạo đầu vào bằng cách dự đoán **giá trị pixel cho mỗi patch bị che**. Mỗi phần tử trong output của decoder là một vector giá trị pixel đại diện cho một patch. Layer cuối của decoder là linear projection với số kênh output bằng số giá trị pixel trong một patch. Output được reshape thành ảnh tái tạo. Hàm loss tính [[Mean Squared Error]] (MSE) giữa ảnh tái tạo và ảnh gốc trong không gian pixel. **Loss chỉ được tính trên các patch bị che**, tương tự BERT.
 
-> *"The MAE decoder is only used during pre-training to perform the image reconstruction task (only the encoder is used to produce image representations for recognition). Therefore, the decoder architecture can be flexibly designed in a manner that is independent of the encoder design."*
+Tác giả cũng nghiên cứu biến thể với mục tiêu là **giá trị pixel đã chuẩn hóa** của mỗi patch bị che. Cụ thể, tính mean và std của tất cả pixel trong patch và dùng chúng để chuẩn hóa patch. Sử dụng pixel đã chuẩn hóa làm mục tiêu cải thiện chất lượng biểu diễn.
 
-#### Dịch nghĩa
+## 3.5 Triển khai đơn giản
 
-Input của decoder là **toàn bộ token**: (i) patch đã encode, (ii) mask token (là vector học được, chỉ ra vị trí patch cần dự đoán). Positional embedding được thêm cho tất cả token — nếu không, mask token không biết vị trí trong ảnh.
+MAE pre-training có thể triển khai hiệu quả và không yêu cầu bất kỳ sparse operation chuyên biệt nào:
 
-**Decoder chỉ dùng trong pre-training.** Khi fine-tune, chỉ giữ encoder → decoder có thể thiết kế độc lập, nhẹ hơn encoder.
+1. Tạo token cho mỗi patch đầu vào (linear projection + positional embedding)
+2. **Shuffle ngẫu nhiên** danh sách tokens
+3. **Loại bỏ phần cuối** của danh sách theo masking ratio → tập con nhỏ cho encoder
+4. Sau encoding, thêm mask tokens và **unshuffle** để align với targets
+5. Decoder xử lý danh sách đầy đủ
 
-#### Giải thích sâu
-
-Decoder mặc định có:
-- **8 block** (encoder ViT-L có 24 block)
-- **512-d** width (encoder 1024-d)
-- Chỉ chiếm **<10% FLOPs/token** so với encoder
-
-```
-Pre-training:
-  Encoder (ViT-L, 24 blocks) → latent [visible patches]
-  → Insert mask tokens → Decoder (8 blocks, 512-d) → reconstructed pixels
-
-Fine-tuning:
-  Encoder (ViT-L, 24 blocks) → latent → Classification head
-  (Decoder bị bỏ đi)
-```
+Không cần sparse operations. Triển khai đơn giản này tạo overhead không đáng kể vì shuffle/unshuffle rất nhanh.
 
 ---
 
-### 3.4 Reconstruction Target
+# 4. Thực nghiệm trên ImageNet
 
-#### Văn bản gốc
+Tác giả thực hiện **self-supervised pre-training** trên ImageNet-1K training set. Sau đó đánh giá biểu diễn với (i) **fine-tuning end-to-end** hoặc (ii) **[[Linear Probing]]**. Báo cáo top-1 validation accuracy với single 224×224 crop.
 
-> *"Our MAE reconstructs the input by predicting the pixel values for each masked patch. Each element in the decoder's output is a vector of pixel values representing a patch. The last layer of the decoder is a linear projection whose number of output channels equals the number of pixel values in a patch. The decoder's output is reshaped to form a reconstructed image. Our loss function computes the mean squared error (MSE) between the reconstructed and original images in the pixel space. We compute the loss only on masked patches, similar to BERT [14]."*
+**Baseline: ViT-Large.** ViT-L được dùng làm backbone trong ablation study. ViT-L rất lớn (lớn hơn ResNet-50 một bậc độ lớn) và có xu hướng overfit.
 
-#### Dịch nghĩa
+| Training | Accuracy |
+|----------|----------|
+| Scratch, original [16] | 76.5% |
+| Scratch, our impl. | 82.5% |
+| **Baseline MAE** | **84.9%** |
 
-MAE tái tạo ảnh bằng cách dự đoán pixel cho mỗi patch bị che. Output của decoder là vector pixel, được reshape thành ảnh. **Loss function: MSE giữa ảnh tái tạo và ảnh gốc, chỉ tính trên patch bị che** (như BERT chỉ tính loss trên token bị mask).
+Huấn luyện supervised ViT-L từ scratch không đơn giản và cần recipe tốt với regularization mạnh. Dù vậy, MAE pre-training vẫn đóng góp cải thiện lớn. Fine-tuning chỉ 50 epochs (vs 200 từ scratch).
 
-#### Giải thích sâu
+## 4.1 Các đặc tính chính
 
-$$
-\mathcal{L} = \frac{1}{|M|} \sum_{i \in M} \| \hat{x}_i - x_i \|^2
-$$
+### Masking Ratio
 
-Trong đó:
-- $M$: tập chỉ số các patch bị che
-- $\hat{x}_i$: pixel được dự đoán
-- $x_i$: pixel ground truth
+![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/img-000.png]]
+*Figure 5: Masking ratio. Tỉ lệ cao (75%) hoạt động tốt cho cả fine-tuning và linear probing.*
 
-**Tại sao chỉ tính loss trên patch bị che?**
-Paper cho biết tính loss trên toàn bộ pixel làm giảm accuracy ~0.5%. Trực giác: loss trên patch nhìn thấy là "nhiễu" không mang thông tin hữu ích — encoder đã thấy chúng rồi.
+Tỉ lệ tối ưu **cao bất ngờ — 75%** tốt cho cả linear probing và fine-tuning. Hành vi này trái ngược với BERT (masking ratio điển hình 15%) và các công trình liên quan trong vision (20-50%).
 
----
+| Masking Ratio | Fine-tuning | Linear Probing |
+|---------------|-------------|----------------|
+| 20% | 83.4% | 58.9% |
+| 50% | 85.0% | 69.9% |
+| **75%** | **84.9%** | **73.5%** |
+| 90% | 84.5% | 66.1% |
 
-### 3.5 Simple Implementation
+Mô hình suy luận các patch bị thiếu để tạo ra output khác nhau nhưng **hợp lý (plausible)**. Nó hiểu gestalt của đối tượng và cảnh — không thể đơn giản hoàn thành bằng cách kéo dài đường thẳng hoặc texture.
 
-#### Văn bản gốc
+> [!TIP] ELI5
+> Nếu giấu ít (20%), máy chỉ cần nhìn mảnh bên cạnh và tô tiếp — học được rất ít. Nếu giấu nhiều (75%), máy phải "tưởng tượng" cả bức tranh mới đoán được — học được nhiều hơn!
 
-> *"Our MAE pre-training can be implemented efficiently, and importantly, does not require any specialized sparse operations. First we generate a token for every input patch (by linear projection with an added positional embedding). Next we randomly shuffle the list of tokens and remove the last portion of the list, based on the masking ratio. This process produces a small subset of tokens for the encoder and is equivalent to sampling patches without replacement. After encoding, we append a list of mask tokens to the list of encoded patches, and unshuffle this full list (inverting the random shuffle operation) to align all tokens with their targets. The decoder is applied to this full list (with positional embeddings added)."*
+### Decoder Design
 
-#### Dịch nghĩa
-
-MAE pre-training có thể triển khai hiệu quả, **không cần sparse operations phức tạp**:
-
-1. Tạo token cho mỗi patch (linear projection + positional embedding)
-2. **Shuffle ngẫu nhiên** danh sách token
-3. **Bỏ phần cuối** theo masking ratio → tập con nhỏ cho encoder
-4. Sau encoding, thêm mask token và **unshuffle** để align với vị trí gốc
-5. Decoder xử lý full list
-
-#### Giải thích sâu
-
-Đây là **engineering trick quan trọng**:
-- Không cần sparse attention (như Longformer)
-- Shuffle + truncate là thao tác rẻ (O(N))
-- Tương thích với các deep learning framework tiêu chuẩn
-
----
-
-## 4. Experiments — Thực nghiệm
-
-### 4.1 Masking Ratio
-
-#### Văn bản gốc
-
-> *"The optimal ratios are surprisingly high. The ratio of 75% is good for both linear probing and fine-tuning. This behavior is in contrast with BERT [14], whose typical masking ratio is 15%. Our masking ratios are also much higher than those in related works [6, 16, 2] in computer vision (20% to 50%)."*
-
-#### Dịch nghĩa
-
-Tỉ lệ mask tối ưu cao bất ngờ: **75%** tốt cho cả linear probing và fine-tuning. Khác với BERT (15%) và các công trình vision trước (20-50%).
-
-#### Giải thích sâu + Kết quả
-
-| Masking Ratio | Fine-tuning Acc | Linear Probing Acc |
-|---------------|-----------------|-------------------|
-| 20%           | 83.4%           | 58.9%             |
-| 50%           | 84.9%           | 69.9%             |
-| 75%           | **84.9%**       | **73.5%**         |
-| 90%           | 84.5%           | 66.1%             |
-
-**Quan sát**: 
-- Linear probing nhạy với masking ratio hơn fine-tuning.
-- 75% là sweet spot: bài toán đủ khó để học semantic, nhưng không khó đến mức không học được.
-
----
-
-### 4.2 Decoder Design
-
-#### Văn bản gốc
-
-> *"A sufficiently deep decoder is important for linear probing. This can be explained by the gap between a pixel reconstruction task and a recognition task: the last several layers in an autoencoder are more specialized for reconstruction, but are less relevant for recognition. A reasonably deep decoder can account for the reconstruction specialization, leaving the latent representations at a more abstract level."*
-
-#### Dịch nghĩa
-
-Decoder đủ sâu quan trọng cho linear probing. Giải thích: các layer cuối autoencoder chuyên biệt cho tái tạo, không phù hợp recognition. Decoder sâu "hấp thụ" tính chuyên biệt này, để latent representation trừu tượng hơn.
-
-#### Kết quả Ablation
+**Decoder depth** (số Transformer block): Decoder đủ sâu quan trọng cho linear probing. Các layer cuối trong autoencoder chuyên biệt hơn cho reconstruction, ít liên quan đến recognition. Decoder đủ sâu có thể "hấp thụ" tính chuyên biệt này, để biểu diễn ẩn ở mức trừu tượng hơn.
 
 | Decoder Blocks | Fine-tuning | Linear Probing |
 |----------------|-------------|----------------|
-| 1              | 84.8%       | 65.5%          |
-| 4              | 84.9%       | 71.9%          |
-| 8 (default)    | 84.9%       | **73.5%**      |
-| 12             | 84.4%       | 73.3%          |
+| 1 | 84.8% | 65.5% |
+| 4 | 84.9% | 71.9% |
+| **8 (default)** | **84.9%** | **73.5%** |
+| 12 | 84.4% | 73.3% |
 
-> [!TIP] Insight
-> Fine-tuning ít nhạy với decoder depth vì encoder được update theo downstream objective. Linear probing cố định encoder → chất lượng feature phụ thuộc vào việc encoder có bị "kéo về pixel" hay không.
+**Decoder width** (số channels): 512-d là mặc định, hoạt động tốt. Decoder hẹp hơn cũng hoạt động tốt với fine-tuning. Decoder mặc định chỉ có **9% FLOPs/token** so với ViT-L.
 
----
+### Mask Token
 
-### 4.3 Mask Token in Encoder
+Một thiết kế quan trọng của MAE là **bỏ mask token trong encoder** và chỉ dùng trong decoder nhẹ.
 
-#### Văn bản gốc
+| Configuration | Fine-tuning | Linear Probing | FLOPs |
+|--------------|-------------|----------------|-------|
+| Encoder w/ [MASK] | 84.2% | 59.6% | 3.3× |
+| **Encoder w/o [MASK]** | **84.9%** | **73.5%** | **1×** |
 
-> *"If the encoder uses mask tokens, it performs worse: its accuracy drops by 14% in linear probing. In this case, there is a gap between pre-training and deploying: this encoder has a large portion of mask tokens in its input in pre-training, which does not exist in uncorrupted images. This gap may degrade accuracy in deployment."*
+Nếu encoder sử dụng mask tokens, accuracy giảm **14% trong linear probing**. Nguyên nhân: có gap giữa pre-training (encoder thấy nhiều mask token) và deployment (encoder thấy ảnh đầy đủ không có mask). Bằng cách loại bỏ mask token khỏi encoder, ta ràng buộc encoder luôn thấy patch thật.
 
-#### Dịch nghĩa
+Hơn nữa, bỏ mask token trong encoder **giảm FLOPs training 3.3×**, dẫn đến speedup wall-clock **2.8–4.1×**.
 
-Nếu encoder dùng mask token, accuracy giảm 14% trong linear probing. Nguyên nhân: **gap giữa pre-training và deployment** — encoder thấy [MASK] trong training nhưng không thấy trong inference.
+> [!TIP] ELI5
+> Nếu encoder học với nhiều "ô trống" [MASK], khi làm việc thật nó sẽ bối rối vì không còn ô trống nữa. MAE cho encoder chỉ nhìn ô thật, nên khi làm việc nó không bị "ngạc nhiên".
 
-#### Kết quả
+### Reconstruction Target
 
-| Configuration      | Fine-tuning | Linear Probing | FLOPs  |
-|-------------------|-------------|----------------|--------|
-| Encoder w/ [M]    | 84.2%       | 59.6%          | 3.3×   |
-| Encoder w/o [M]   | **84.9%**   | **73.5%**      | 1×     |
+| Target | Fine-tuning | Linear Probing |
+|--------|-------------|----------------|
+| Pixel (w/o norm) | 84.9% | 73.5% |
+| **Pixel (w/ norm)** | **85.4%** | **73.9%** |
+| PCA | 84.6% | 72.3% |
+| dVAE token | 85.3% | 71.6% |
 
----
+Sử dụng **pixel đã chuẩn hóa** (per-patch normalization) cải thiện accuracy. Normalization tăng contrast cục bộ. Dùng token từ dVAE (như BEiT) chỉ tốt hơn unnormalized pixel 0.4%, không có lợi thế so với normalized pixel. **Tokenization không cần thiết** — và dVAE cần pre-training riêng trên 250M ảnh, thêm overhead đáng kể.
 
-### 4.4 Reconstruction Target
+### Data Augmentation
 
-#### Văn bản gốc
+| Augmentation | Fine-tuning | Linear Probing |
+|--------------|-------------|----------------|
+| None (center-crop only) | 84.0% | 65.7% |
+| Crop, fixed size | 84.7% | 73.1% |
+| **Crop, random size** | **84.9%** | **73.5%** |
+| Crop + color jitter | 84.3% | 71.9% |
 
-> *"Using pixels with normalization improves accuracy. This per-patch normalization enhances the contrast locally... Both experiments suggest that the high-frequency components are useful in our method."*
+MAE hoạt động tốt với **augmentation tối giản** (chỉ crop). Color jittering **làm giảm** kết quả. Đáng ngạc nhiên, MAE vẫn hoạt động tốt **không có augmentation** — khác biệt lớn với [[Contrastive Learning]] (giảm 13-28% khi chỉ dùng crop).
 
-> *"We also compare an MAE variant that predicts tokens, the target used in BEiT [2]... This tokenization improves fine-tuning accuracy by 0.4% vs. unnormalized pixels, but has no advantage vs. normalized pixels."*
+Trong MAE, vai trò của data augmentation chủ yếu được thực hiện bởi **random masking**: mask khác nhau mỗi iteration, tạo training sample mới bất kể augmentation.
 
-#### Dịch nghĩa
-
-Dùng pixel với **per-patch normalization** cải thiện accuracy. Normalization tăng contrast cục bộ và high-frequency components hữu ích.
-
-So sánh với dVAE token (như BEiT): token chỉ tốt hơn unnormalized pixel 0.4%, không lợi thế so với normalized pixel. **Tokenization không cần thiết cho MAE.**
-
-#### Kết quả
-
-| Target              | Fine-tuning | Linear Probing |
-|--------------------|-------------|----------------|
-| Pixel (w/o norm)   | 84.9%       | 73.5%          |
-| Pixel (w/ norm)    | **85.4%**   | **73.9%**      |
-| dVAE token         | 85.3%       | 71.6%          |
-
----
-
-### 4.5 Data Augmentation
-
-#### Văn bản gốc
-
-> *"Our MAE works well using cropping-only augmentation, either fixed-size or random-size (both having random horizontal flipping). Adding color jittering degrades the results... Surprisingly, our MAE behaves decently even if using no data augmentation (only center-crop, no flipping). This property is dramatically different from contrastive learning."*
-
-#### Dịch nghĩa
-
-MAE hoạt động tốt với **augmentation tối giản** (chỉ crop). Color jittering làm giảm kết quả. MAE thậm chí hoạt động tốt **không có augmentation** — khác biệt lớn với contrastive learning (cần augmentation mạnh).
-
-#### Giải thích sâu
-
-Trong contrastive learning (SimCLR, MoCo), augmentation tạo "positive pairs" để học invariance. Nếu không có augmentation, hai view giống hệt → trivial solution.
-
-Trong MAE, **random masking đóng vai trò augmentation**: mỗi iteration có mask khác nhau, tạo training sample mới. Bài toán khó nhờ mask, không cần augmentation nặng.
-
----
-
-### 4.6 Mask Sampling Strategy
-
-#### Văn bản gốc
-
-> *"The block-wise masking strategy, proposed in [2], tends to remove large blocks. Our MAE with block-wise masking works reasonably well at a ratio of 50%, but degrades at a ratio of 75%... We also study grid-wise sampling, which regularly keeps one of every four patches. This is an easier task and has lower training loss. The reconstruction is sharper. However, the representation quality is lower."*
-
-#### Dịch nghĩa
-
-- **Block masking**: Che vùng lớn. Hoạt động OK ở 50%, kém ở 75%.
-- **Grid masking**: Giữ 1/4 patch đều đặn. Task dễ hơn, loss thấp hơn, nhưng representation yếu hơn.
-- **Random masking**: Tốt nhất, cho phép masking ratio cao và representation mạnh.
-
-#### Hình minh họa
+### Mask Sampling Strategy
 
 ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-006-054.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-006-055.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-006-056.jpg]]
-*Từ trái sang: Random 75%, Block 50%, Grid 75%. Random tạo reconstruction hợp nghĩa nhất.*
+*Figure 6: Mask sampling strategies. Trái: Random 75% (default). Giữa: Block 50%. Phải: Grid 75%.*
+
+| Strategy | Ratio | Fine-tuning | Linear Probing |
+|----------|-------|-------------|----------------|
+| **Random** | 75% | **84.9%** | **73.5%** |
+| Block | 50% | 83.9% | 72.3% |
+| Block | 75% | 82.8% | 63.9% |
+| Grid | 75% | 84.0% | 66.0% |
+
+**Random sampling hoạt động tốt nhất.** Block masking (che vùng lớn liên tục) khó hơn, reconstruction mờ hơn. Grid masking (giữ 1/4 patch đều) dễ hơn, reconstruction sắc hơn nhưng representation yếu hơn.
+
+### Training Schedule
+
+Accuracy cải thiện đều với huấn luyện dài hơn. Linear probing chưa bão hòa ngay cả ở 1600 epochs — khác với contrastive methods (MoCo v3 bão hòa ở 300 epochs). Lưu ý rằng MAE encoder chỉ thấy 25% patches/epoch, trong khi contrastive learning thấy 200% (two-crop) hoặc hơn.
 
 ---
 
-### 4.7 Comparison with Previous Results
+# 5. So sánh với các phương pháp trước
 
-#### Văn bản gốc
+## 5.1 So sánh với Self-Supervised Methods
 
-> *"For ViT-B, all methods perform closely. For ViT-L, the gaps among methods are bigger, suggesting that a challenge for bigger models is to reduce overfitting. Our MAE can scale up easily and has shown steady improvement from bigger models. We obtain 86.9% accuracy using ViT-H (224 size). By fine-tuning with a 448 size, we achieve 87.8% accuracy, using only IN1K data."*
+| Method | Pre-train Data | ViT-B | ViT-L | ViT-H | ViT-H448 |
+|--------|---------------|-------|-------|-------|----------|
+| Scratch | - | 82.3% | 82.6% | 83.1% | - |
+| DINO | IN1K | 82.8% | - | - | - |
+| MoCo v3 | IN1K | 83.2% | 84.1% | - | - |
+| BEiT | IN1K+DALLE | 83.2% | 85.2% | - | - |
+| **MAE** | IN1K | **83.6%** | **85.9%** | **86.9%** | **87.8%** |
 
-#### Kết quả so sánh
+MAE có thể **scale up dễ dàng** và cho thấy cải thiện đều từ model lớn hơn. Đạt **86.9%** với ViT-H (224), và **87.8%** khi fine-tune với 448 size — **state-of-the-art** trong các phương pháp chỉ dùng IN1K data.
 
-| Method       | Pre-train Data | ViT-B  | ViT-L  | ViT-H  | ViT-H448 |
-|--------------|---------------|--------|--------|--------|----------|
-| DINO         | IN1K          | 82.8%  | -      | -      | -        |
-| MoCo v3      | IN1K          | 83.2%  | 84.1%  | -      | -        |
-| BEiT         | IN1K+DALLE    | 83.2%  | 85.2%  | -      | -        |
-| **MAE**      | IN1K          | **83.6%** | **85.9%** | **86.9%** | **87.8%** |
+So với [[BEiT]], MAE chính xác hơn trong khi đơn giản và nhanh hơn (3.5× per epoch). MAE tái tạo pixel, trong khi BEiT dự đoán token — BEiT báo cáo giảm 1.8% khi tái tạo pixel với ViT-B.
 
-> [!IMPORTANT] Kết quả then chốt
-> MAE đạt **87.8%** trên ImageNet-1K với ViT-H448 — tốt nhất trong các phương pháp chỉ dùng IN1K data. Vượt qua cả BEiT (cần DALLE 250M images cho tokenizer) và supervised pre-training.
+## 5.2 So sánh với Supervised Pre-training
 
----
+MAE pre-training (chỉ dùng IN1K) có thể tổng quát tốt hơn: lợi ích so với training from scratch lớn hơn với model có dung lượng cao hơn. Xu hướng này tương tự JFT-300M supervised pre-training. Điều này cho thấy MAE có thể giúp **scale up model sizes**.
 
-### 4.8 Partial Fine-tuning
+## 5.3 Partial Fine-tuning
 
-#### Văn bản gốc
+Linear probing và fine-tuning results phần lớn **không tương quan**. Linear probing bỏ lỡ cơ hội khai thác các đặc trưng mạnh nhưng phi tuyến — vốn là thế mạnh của deep learning.
 
-> *"Notably, fine-tuning only one Transformer block boosts the accuracy significantly from 73.5% to 81.0%. Moreover, if we fine-tune only 'half' of the last block (i.e., its MLP sub-block), we can get 79.1%, much better than linear probing."*
+Đặc biệt, fine-tune chỉ **một Transformer block** tăng accuracy từ 73.5% lên **81.0%**. Fine-tune "nửa" block cuối (MLP sub-block) đạt 79.1% — tốt hơn nhiều linear probing.
 
-#### Dịch nghĩa
+So với MoCo v3: MoCo v3 có linear probing cao hơn, nhưng **tất cả partial fine-tuning results của MoCo v3 đều thua MAE**. MAE representations ít linearly separable hơn, nhưng là **non-linear features mạnh hơn**.
 
-Fine-tune chỉ 1 block tăng từ 73.5% lên 81.0%. Fine-tune nửa block cuối (MLP sub-block) đạt 79.1% — tốt hơn nhiều so với linear probing.
-
-#### Giải thích sâu
-
-![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/img-000.png]]
-*Figure 9: Partial fine-tuning. MAE representation mạnh hơn MoCo v3 khi tune ≥1 block, dù linear probing yếu hơn.*
-
-**Insight**: Linear separability không phải thước đo duy nhất cho representation quality. MAE học **non-linear features** mạnh hơn contrastive methods.
+> [!NOTE] Suy luận thêm
+> Linear separability không phải thước đo duy nhất cho representation quality. Linear probing không tương quan tốt với transfer learning performance.
 
 ---
 
-## 5. Transfer Learning
+# 6. Transfer Learning
 
-### 5.1 Object Detection & Segmentation (COCO)
+## 6.1 Object Detection & Segmentation (COCO)
 
-#### Kết quả
+Fine-tune Mask R-CNN end-to-end trên COCO với ViT backbone + FPN.
 
-| Method       | ViT-B APbox | ViT-L APbox | ViT-B APmask | ViT-L APmask |
-|--------------|-------------|-------------|--------------|--------------|
-| Supervised   | 47.9        | 49.3        | 42.9         | 43.9         |
-| MoCo v3      | 47.9        | 49.3        | 42.7         | 44.0         |
-| BEiT         | 49.8        | 53.3        | 44.4         | 47.1         |
-| **MAE**      | **50.3**    | **53.3**    | **44.9**     | **47.2**     |
+| Method | Pre-train Data | ViT-B APbox | ViT-L APbox | ViT-B APmask | ViT-L APmask |
+|--------|---------------|-------------|-------------|--------------|--------------|
+| Supervised | IN1K w/ labels | 47.9 | 49.3 | 42.9 | 43.9 |
+| MoCo v3 | IN1K | 47.9 | 49.3 | 42.7 | 44.0 |
+| BEiT | IN1K+DALLE | 49.8 | 53.3 | 44.4 | 47.1 |
+| **MAE** | IN1K | **50.3** | **53.3** | **44.9** | **47.2** |
 
-MAE outperforms supervised pre-training by **4.0 points** với ViT-L (53.3 vs 49.3).
+MAE outperforms supervised pre-training **4.0 points** với ViT-L (53.3 vs 49.3). Pixel-based MAE tốt hơn hoặc ngang token-based BEiT, trong khi đơn giản và nhanh hơn nhiều.
 
----
+## 6.2 Semantic Segmentation (ADE20K)
 
-### 5.2 Semantic Segmentation (ADE20K)
+UperNet trên ADE20K.
 
-| Method       | ViT-B mIoU | ViT-L mIoU |
-|--------------|------------|------------|
-| Supervised   | 47.4       | 49.9       |
-| MoCo v3      | 47.3       | 49.1       |
-| BEiT         | 47.1       | 53.3       |
-| **MAE**      | **48.1**   | **53.6**   |
+| Method | ViT-B mIoU | ViT-L mIoU |
+|--------|------------|------------|
+| Supervised | 47.4 | 49.9 |
+| MoCo v3 | 47.3 | 49.1 |
+| BEiT | 47.1 | 53.3 |
+| **MAE** | **48.1** | **53.6** |
 
-MAE outperforms supervised pre-training by **3.7 points** với ViT-L.
+MAE outperforms supervised pre-training **3.7 points** với ViT-L.
 
----
+## 6.3 Classification Tasks
 
-### 5.3 Classification Transfer
+| Dataset | ViT-B | ViT-L | ViT-H | ViT-H448 | Previous Best |
+|---------|-------|-------|-------|----------|---------------|
+| iNat 2017 | 70.5% | 75.7% | 79.3% | **83.4%** | 75.4%* |
+| iNat 2018 | 75.4% | 80.1% | 83.0% | **86.8%** | 81.2%* |
+| Places205 | 63.9% | 65.8% | 65.9% | **66.8%** | 66.0%† |
+| Places365 | 57.9% | 59.4% | 59.8% | **60.3%** | 58.0%‡ |
 
-| Dataset   | ViT-B  | ViT-L  | ViT-H  | ViT-H448 | Previous Best |
-|-----------|--------|--------|--------|----------|---------------|
-| iNat 2017 | 70.5%  | 75.7%  | 79.3%  | **83.4%**| 75.4%*        |
-| iNat 2018 | 75.4%  | 80.1%  | 83.0%  | **86.8%**| 81.2%*        |
-| Places205 | 63.9%  | 65.8%  | 65.9%  | **66.8%**| 66.0%†        |
-| Places365 | 57.9%  | 59.4%  | 59.8%  | **60.3%**| 58.0%‡        |
+*: previous best | †: pre-trained on 1B images | ‡: pre-trained on 3.5B images
 
-*: pre-trained on different data | †: pre-trained on 1B images | ‡: pre-trained on 3.5B images
+MAE cho thấy **strong scaling behavior** trên iNaturalists. Kết quả vượt previous best (được pre-train trên hàng tỉ ảnh) bằng margins lớn.
 
-> [!TIP] Scaling Behavior
-> MAE cho thấy **strong scaling**: accuracy tăng đáng kể với model lớn hơn. Trên iNaturalist, MAE vượt previous best (trained on much more data) by large margins.
+## 6.4 Pixels vs Tokens
 
----
+| Target | IN1K (ViT-B/L/H) | COCO (ViT-B/L) | ADE20K (ViT-B/L) |
+|--------|------------------|----------------|------------------|
+| Pixel (w/ norm) | 83.6/85.9/86.9 | 50.3/53.3 | 48.1/53.6 |
+| dVAE token | 83.6/85.7/86.9 | 50.3/53.2 | 48.1/53.4 |
+| **Δ (token - pixel)** | 0.0/-0.2/0.0 | 0.0/-0.1 | 0.0/-0.2 |
 
-## 6. Discussion & Conclusion
-
-### 6.1 Văn bản gốc
-
-> *"Simple algorithms that scale well are the core of deep learning. In NLP, simple self-supervised learning methods (e.g., [47, 14, 48, 4]) enable benefits from exponentially scaling models. In computer vision, practical pre-training paradigms are dominantly supervised despite progress in self-supervised learning. In this study, we observe on ImageNet and in transfer learning that an autoencoder—a simple self-supervised method similar to techniques in NLP—provides scalable benefits."*
-
-> *"On the other hand, we note that images and languages are signals of a different nature and this difference must be addressed carefully. Images are merely recorded light without a semantic decomposition into the visual analogue of words. Instead of attempting to remove objects, we remove random patches that most likely do not form a semantic segment. Likewise, our MAE reconstructs pixels, which are not semantic entities. Nevertheless, we observe... that our MAE infers complex, holistic reconstructions, suggesting it has learned numerous visual concepts, i.e., semantics."*
-
-### 6.2 Dịch nghĩa
-
-**Thuật toán đơn giản nhưng scale tốt là cốt lõi của deep learning.** Trong NLP, các phương pháp self-supervised đơn giản (GPT, BERT) mang lại lợi ích từ việc scale mô hình theo hàm mũ. Trong vision, pre-training vẫn bị supervised thống trị. Nghiên cứu này cho thấy autoencoder — phương pháp self-supervised đơn giản tương tự NLP — mang lại **scalable benefits** cho vision.
-
-Tuy nhiên, ảnh và ngôn ngữ có bản chất khác nhau. Ảnh không có phân rã ngữ nghĩa như từ. MAE che patch ngẫu nhiên (không cố xóa vật thể) và tái tạo pixel (không phải entity ngữ nghĩa). Dù vậy, MAE **suy luận được reconstruction phức tạp, toàn thể**, cho thấy nó đã học nhiều khái niệm thị giác — tức là ngữ nghĩa.
-
-### 6.3 Giải thích sâu (Suy luận thêm — đánh dấu rõ)
-
-> [!NOTE] Suy luận của tác giả ghi chú
-> MAE không cần trở thành generative model hoàn chỉnh. Mục tiêu là học latent đủ tốt để giảm lỗi có điều kiện trên patch bị che. Nhưng chính việc "điền vào thiếu" dưới che phủ cao tạo áp lực học cấu trúc **nguyên nhân–hệ quả** (bố cục/đối tượng) hơn là tương quan cục bộ.
->
-> Đây có thể giải thích tại sao MAE tạo representation mạnh cho downstream, ngay cả khi chất lượng tái tạo pixel không hoàn toàn khớp ground truth.
+**Tokenization không cần thiết** cho MAE — sự khác biệt thống kê không đáng kể.
 
 ---
 
-## 7. Ví dụ Reconstruction
+# 7. Thảo luận và Kết luận (Discussion and Conclusion)
 
-### 7.1 ImageNet Validation
+**Thuật toán đơn giản nhưng scale tốt là cốt lõi của deep learning.** Trong NLP, các phương pháp self-supervised đơn giản (GPT, BERT) mang lại lợi ích từ việc scale model theo hàm mũ. Trong vision, pre-training thực tế vẫn chủ yếu là supervised dù có tiến bộ trong self-supervised learning. Trong nghiên cứu này, tác giả quan sát trên ImageNet và transfer learning rằng autoencoder — một phương pháp self-supervised đơn giản tương tự NLP — **cung cấp lợi ích scalable**. Self-supervised learning trong vision có thể đang bắt đầu đi theo quỹ đạo tương tự NLP.
+
+Mặt khác, ảnh và ngôn ngữ là tín hiệu có bản chất khác nhau và sự khác biệt này phải được giải quyết cẩn thận. Ảnh chỉ là ánh sáng được ghi lại, không có phân rã ngữ nghĩa thành từ. Thay vì cố gắng loại bỏ đối tượng, ta loại bỏ các patch ngẫu nhiên có thể không tạo thành phân đoạn ngữ nghĩa. Tương tự, MAE tái tạo pixel — không phải thực thể ngữ nghĩa. Tuy nhiên, ta quan sát rằng MAE suy luận **các reconstruction phức tạp, toàn thể**, gợi ý rằng nó đã học nhiều khái niệm thị giác, tức là ngữ nghĩa. Tác giả giả thuyết rằng hành vi này xảy ra thông qua **biểu diễn ẩn phong phú** bên trong MAE.
+
+> [!NOTE] Suy luận thêm (quan điểm của tác giả ghi chú)
+> MAE không cần trở thành mô hình sinh ảnh hoàn chỉnh. Mục tiêu là học latent đủ tốt để giảm lỗi có điều kiện trên patch bị che. Nhưng chính việc "điền vào thiếu" dưới che phủ cao tạo áp lực học cấu trúc **nguyên nhân–hệ quả** (bố cục/đối tượng) hơn là tương quan cục bộ. Vì vậy MAE tạo representation mạnh cho downstream, ngay cả khi reconstruction pixel không hoàn toàn khớp ground truth.
+
+---
+
+# 8. Ví dụ Reconstruction
+
+## 8.1 ImageNet Validation (Masking 80%)
 
 ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-010.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-011.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-012.jpg]]
-*Masked (left) → MAE Reconstruction (middle) → Ground Truth (right). Masking ratio 80%.*
+*Từ trái sang: Masked image, MAE reconstruction, Ground truth. Chỉ 39/196 patches nhìn thấy.*
 
 ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-022.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-023.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-024.jpg]]
 *Reconstruction có thể khác ground truth nhưng "hợp nghĩa" (semantically plausible).*
 
-### 7.2 COCO Validation (Zero-shot transfer)
+## 8.2 COCO Validation (Zero-shot transfer)
 
 ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-034.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-035.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-036.jpg]]
-*MAE trained on ImageNet, applied to COCO. Model generalizes to out-of-domain images.*
+*MAE trained on ImageNet, applied to COCO images. Generalizes to out-of-domain images.*
+
+## 8.3 Higher Masking Ratios
+
+![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-037.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-038.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-039.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-040.jpg]]
+*Original → Mask 75% → Mask 85% → Mask 95%. Predictions khác nhau hợp lý, cho thấy method có thể tổng quát.*
 
 ---
 
-## 8. Tóm tắt các Contributions
+# 9. Tóm tắt các Contributions
 
 1. **High masking ratio (75%)**: Khác biệt quan trọng với BERT (15%), giải quyết vấn đề redundancy của ảnh.
 
@@ -598,17 +384,27 @@ Tuy nhiên, ảnh và ngôn ngữ có bản chất khác nhau. Ảnh không có 
 
 ---
 
-## 9. Liên kết tới các Concept Notes
+# 10. Liên kết tới các Concept Notes
 
 - [[Masked Autoencoders (MAE)]] — Concept note tổng hợp về MAE
-- [[Vision Transformers (ViT)]] — Kiến trúc encoder của MAE
-- [[Self-Supervised Learning (Computer Vision)]] — Bối cảnh rộng hơn
+- [[Vision Transformers (ViT)]] — Kiến trúc encoder
+- [[Self-Supervised Learning (Computer Vision)]] — Bối cảnh phương pháp
 - [[Autoencoders]] — Họ phương pháp gốc
+- [[Denoising Autoencoders]] — Ancestor trực tiếp
 - [[BERT]] — Nguồn cảm hứng từ NLP
+- [[GPT]] — Phương pháp autoregressive trong NLP
 - [[Contrastive Learning]] — Nhánh SSL khác (để so sánh)
+- [[BEiT]] — Phương pháp masked prediction dùng tokens
+- [[Linear Probing]] — Cách đánh giá representation
+- [[Fine-Tuning (Transfer Learning)]] — Cách đánh giá khác
+- [[Positional Embedding]] — Thành phần kỹ thuật quan trọng
+- [[Mean Squared Error]] — Loss function
+- [[ImageNet]] — Dataset và benchmark
+- [[Data Augmentation]] — So sánh với contrastive methods
+- [[Transfer Learning]] — Kết quả downstream tasks
 
 ---
 
-## 10. Nguyên văn bài báo (English)
+# 11. Nguyên văn bài báo (English)
 
 ![[30_Resources/Papers/Masked Autoencoders Are Scalable Vision Learners (Original)]]

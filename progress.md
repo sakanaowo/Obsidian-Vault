@@ -161,6 +161,12 @@ chi tiết:
   - Chuyển bản trích xuất từ `pdftotext -layout` sang `pdftotext` (không layout) để tránh lỗi hiển thị cột/dẫn tới “grid” dày đặc trong code block.
 ---
 ---
+tác vụ: Cập nhật quy tắc ELI5 trong AGENT - 2026-01-14
+nội dung: Đã cập nhật [[AGENT]] để bắt buộc “Explain Like I'm 5” cho mọi phần giải thích.
+chi tiết:
+  - Thêm chuẩn 2 tầng: `ELI5 → Deep` để vừa dễ hiểu ngay vừa đảm bảo phân tích học thuật.
+---
+---
 tác vụ: Viết lại MAE Paper Note (Comprehensive Rewrite) - 2026-01-14
 nội dung: Đã viết lại hoàn toàn [[Masked Autoencoders Are Scalable Vision Learners]] theo chuẩn "First Principles" với từng đoạn đối chứng văn bản gốc.
 chi tiết:
@@ -169,4 +175,30 @@ chi tiết:
   - Đã tích hợp hình ảnh minh họa từ `assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/` (Figure 1 architecture, reconstruction examples, mask sampling strategies).
   - Đã thêm công thức toán học để giải thích cơ chế (attention complexity, MSE loss, masking ratio effect).
   - Đã liên kết tới các Concept Notes: [[Masked Autoencoders (MAE)]], [[Vision Transformers (ViT)]], [[Self-Supervised Learning (Computer Vision)]], [[BERT]], [[Contrastive Learning]].
+---
+---
+tác vụ: Tạo Concept Notes cho MAE Paper - 2026-01-14
+nội dung: Đã tạo 10 concept notes mới để giải thích các thuật ngữ/khái niệm quan trọng trong bài MAE.
+chi tiết:
+  - [[BERT]]: Masked Language Model, so sánh với MAE (masking ratio 15% vs 75%)
+  - [[GPT]]: Autoregressive Language Model, scaling laws
+  - [[Contrastive Learning]]: SimCLR, MoCo, so sánh với MAE (discriminative vs generative)
+  - [[Denoising Autoencoders]]: Ancestor của MAE, cơ chế corruption
+  - [[BEiT]]: BERT for Vision, so sánh dVAE tokens vs pixels
+  - [[Positional Embedding]]: Sinusoidal vs Learned, vai trò trong MAE decoder
+  - [[Mean Squared Error]]: Loss function, normalized vs unnormalized pixels
+  - [[Transfer Learning]]: MAE vs supervised pre-training performance
+  - [[ImageNet]]: Dataset và benchmark, MAE state-of-the-art kết quả
+  - [[Data Augmentation]]: Tại sao MAE không cần augmentation mạnh
+---
+---
+tác vụ: Dịch toàn bộ MAE Paper với ELI5 - 2026-01-16
+nội dung: Đã viết lại hoàn toàn [[Masked Autoencoders Are Scalable Vision Learners]] theo yêu cầu dịch từng section với giải thích ELI5.
+chi tiết:
+  - Cấu trúc 11 phần chính: Abstract, Introduction, Related Work, Approach, ImageNet Experiments, Comparisons, Transfer Learning, Discussion, Reconstruction Examples, Contributions, Concept Links.
+  - Mỗi phần có dịch thuật kèm ELI5 trong `> [!TIP]` callout để giải thích cho người chưa có background.
+  - Đã tích hợp tất cả bảng ablation: Masking Ratio, Decoder Design, Mask Token, Reconstruction Target, Data Augmentation, Mask Sampling Strategy.
+  - Đã embed các hình minh họa từ `assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/` (Figure 1, 2, 3, 4, 5, 6).
+  - Đã liên kết tới 16 Concept Notes để tránh dead links và chuẩn hóa thuật ngữ.
+  - Format theo mẫu LIMA và Textbooks papers trong vault.
 ---

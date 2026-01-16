@@ -4,17 +4,39 @@
     "type": "split",
     "children": [
       {
-        "id": "a29b210319a19b1a",
+        "id": "c7bd246681508f9b",
         "type": "tabs",
         "children": [
           {
-            "id": "040f1c4e3295d5a4",
+            "id": "16bda440e3b7c16a",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "assets/Library/7. He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022_paper.pdf"
+              },
+              "icon": "lucide-file-text",
+              "title": "7. He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022_paper"
+            }
+          },
+          {
+            "id": "2456c1b4530998ef",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          },
+          {
+            "id": "90ab3efc5fbfd172",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "30_Resources/Papers/Masked Autoencoders Are Scalable Vision Learners.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -31,7 +53,8 @@
               "title": "Masked Autoencoders Are Scalable Vision Learners"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -88,7 +111,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 312.5
+    "width": 237.5
   },
   "right": {
     "id": "ae95f377b707bd71",
@@ -189,13 +212,36 @@
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
       "obsidian-git:Open Git source control": false,
-      "terminal:Open terminal": false,
       "obsidian42-brat:BRAT": false,
       "agent-client:Open agent client": false
     }
   },
-  "active": "040f1c4e3295d5a4",
+  "active": "90ab3efc5fbfd172",
   "lastOpenFiles": [
+    "20_Areas/AI/Concepts/Image Patches.md",
+    "20_Areas/AI/Concepts/Vision Transformers (ViT).md",
+    "20_Areas/AI/Concepts/Positional Embedding.md",
+    "30_Resources/Papers/Masked Autoencoders Are Scalable Vision Learners.md",
+    "TODO.md",
+    "assets/Library/7. He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022_paper.pdf",
+    "20_Areas/AI/Concepts/Autoencoders.md",
+    "20_Areas/AI/Concepts/Large Language Models.md",
+    "Learning DL,ML-deprecated/Transformer/Self-Attention.md",
+    "Learning DL,ML-deprecated/Transformer",
+    "Learning DL,ML-deprecated",
+    "20_Areas/AI/Concepts/NLP Pipeline.md",
+    "20_Areas/AI/Concepts/Lemmatization.md",
+    "20_Areas/AI/Concepts/Part-of-Speech Tagging.md",
+    "20_Areas/AI/Concepts/BERT.md",
+    "2026-01-14.md",
+    "20_Areas/AI/Concepts/Data Augmentation.md",
+    "20_Areas/AI/Concepts/ImageNet.md",
+    "20_Areas/AI/Concepts/Transfer Learning.md",
+    "20_Areas/AI/Concepts/BEiT.md",
+    "20_Areas/AI/Concepts/Mean Squared Error.md",
+    "20_Areas/AI/Concepts/Denoising Autoencoders.md",
+    "20_Areas/AI/Concepts/GPT.md",
+    "20_Areas/AI/Concepts/Contrastive Learning.md",
     "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-006-059.jpg",
     "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-006-058.jpg",
     "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-006-057.jpg",
@@ -206,42 +252,18 @@
     "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-052.jpg",
     "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-051.jpg",
     "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-050.jpg",
-    "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-049.jpg",
     "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-001-001.ppm",
     "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-001-000.ppm",
     "30_Resources/Books/Dive Into Deep Learning",
     "30_Resources/Papers/Masked Autoencoders Are Scalable Vision Learners (Original).md",
-    "30_Resources/Papers/Masked Autoencoders Are Scalable Vision Learners.md",
-    "assets/Library/7. He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022_paper.pdf",
     "20_Areas/AI/Concepts/Linear Probing.md",
-    "20_Areas/AI/Concepts/Vision Transformers (ViT).md",
     "20_Areas/AI/Concepts/Self-Supervised Learning (Computer Vision).md",
     "20_Areas/AI/Concepts/Masking Ratio.md",
     "20_Areas/AI/Concepts/Masked Autoencoders (MAE).md",
-    "20_Areas/AI/Concepts/Image Patches.md",
-    "20_Areas/AI/Concepts/Fine-Tuning (Transfer Learning).md",
-    "20_Areas/AI/Concepts/Autoencoders.md",
     "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022",
-    "TODO.md",
     "assets/Library/1. 2304.02643v1.pdf",
-    "50_PTIT/Truy xuat thong tin/TIET 1.md",
-    "30_Resources/Papers/Textbooks Are All You Need.md",
     "50_PTIT/Khai Pha Du Lieu",
-    "30_Resources/Papers/LIMA - Less Is More for Alignment.md",
-    "AGENT.md",
-    "20_Areas/AI/Concepts/Synthetic Data (LLM Training).md",
-    "20_Areas/AI/Concepts/Supervised Fine-Tuning (SFT).md",
-    "20_Areas/AI/Concepts/Superficial Alignment Hypothesis.md",
-    "20_Areas/AI/Concepts/Reinforcement Learning from Human Feedback (RLHF).md",
-    "20_Areas/AI/Concepts/Instruction Tuning.md",
-    "20_Areas/AI/Concepts/Data Curation.md",
     "assets/Library/2305.11206v1.pdf",
-    "30_Resources/Papers/Hierarchical Text-Conditional Image Generation with CLIP Latents.md",
-    "assets/Library/2306.11644v2.pdf",
-    "assets/2305.11206v1.pdf",
-    "30_Resources/Papers/High-Resolution Image Synthesis with Latent Diffusion Models.md",
-    "30_Resources/Papers/Learning Transferable Visual Models From Natural Language Supervision.md",
-    "30_Resources/Papers/Photorealistic Text-to-Image Diffusion Models with Deep Language Understanding.md",
     "Untitled.canvas"
   ]
 }
