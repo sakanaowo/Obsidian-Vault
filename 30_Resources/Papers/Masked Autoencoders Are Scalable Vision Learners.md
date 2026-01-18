@@ -245,7 +245,17 @@ Trong MAE, vai trò của data augmentation chủ yếu được thực hiện b
 
 ### Training Schedule
 
-Accuracy cải thiện đều với huấn luyện dài hơn. Linear probing chưa bão hòa ngay cả ở 1600 epochs — khác với contrastive methods (MoCo v3 bão hòa ở 300 epochs). Lưu ý rằng MAE encoder chỉ thấy 25% patches/epoch, trong khi contrastive learning thấy 200% (two-crop) hoặc hơn.
+| Epochs | Fine-tuning | Linear Probing |
+|--------|-------------|----------------|
+| 100 | 82.3% | 57.3% |
+| 200 | 83.3% | 64.4% |
+| 400 | 84.3% | 69.7% |
+| 800 | 84.9% | 73.5% |
+| 1600 | 85.1% | 75.1% |
+
+*Figure 7: Training schedules. Accuracy cải thiện đều với huấn luyện dài hơn.*
+
+Linear probing chưa bão hòa ngay cả ở 1600 epochs — khác với contrastive methods (MoCo v3 bão hòa ở 300 epochs). Lưu ý rằng MAE encoder chỉ thấy 25% patches/epoch, trong khi contrastive learning thấy 200% (two-crop) hoặc hơn.
 
 ---
 
@@ -267,11 +277,29 @@ So với [[BEiT]], MAE chính xác hơn trong khi đơn giản và nhanh hơn (3
 
 ## 5.2 So sánh với Supervised Pre-training
 
-MAE pre-training (chỉ dùng IN1K) có thể tổng quát tốt hơn: lợi ích so với training from scratch lớn hơn với model có dung lượng cao hơn. Xu hướng này tương tự JFT-300M supervised pre-training. Điều này cho thấy MAE có thể giúp **scale up model sizes**.
+| Model | Params | MAE (IN1K) | Supervised (IN1K) | Supervised (JFT-300M) |
+|-------|--------|------------|-------------------|------------------------|
+| ViT-B/16 | 86M | 83.6% | 82.3% | ~85% |
+| ViT-L/16 | 307M | 85.9% | 82.6% | 87.1% |
+| ViT-H/14 | 632M | 86.9% | 83.1% | 88.5% |
+
+*Figure 8: MAE pre-training vs supervised pre-training, evaluated by fine-tuning in ImageNet-1K. MAE có thể generalize tốt hơn: gain so với training from scratch lớn hơn với model có dung lượng cao hơn.*
+
+Xu hướng này tương tự JFT-300M supervised pre-training. Điều này cho thấy MAE có thể giúp **scale up model sizes**.
 
 ## 5.3 Partial Fine-tuning
 
 Linear probing và fine-tuning results phần lớn **không tương quan**. Linear probing bỏ lỡ cơ hội khai thác các đặc trưng mạnh nhưng phi tuyến — vốn là thế mạnh của deep learning.
+
+| # Blocks Fine-tuned | MAE | MoCo v3 |
+|---------------------|------|--------|
+| 0 (linear probing) | 73.5% | 77.6% |
+| 1 | 81.0% | 79.9% |
+| 4 | 84.2% | 81.6% |
+| 12 | 84.7% | 83.8% |
+| 24 (full) | 84.9% | 84.1% |
+
+*Figure 9: Partial fine-tuning results of ViT-L. Tuning 0 blocks = linear probing; 24 = full fine-tuning. MAE representations ít linearly separable, nhưng consistently better khi ≥1 blocks được tuned.*
 
 Đặc biệt, fine-tune chỉ **một Transformer block** tăng accuracy từ 73.5% lên **81.0%**. Fine-tune "nửa" block cuối (MLP sub-block) đạt 79.1% — tốt hơn nhiều linear probing.
 
@@ -348,23 +376,75 @@ Mặt khác, ảnh và ngôn ngữ là tín hiệu có bản chất khác nhau v
 
 # 8. Ví dụ Reconstruction
 
-## 8.1 ImageNet Validation (Masking 80%)
+## 8.1 ImageNet Validation — Figure 2 (Masking 80%)
 
+> [!NOTE] Figure 2 Caption (Paper)
+> Example results on ImageNet validation images. For each triplet, we show the masked image (left), MAE reconstruction (middle), and ground-truth (right). The masking ratio is 80%, leaving only 39 out of 196 patches.
+
+**Example 1: Bird**
 ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-010.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-011.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-012.jpg]]
-*Từ trái sang: Masked image, MAE reconstruction, Ground truth. Chỉ 39/196 patches nhìn thấy.*
 
+**Example 2: Dog**
+![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-013.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-014.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-015.jpg]]
+
+**Example 3: Lighthouse**
+![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-016.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-017.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-018.jpg]]
+
+**Example 4: Orchid**
+![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-019.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-020.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-021.jpg]]
+
+**Example 5: Portrait**
 ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-022.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-023.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-024.jpg]]
-*Reconstruction có thể khác ground truth nhưng "hợp nghĩa" (semantically plausible).*
 
-## 8.2 COCO Validation (Zero-shot transfer)
+**Example 6: Elephant**
+![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-025.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-026.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-027.jpg]]
 
+**Example 7: Lizard**
+![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-028.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-029.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-030.jpg]]
+
+**Example 8: Outdoor Scene**
+![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-031.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-032.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-002-033.jpg]]
+
+*Note: As no loss is computed on visible patches, the model output on visible patches is qualitatively worse. One can simply overlay the output with the visible patches to improve visual quality.*
+
+## 8.2 COCO Validation — Figure 3 (Zero-shot transfer)
+
+> [!NOTE] Figure 3 Caption (Paper)
+> Example results on COCO validation images, using an MAE trained on ImageNet (the same model weights as in Figure 2). Observe the reconstructions on the right-most examples, which, although different from the ground truth, are semantically plausible.
+
+**Example 1**
 ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-034.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-035.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-036.jpg]]
-*MAE trained on ImageNet, applied to COCO images. Generalizes to out-of-domain images.*
 
-## 8.3 Higher Masking Ratios
+**Example 2**
+![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-043.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-044.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-045.jpg]]
 
-![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-037.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-038.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-039.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-040.jpg]]
-*Original → Mask 75% → Mask 85% → Mask 95%. Predictions khác nhau hợp lý, cho thấy method có thể tổng quát.*
+**Example 3**
+![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-046.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-047.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-048.jpg]]
+
+**Example 4 (Semantically Plausible)**
+![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-049.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-050.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-051.jpg]]
+
+**Example 5 (Semantically Plausible)**
+![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-052.jpg]] ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-053.jpg]]
+
+*Reconstruction khác với ground truth nhưng "hợp nghĩa" (semantically plausible) — cho thấy MAE đã học semantics, không chỉ copy pixels.*
+
+## 8.3 Higher Masking Ratios — Figure 4
+
+> [!NOTE] Figure 4 Caption (Paper)
+> Reconstructions of ImageNet validation images using an MAE pre-trained with a masking ratio of 75% but applied on inputs with higher masking ratios. The predictions differ plausibly from the original images, showing that the method can generalize.
+
+**Row 1**
+| Original | Mask 75% | Mask 85% | Mask 95% |
+|----------|----------|----------|----------|
+| ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-037.jpg]] | ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-038.jpg]] | ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-039.jpg]] | ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-040.jpg]] |
+
+**Row 2**
+| Original | Mask 75% | Mask 85% | Mask 95% |
+|----------|----------|----------|----------|
+| ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-041.jpg]] | ![[assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-042.jpg]] | - | - |
+
+*Khi masking ratio tăng từ 75% → 95%, predictions vẫn plausible dù khác original — chứng minh MAE học holistic understanding, không chỉ local interpolation.*
 
 ---
 
