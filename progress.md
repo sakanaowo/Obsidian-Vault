@@ -1,4 +1,36 @@
 ---
+---
+tác vụ: Penn Treebank exercises (DailyNote) - 2026-01-20
+nội dung: Đã bổ sung đáp án Penn Treebank POS + parse tree cho [[20-01-2026]] và mở rộng cơ chế trong [[Part-of-Speech Tagging]].
+chi tiết:
+  - Gán POS tag cho từng token, xác định subject/main verb, liệt kê noun phrases.
+  - Vẽ Penn Treebank phrase-structure parse cho “Students study NLP.” và trả lời câu hỏi phân tích (relative clause/head noun/VP elements).
+  - Vẽ Penn Treebank phrase-structure parse cho câu có SBAR (relative clause) “Students who study NLP …” và phân tích NP/VP/PP/SBAR.
+  - Bổ sung cột NOTE giải thích vai trò ngữ pháp cho từng token trong bài 2.2.
+  - Đổi diagram parse tree sang `mermaid` để nhìn rõ trong Obsidian.
+  - Bổ sung bảng giải thích ≥ 8 POS tags (kèm tag không xuất hiện trong câu để đủ yêu cầu).
+  - Thêm mục “POS tagging hoạt động như thế nào? (ELI5 → Deep)” để làm rõ pipeline và mô hình (HMM/CRF/Transformer).
+---
+tác vụ: Dịch NLP Book PTIT (Chapter 2-4) - 2026-01-19
+nội dung: Đã dịch và viết lại 3 chapters của tài liệu NLP PTIT theo chuẩn Deep & Comprehensive.
+chi tiết:
+  - **Chapter 2 - POS Tagging:** [[Chapter 2]] — HMM, Viterbi Algorithm, Beam Search
+  - **Chapter 3 - Language Models:** [[Chapter 3]] — N-gram, Perplexity, Smoothing techniques
+  - **Chapter 4 - Sentiment Classification:** [[Chapter 4]] — Naive Bayes, Evaluation metrics
+  - **Concept Notes tạo mới:**
+    - [[Hidden Markov Model]], [[Viterbi Algorithm]], [[Markov Chain]]
+    - [[N-gram Language Model]], [[Perplexity]], [[Smoothing (NLP)]]
+    - [[Naive Bayes]]
+  - Tích hợp ảnh từ `assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/`
+---
+---
+tác vụ: MCP Concept Notes (AI) - 2026-01-18
+nội dung: Đã tạo cụm concept notes về [[Model Context Protocol (MCP)]] và các thành phần liên quan, kèm MOC điều hướng.
+chi tiết:
+  - Tạo mới: [[Model Context Protocol (MCP)]], [[MCP Server]], [[MCP Client]], [[MCP Resources]], [[MCP Tools]], [[MCP Transports]], [[MCP Security Model]].
+  - Tạo mới để tránh dead link và làm rõ bề mặt tấn công: [[Prompt Injection]].
+  - Tạo MOC: [[Agent Tooling & Integration MOC]] để liên kết MCP với [[Function Calling]] và [[LangChain]].
+---
 tác vụ: Clean up duplicate files - 2025-12-14
 nội dung: Đã dọn dẹp các file trùng lặp trong thư mục `30_Resources`.
 chi tiết:
