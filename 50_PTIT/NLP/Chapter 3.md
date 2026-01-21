@@ -16,33 +16,39 @@ aliases:
 # Chapter 3 — Statistical Language Models
 
 > [!NOTE] Source
-> Tài liệu gốc: `assets/Library/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang.pdf` (Chapter 3). Nội dung dưới đây là **dịch + diễn giải có phê bình** dựa trên slide; các đoạn được đánh dấu "Suy luận thêm" là phần mở rộng từ kiến thức nền.
+> Tài liệu gốc: `assets/Library/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang.pdf` (Chapter 3, slide 1-21). Nội dung dưới đây bám sát 100% cấu trúc gốc với phần ELI5 và giải thích mục đích/ứng dụng bổ sung.
 
 ---
 
-## 1. Language Model Là Gì?
+## 1. Language Model là gì?
 
 > [!NOTE] ELI5
-> Tưởng tượng bạn đang nhắn tin và điện thoại **gợi ý từ tiếp theo**. Làm sao nó biết "Tôi muốn ăn..." nên gợi ý "cơm" thay vì "ghế"? Đó là nhờ **Language Model** — một chương trình đã "đọc" hàng triệu câu và học được rằng sau "muốn ăn" thường là đồ ăn, không phải đồ vật. Language Model cho điểm "khả năng xảy ra" của các câu.
+> Tưởng tượng bạn đang nhắn tin và điện thoại **gợi ý từ tiếp theo**. Làm sao nó biết "Tôi muốn ăn..." nên gợi ý "cơm" thay vì "ghế"? Đó là nhờ **Language Model** — một chương trình đã "đọc" hàng triệu câu và học được rằng sau "muốn ăn" thường là đồ ăn.
 
-### 1.1 Định Nghĩa Formal
+### 1.1 Định nghĩa
 
-**Language Model (LM)** là một mô hình xác suất gán xác suất cho các chuỗi từ. Formally, cho một câu $W = w_1, w_2, ..., w_n$, LM ước lượng:
+[[Language Model]] (LM) là mô hình xác suất gán xác suất cho các chuỗi từ:
 
 $$P(W) = P(w_1, w_2, ..., w_n)$$
 
-**Ứng dụng trực tiếp:**
-- **Sinh văn bản:** Chọn từ tiếp theo có xác suất cao
+**Mục đích:** Đánh giá mức độ "tự nhiên" hay "likely" của một câu — câu nào có xác suất cao hơn thì tự nhiên hơn.
+
+### 1.2 Ứng dụng trực tiếp
+
 - **Speech Recognition:** Chọn transcription có $P(W)$ cao nhất từ các ứng viên acoustic
 - **Machine Translation:** Chọn bản dịch tự nhiên nhất
 - **Spelling/Grammar Correction:** So sánh $P(\text{câu gốc})$ vs $P(\text{câu sửa})$
+- **Text Generation:** Chọn từ tiếp theo có xác suất cao
 
-### 1.2 Sự Khác Biệt Với Formal Grammar
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_3/img-001.png]]
 
-**Formal grammars** (regular, context-free) đưa ra quyết định "binary": câu hợp lệ hoặc không. Trong thực tế, chúng ta cần đánh giá **mức độ** — câu nào tự nhiên hơn, fluent hơn, likely hơn.
+### 1.3 Khác biệt với Formal Grammar
 
-> *"Colorless green ideas sleep furiously"* — ngữ pháp đúng nhưng vô nghĩa
-> *"The cat sat on the mat"* — ngữ pháp đúng và tự nhiên
+**Formal grammars** (regular, context-free) đưa ra quyết định "binary": câu hợp lệ hoặc không.
+
+Trong thực tế, chúng ta cần đánh giá **mức độ**:
+- *"Colorless green ideas sleep furiously"* — ngữ pháp đúng nhưng vô nghĩa
+- *"The cat sat on the mat"* — ngữ pháp đúng và tự nhiên
 
 LM cho phép **ranking** các câu theo likelihood, thay vì chỉ accept/reject.
 
@@ -51,7 +57,7 @@ LM cho phép **ranking** các câu theo likelihood, thay vì chỉ accept/reject
 ## 2. N-gram Language Models
 
 > [!NOTE] ELI5
-> Để đoán từ tiếp theo, bạn không cần nhớ **cả câu** — chỉ cần nhớ **vài từ gần nhất**. Nếu tôi nói "Con mèo đang...", bạn đoán "ngủ" hoặc "chạy" — không cần biết 10 phút trước tôi nói gì. **N-gram model** làm đúng như vậy: dùng $N-1$ từ gần nhất để đoán từ tiếp theo.
+> Để đoán từ tiếp theo, bạn không cần nhớ **cả câu** — chỉ cần nhớ **vài từ gần nhất**. Nếu tôi nói "Con mèo đang...", bạn đoán "ngủ" hoặc "chạy" — không cần biết 10 phút trước tôi nói gì. **N-gram model** làm đúng như vậy.
 
 ### 2.1 Chain Rule và Markov Assumption
 
@@ -61,105 +67,114 @@ $$P(w_1, w_2, ..., w_n) = P(w_1) \cdot P(w_2|w_1) \cdot P(w_3|w_1,w_2) \cdots P(
 
 $$= \prod_{k=1}^{n} P(w_k | w_1, ..., w_{k-1})$$
 
-Vấn đề: số lượng context histories $w_1, ..., w_{k-1}$ tăng **theo hàm mũ** — không đủ data để ước lượng!
+**Vấn đề:** Số lượng context histories tăng **hàm mũ** — không đủ data để ước lượng!
 
-**Giải pháp: Markov Assumption (N-gram)**
+**Giải pháp: Markov Assumption**
 
-Giả định xác suất từ tiếp theo chỉ phụ thuộc vào $N-1$ từ gần nhất:
+Xác suất từ tiếp theo chỉ phụ thuộc vào $N-1$ từ gần nhất:
 
 $$P(w_k | w_1, ..., w_{k-1}) \approx P(w_k | w_{k-N+1}, ..., w_{k-1})$$
 
 ![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_3/img-003.jpg]]
 
-### 2.2 Các Loại N-gram
+### 2.2 Các loại N-gram
 
 | N | Tên | Context | Ví dụ |
 |---|-----|---------|-------|
-| 1 | Unigram | Không có context | $P(\text{phone})$ |
+| 1 | Unigram | Không context | $P(\text{phone})$ |
 | 2 | Bigram | 1 từ trước | $P(\text{phone} \mid \text{cell})$ |
 | 3 | Trigram | 2 từ trước | $P(\text{phone} \mid \text{your cell})$ |
 | 4 | 4-gram | 3 từ trước | $P(\text{phone} \mid \text{off your cell})$ |
 
 **Trade-off:**
-- **N lớn hơn:** Capture được context dài hơn, chính xác hơn về mặt ngôn ngữ
-- **N nhỏ hơn:** Ít sparse data, ước lượng robust hơn
+- **N lớn:** Capture context dài hơn, chính xác hơn
+- **N nhỏ:** Ít sparse data, ước lượng robust hơn
 
-Trong thực tế, **trigram** (N=3) là sweet spot phổ biến cho các hệ thống truyền thống.
+Trong thực tế, **trigram** (N=3) là sweet spot phổ biến.
 
-### 2.3 Ước Lượng Xác Suất: Maximum Likelihood Estimation (MLE)
+---
 
-Xác suất N-gram được ước lượng bằng **counting và normalizing**:
+## 3. Estimating Probabilities
+
+### 3.1 Maximum Likelihood Estimation (MLE)
+
+N-gram conditional probabilities được ước lượng từ raw text bằng **counting và normalizing**:
 
 **Bigram:**
 $$P(w_n | w_{n-1}) = \frac{C(w_{n-1}, w_n)}{C(w_{n-1})}$$
 
-**General N-gram:**
-$$P(w_n | w_{n-N+1}, ..., w_{n-1}) = \frac{C(w_{n-N+1}, ..., w_n)}{C(w_{n-N+1}, ..., w_{n-1})}$$
+**N-gram:**
+$$P(w_n | w_{n-N+1}^{n-1}) = \frac{C(w_{n-N+1}^n)}{C(w_{n-N+1}^{n-1})}$$
 
 Trong đó $C(\cdot)$ là count (số lần xuất hiện) trong training corpus.
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_3/img-005.jpg]]
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_3/img-005.png]]
 
-### 2.4 Xử Lý Ranh Giới Câu
+### 3.2 Xử lý ranh giới câu
 
-Để có mô hình xác suất consistent, ta thêm **special tokens**:
+Để có mô hình xác suất consistent, thêm **special tokens**:
 - `<s>`: Start-of-sentence token
 - `</s>`: End-of-sentence token
 
-Điều này cho phép mô hình học:
-- Từ nào thường bắt đầu câu: $P(w|\text{<s>})$
-- Từ nào thường kết thúc câu: $P(\text{</s>}|w)$
+**Ví dụ từ tài liệu gốc:**
 
-**Ví dụ:**
 ```
-Câu: "I want english food"
-Với bigram: "<s> I want english food </s>"
+P(<s> i want english food </s>)
+= P(i|<s>) × P(want|i) × P(english|want) × P(food|english) × P(</s>|food)
+= 0.25 × 0.33 × 0.0011 × 0.5 × 0.68 = 0.000031
 
-P(<s> I want english food </s>) 
-= P(I|<s>) × P(want|I) × P(english|want) × P(food|english) × P(</s>|food)
+P(<s> i want chinese food </s>)
+= P(i|<s>) × P(want|i) × P(chinese|want) × P(food|chinese) × P(</s>|food)
+= 0.25 × 0.33 × 0.0065 × 0.52 × 0.68 = 0.00019
 ```
+
+**Mục đích:** Special tokens cho phép mô hình học:
+- Từ nào thường bắt đầu câu: $P(w|<s>)$
+- Từ nào thường kết thúc câu: $P(</s>|w)$
 
 ![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_3/img-002.png]]
 
-### 2.5 N-gram như Generative Model
+### 3.3 Generative Model
 
-N-gram LM có thể được xem như một **probabilistic automaton** để sinh câu:
+N-gram LM có thể được xem như một **probabilistic automata** để sinh câu:
 
 ```
-1. Khởi tạo với N-1 tokens <s>
-2. Lặp:
-   a. Dựa trên N-1 từ trước đó, sample từ tiếp theo theo phân phối P(w|context)
-   b. Nếu từ được sample là </s>, dừng lại
-3. Output: chuỗi từ đã sinh
+1. Initialize sentence with N-1 <s> symbols
+2. Until </s> is generated do:
+   - Stochastically pick next word based on P(w|context)
+3. Output: generated word sequence
 ```
 
-> [!NOTE] Suy luận thêm — MLE là gì về mặt toán học?
-> MLE (Maximum Likelihood Estimation) tìm tham số mô hình $\hat{\theta}$ sao cho xác suất sinh ra dữ liệu quan sát được là lớn nhất: $\hat{\theta} = \argmax_\theta P(D|\theta)$. Với N-gram, "tham số" là các xác suất $P(w|context)$, và MLE leads đến công thức đếm ở trên.
+**MLE interpretation:** Relative frequency estimates maximize probability mà model $M$ sẽ generate training corpus $T$:
+
+$$\hat{\lambda} = \argmax_\lambda P(T | M(\lambda))$$
 
 ---
 
-## 3. Đánh Giá Language Models
+## 4. Evaluating Language Models
 
-### 3.1 Extrinsic vs Intrinsic Evaluation
+### 4.1 Extrinsic vs Intrinsic Evaluation
 
-**Extrinsic (in vivo):** Đánh giá LM qua hiệu quả của task cuối (speech recognition accuracy, translation BLEU, ...).
-- **Ưu điểm:** Realistic, đo đúng cái ta quan tâm
-- **Nhược điểm:** Tốn kém, chậm, khó isolate ảnh hưởng của LM
+**Extrinsic (in vivo):**
+- Đánh giá LM qua hiệu quả của end application (speech recognition accuracy, translation BLEU)
+- **Ưu điểm:** Realistic
+- **Nhược điểm:** Expensive, slow
 
-**Intrinsic:** Đánh giá LM trực tiếp qua khả năng "fit" test data.
-- **Ưu điểm:** Nhanh, rẻ, có thể iterate nhanh
-- **Nhược điểm:** Không đảm bảo correlate với downstream task
+**Intrinsic:**
+- Đánh giá LM trực tiếp qua khả năng "fit" test data
+- **Ưu điểm:** Faster, cheaper
+- **Nhược điểm:** May not correlate with extrinsic task
 
-**Best practice:** Verify intrinsic metric correlate với extrinsic ít nhất một lần, rồi dùng intrinsic để phát triển.
+**Best practice:** Verify intrinsic metric correlates với extrinsic ít nhất một lần, rồi dùng intrinsic để phát triển.
 
-### 3.2 Perplexity: Metric Intrinsic Chuẩn
+### 4.2 Perplexity
 
-[[Perplexity]] đo **trung bình geometric của inverse probability** mà model gán cho test corpus:
+> [!NOTE] ELI5
+> Perplexity đo "sự bất ngờ" của mô hình khi đọc văn bản mới. Nếu mô hình "hiểu" ngôn ngữ tốt, nó sẽ ít "ngạc nhiên" khi thấy các câu thông thường → perplexity thấp.
+
+[[Perplexity]] đo mức độ "fit" của model với test data:
 
 $$PP(W) = P(w_1, w_2, ..., w_N)^{-\frac{1}{N}} = \sqrt[N]{\frac{1}{P(w_1, w_2, ..., w_N)}}$$
-
-Hoặc tương đương:
-$$PP(W) = \sqrt[N]{\prod_{i=1}^{N} \frac{1}{P(w_i | w_1, ..., w_{i-1})}}$$
 
 **Diễn giải:**
 - Perplexity = **weighted average branching factor**: trung bình mô hình phải "chọn" giữa bao nhiêu từ tại mỗi vị trí
@@ -167,7 +182,7 @@ $$PP(W) = \sqrt[N]{\prod_{i=1}^{N} \frac{1}{P(w_i | w_1, ..., w_{i-1})}}$$
 
 ![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_3/img-004.png]]
 
-**Ví dụ thực nghiệm (WSJ corpus):**
+**Ví dụ thực nghiệm từ tài liệu gốc (WSJ corpus):**
 
 | Model | Perplexity |
 |-------|------------|
@@ -175,31 +190,32 @@ $$PP(W) = \sqrt[N]{\prod_{i=1}^{N} \frac{1}{P(w_i | w_1, ..., w_{i-1})}}$$
 | Bigram | 170 |
 | Trigram | 109 |
 
-Trigram tốt hơn bigram, bigram tốt hơn unigram — phù hợp với trực giác rằng context giúp dự đoán.
+**Mục đích:** Trigram tốt hơn bigram, bigram tốt hơn unigram — context giúp dự đoán tốt hơn.
 
-> [!NOTE] Suy luận thêm — Perplexity và Entropy
+> [!NOTE] Mối quan hệ với Entropy
 > Perplexity liên hệ với [[Entropy (Information Theory)]]:
 > $$PP = 2^{H(W)}$$
-> Trong đó $H(W)$ là cross-entropy giữa true distribution và model. Perplexity 109 tương đương entropy ~6.77 bits/word.
+> Trong đó $H(W)$ là cross-entropy. Perplexity 109 ≈ entropy ~6.77 bits/word.
 
 ---
 
-## 4. Generalization: Bài Toán Cốt Lõi
+## 5. Generalization
 
 > [!NOTE] ELI5
-> Nếu bạn chỉ học thuộc lòng 100 câu, bạn sẽ nói tốt 100 câu đó nhưng **không biết nói câu mới**. Mô hình tốt phải **generalize** — học từ dữ liệu cũ để xử lý dữ liệu mới chưa từng thấy. Đây là thách thức lớn nhất của Machine Learning.
+> Nếu bạn chỉ học thuộc lòng 100 câu, bạn sẽ nói tốt 100 câu đó nhưng **không biết nói câu mới**. Mô hình tốt phải **generalize** — học từ dữ liệu cũ để xử lý dữ liệu mới.
 
-### 4.1 Overfitting và Underfitting
+### 5.1 Định nghĩa
 
-**Overfitting:** Model quá phức tạp, "nhớ" training data nhưng không generalize.
-- Dấu hiệu: Train perplexity rất thấp, test perplexity cao
-- N-gram: N quá lớn → nhiều context không bao giờ xuất hiện trong test
+**Generalization** trong Machine Learning là khả năng của mô hình perform well trên **new, unseen data**.
 
-**Underfitting:** Model quá đơn giản, không capture được patterns.
-- Dấu hiệu: Cả train và test perplexity đều cao
-- N-gram: Unigram bỏ qua mọi context → poor predictions
+**Factors ảnh hưởng:**
+- Data quality và quantity
+- Model complexity và regularization
+- Hyperparameters
 
-### 4.2 Bias-Variance Trade-off
+### 5.2 Balancing Bias and Variance
+
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_3/img-000.jpg]]
 
 | Aspect | High Bias (Underfitting) | High Variance (Overfitting) |
 |--------|--------------------------|----------------------------|
@@ -210,42 +226,44 @@ Trigram tốt hơn bigram, bigram tốt hơn unigram — phù hợp với trực
 
 **Goal:** Tìm sweet spot với cả bias và variance đều acceptable.
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_3/img-000.jpg]]
+### 5.3 Strategies
+
+- **Cross-Validation:** Chia data thành train, validation, test sets
+- **Transfer Learning:** Sử dụng pre-trained models, adapt với less data
 
 ---
 
-## 5. Smoothing: Giải Quyết Zero Probabilities
+## 6. Smoothing
 
 > [!NOTE] ELI5
-> Giả sử bạn chưa bao giờ thấy cụm "unicorn pizza" trong sách. Điều đó không có nghĩa là "unicorn pizza" **không thể tồn tại** — chỉ là bạn chưa gặp. **Smoothing** là cách "dành chỗ" một chút xác suất cho những thứ chưa thấy, để model không nói "impossible" với những gì nó chưa biết.
+> Giả sử bạn chưa bao giờ thấy cụm "unicorn pizza" trong sách. Điều đó không có nghĩa là "unicorn pizza" **không thể tồn tại**. **Smoothing** là cách "dành chỗ" một chút xác suất cho những thứ chưa thấy.
 
-### 5.1 Vấn Đề Zero Probability
+### 6.1 Vấn đề Zero Probability
 
-Với MLE thuần túy, nếu N-gram $(w_{n-N+1}, ..., w_n)$ không xuất hiện trong training:
+Với MLE thuần túy, nếu N-gram không xuất hiện trong training:
 
-$$P(w_n | w_{n-N+1}, ..., w_{n-1}) = 0$$
+$$P(w_n | context) = 0$$
 
 **Hậu quả:**
 - Xác suất của cả câu = 0 (vì là tích)
 - Perplexity = ∞
 - Model "từ chối" mọi câu có N-gram unseen
 
-Vì **số lượng N-gram khả dĩ là combinatorial**, phần lớn N-grams sẽ **không xuất hiện** trong training dù training data lớn.
+**Vấn đề:** Vì số lượng N-gram khả dĩ là **combinatorial**, phần lớn N-grams sẽ **không xuất hiện** trong training dù training data lớn.
 
-### 5.2 Laplace (Add-One) Smoothing
+### 6.2 Laplace (Add-One) Smoothing
 
-Ý tưởng: "Hallucinate" rằng mỗi N-gram xuất hiện thêm 1 lần.
+**Ý tưởng:** "Hallucinate" rằng mỗi N-gram xuất hiện thêm 1 lần.
 
-**Công thức (Bigram):**
 $$P_{Laplace}(w_n | w_{n-1}) = \frac{C(w_{n-1}, w_n) + 1}{C(w_{n-1}) + V}$$
 
-Trong đó $V$ là vocabulary size (số từ distinct).
+Trong đó $V$ là vocabulary size.
 
-**Ưu điểm:** Đơn giản, không có zero probabilities
+**Ưu điểm:** Đơn giản, không zero probabilities
 
-**Nhược điểm:** Reassign **quá nhiều** probability mass cho unseen events, làm model quá "phẳng".
+**Nhược điểm:** Reassign **quá nhiều** probability mass cho unseen events
 
-### 5.3 Add-k Smoothing
+### 6.3 Add-k Smoothing
 
 Thay vì add 1, add một giá trị nhỏ hơn $k < 1$:
 
@@ -253,93 +271,114 @@ $$P_{Add-k}(w_n | w_{n-1}) = \frac{C(w_{n-1}, w_n) + k}{C(w_{n-1}) + k \cdot V}$
 
 **$k$ được chọn** bằng cách optimize trên development set.
 
-**Ứng dụng:** Add-k hiệu quả cho text classification, nhưng vẫn có vấn đề cho language modeling.
+**Ứng dụng:** Add-k hiệu quả cho text classification, nhưng vẫn có limitations cho language modeling.
 
-### 5.4 Backoff và Interpolation
+### 6.4 Advanced Smoothing Techniques
 
-**Intuition:** Nếu không có đủ evidence cho N-gram, "fall back" về (N-1)-gram.
+Nhiều kỹ thuật nâng cao đã được phát triển:
 
-**Backoff (Katz Backoff):**
-- Nếu $C(w_{n-2}, w_{n-1}, w_n) > 0$: dùng trigram probability (có discount)
-- Nếu không: backoff về bigram $P(w_n | w_{n-1})$
-- Nếu vẫn không: backoff về unigram $P(w_n)$
-
-**Interpolation:**
-Kết hợp các N-gram levels với weights:
-
-$$P_{interp}(w_n | w_{n-2}, w_{n-1}) = \lambda_3 \cdot P_{tri} + \lambda_2 \cdot P_{bi} + \lambda_1 \cdot P_{uni}$$
-
-với $\lambda_1 + \lambda_2 + \lambda_3 = 1$.
-
-Weights $\lambda$ được learn trên held-out data.
-
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_3/img-001.png]]
-
-### 5.5 Advanced Smoothing Techniques
-
-- **Good-Turing:** Ước lượng xác suất của unseen N-grams dựa trên frequency of frequencies
-- **Kneser-Ney:** State-of-the-art cho N-gram LM, sử dụng **continuation probability** — từ xuất hiện trong bao nhiêu context khác nhau
-- **Modified Kneser-Ney:** Kneser-Ney với discount values khác nhau cho các frequency bands
-
-> [!NOTE] Suy luận thêm — Tại sao Kneser-Ney hiệu quả?
-> Kneser-Ney dùng **continuation count** thay vì raw count cho lower-order models. Ví dụ: "Francisco" xuất hiện nhiều nhưng gần như luôn sau "San", nên unigram probability của nó không nên cao. Continuation count đo "từ này xuất hiện trong bao nhiêu contexts khác nhau", better reflect actual generality.
+- **Good-Turing:** Ước lượng xác suất của unseen events dựa trên frequency of frequencies
+- **Interpolation:** Kết hợp các N-gram levels
+- **Backoff:** Sử dụng lower-order model khi higher-order không có data
+- **Kneser-Ney:** State-of-the-art cho N-gram LM, sử dụng continuation probability
+- **Class-based (cluster) N-grams:** Nhóm từ thành classes để giảm sparsity
 
 ---
 
-## 6. Model Combination
+## 7. Model Combination
+
+### 7.1 Vấn đề với N lớn
 
 Khi N tăng:
 - **Expressiveness** tăng (capture longer dependencies)
-- **Data sparsity** tăng (khó ước lượng reliable)
+- **Smoothing problem** tệ hơn (data sparsity)
 
-**Giải pháp:** Combine multiple models với different N, hoặc different training data, hoặc different smoothing.
+**Giải pháp:** Combine kết quả của multiple N-gram models.
 
-**Ensemble methods:**
-- Linear interpolation (như trên)
-- Log-linear combination
-- Neural network combination
+### 7.2 Interpolation
+
+Linearly combine estimates của N-gram models ở các orders khác nhau:
+
+**Interpolated Trigram Model:**
+
+$$P_{interp}(w_n | w_{n-2}, w_{n-1}) = \lambda_1 P(w_n) + \lambda_2 P(w_n|w_{n-1}) + \lambda_3 P(w_n|w_{n-2}, w_{n-1})$$
+
+với $\lambda_1 + \lambda_2 + \lambda_3 = 1$.
+
+**Learn $\lambda$ values:** Train để maximize likelihood của development (tuning) corpus.
+
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_3/img-005.jpg]]
+
+### 7.3 Backoff
+
+Chỉ sử dụng lower-order model khi higher-order không có data (count = 0):
+
+$$P_{BO}(w_n | w_{n-2}, w_{n-1}) = \begin{cases}
+P^*(w_n | w_{n-2}, w_{n-1}) & \text{if } C(w_{n-2}, w_{n-1}, w_n) > 0 \\
+\alpha \cdot P_{BO}(w_n | w_{n-1}) & \text{otherwise}
+\end{cases}$$
+
+Trong đó:
+- $P^*$ là discounted probability (để reserve mass cho unseen events)
+- $\alpha$ là back-off weight
 
 ---
 
-## 7. N-gram LM Trong Bối Cảnh Hiện Đại
+## 8. Long Distance Dependencies
 
-### 7.1 Hạn Chế Của N-gram
+### 8.1 Vấn đề với N-gram
 
-1. **Fixed context window:** Không capture long-range dependencies (quan trọng cho discourse, coreference)
-2. **Discrete representations:** Không generalize giữa similar words ("cat" và "dog" không share statistics)
-3. **Data hungry:** Số lượng N-grams tăng theo hàm mũ với N
+N-gram models có **fixed context window**, không capture được **long-distance dependencies**.
 
-### 7.2 Neural Language Models
+**Ví dụ syntactic dependencies từ tài liệu gốc:**
 
-**RNN/LSTM LMs:** Encode variable-length history trong hidden state
-**Transformer LMs (GPT, etc.):** Self-attention capture arbitrary-length dependencies
+> "The man next to the large oak tree near the grocery store on the corner **is** tall."
+> "The men next to the large oak tree near the grocery store on the corner **are** tall."
+
+Subject-verb agreement phụ thuộc vào "man/men" cách rất xa "is/are".
+
+**Ví dụ semantic dependencies:**
+
+> "The bird next to the large oak tree near the grocery store on the corner **flies** rapidly."
+> "The man next to the large oak tree near the grocery store on the corner **talks** rapidly."
+
+**Mục đích:** Đây là motivation cho các models phức tạp hơn (RNN, LSTM, Transformer).
+
+### 8.2 Beyond N-grams
+
+- **RNN/LSTM LMs:** Encode variable-length history trong hidden state
+- **Transformer LMs (GPT, BERT):** Self-attention capture arbitrary-length dependencies
 
 **Tuy nhiên:** N-gram vẫn relevant cho:
 - Fast, lightweight models
 - Interpretable baselines
-- Combination với neural models (interpolation)
+- Combination với neural models
 - Resource-constrained environments
 
 ---
 
-## 8. Kết Luận
+## 9. Kết Luận
 
-Chapter này thiết lập **N-gram Language Model** như framework cơ bản để:
-1. Assign probabilities to sentences
-2. Evaluate với Perplexity
-3. Handle unseen data với Smoothing
+Chapter này thiết lập **N-gram Language Model** như framework cơ bản:
 
-**Key insights:**
-- LM là bài toán ước lượng phân phối xác suất trên infinite space → cần strong assumptions (Markov)
-- MLE overfits khi data sparse → smoothing là essential
-- Trade-off giữa model complexity và data requirements là ubiquitous trong ML
+1. **LM** gán xác suất cho sentences, đánh giá mức độ "tự nhiên"
 
-Các chapters tiếp theo sẽ áp dụng probabilistic thinking này cho các tác vụ cụ thể: classification (Chapter 4), sequence labeling, parsing.
+2. **N-gram** sử dụng Markov assumption để giảm complexity từ exponential xuống tractable
+
+3. **MLE** ước lượng probabilities bằng counting
+
+4. **Perplexity** là metric chuẩn để evaluate LM (lower is better)
+
+5. **Smoothing** giải quyết zero probability problem cho unseen N-grams
+
+6. **Interpolation/Backoff** kết hợp models ở nhiều orders
+
+7. **Long-distance dependencies** là limitation chính của N-gram → motivate neural LMs
 
 ---
 
 ## TODO
 
-- [ ] Liên kết với [[Neural Language Models]] khi tạo concept note
+- [ ] Liên kết với [[Neural Language Models]]
 - [ ] Thêm code example tính perplexity
-- [ ] So sánh N-gram với GPT-style models về efficiency vs quality
+- [ ] So sánh N-gram với GPT-style models

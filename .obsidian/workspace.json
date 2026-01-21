@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "00_DailyNote/20-01-2026.md",
+                "file": "00_DailyNote/21-01-2026.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "20-01-2026"
+              "title": "21-01-2026"
             }
           }
         ]
@@ -63,7 +63,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "HMM",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -170,13 +170,24 @@
               "icon": "bot-message-square",
               "title": "Agent client"
             }
+          },
+          {
+            "id": "a60d96f7f591ed0a",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
         ],
         "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 541.5
+    "width": 541.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -192,16 +203,20 @@
       "agent-client:Open agent client": false
     }
   },
-  "active": "e9c61a08b25d44ab",
+  "active": "73181e71dc9ee7fb",
   "lastOpenFiles": [
-    "Agent Client/agent_client_20260119_192805.md",
-    "00_DailyNote/20-01-2026.md",
-    "00_DailyNote/19-01-2026.md",
     "50_PTIT/NLP/Chapter 2.md",
-    "20_Areas/AI/Concepts/Part-of-Speech Tagging.md",
-    "assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-009.jpg",
+    "00_DailyNote/21-01-2026.md",
     "20_Areas/AI/Concepts/Viterbi Algorithm.md",
     "20_Areas/AI/Concepts/Hidden Markov Model.md",
+    "20_Areas/AI/Concepts/Markov Chain.md",
+    "00_DailyNote/20-01-2026.md",
+    "AGENT.md",
+    "50_PTIT/NLP/Chapter 1.md",
+    "Agent Client/agent_client_20260119_192805.md",
+    "00_DailyNote/19-01-2026.md",
+    "20_Areas/AI/Concepts/Part-of-Speech Tagging.md",
+    "assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-009.jpg",
     "progress.md",
     "50_PTIT/Truy xuat thong tin/TIET 1.md",
     "20_Areas/AI/Concepts/Naive Bayes.md",
@@ -210,7 +225,6 @@
     "20_Areas/AI/Concepts/Perplexity.md",
     "20_Areas/AI/Concepts/N-gram Language Model.md",
     "50_PTIT/NLP/Chapter 3.md",
-    "20_Areas/AI/Concepts/Markov Chain.md",
     "20_Areas/AI/_MOCs/Agent Tooling & Integration MOC.md",
     "10_Projects/Đồ Án",
     "20_Areas/AI/Concepts/Prompt Injection.md",
@@ -219,9 +233,6 @@
     "20_Areas/AI/Concepts/MCP Tools.md",
     "20_Areas/AI/Concepts/MCP Resources.md",
     "20_Areas/AI/Concepts/MCP Client.md",
-    "20_Areas/AI/Concepts/MCP Server.md",
-    "20_Areas/AI/Concepts/Model Context Protocol (MCP).md",
-    "10_Projects/MAE_AITOPIC/MAE Implementation Guide.md",
     "10_Projects/MAE_AITOPIC/official_mae/util/pos_embed.py",
     "10_Projects/MAE_AITOPIC/official_mae/util/misc.py",
     "10_Projects/MAE_AITOPIC/official_mae/util/lr_sched.py",

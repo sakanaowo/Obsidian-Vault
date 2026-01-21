@@ -80,3 +80,23 @@ Khi xử lý tài liệu PDF (Sách, Paper):
    - **Output Rule:** Ảnh trích xuất phải được lưu vào `assets/<PDF_Name>/`.
    - **Command:** `python plugins/pdf_image_extractor.py <path/to/document.pdf> -o assets/attachment/<document's name>`
 3. **Content Integration:** Kết hợp văn bản từ PDF (đã tách chương) và hình ảnh đã trích xuất để tạo lại nội dung (Source Note/Concept Note) phong phú và trực quan.
+
+### DOCUMENT TRANSLATION STANDARDS (QUY TẮC DỊCH TÀI LIỆU)
+
+Khi dịch và trình bày tài liệu từ nguồn (sách, paper, slide), tuân thủ các quy tắc sau:
+
+#### 1. Bám sát 100% cấu trúc gốc
+- **Chapter by chapter, part by part:** Giữ nguyên cấu trúc sections/subsections của tài liệu gốc.
+- **Không tự ý gộp hoặc tách:** Mỗi phần trong tài liệu gốc phải có phần tương ứng trong bản dịch.
+- **Đọc PDF gốc:** Sử dụng `pdftotext -layout <path.pdf> -` để xem cấu trúc nguồn.
+
+#### 2. Giải thích concept với mục đích & ứng dụng
+Mỗi concept quan trọng cần có:
+- **ELI5:** Giải thích cực đơn giản (2-5 câu, từ vựng tối giản, ví dụ đời thường).
+- **Mục đích:** Tại sao concept này tồn tại? Giải quyết vấn đề gì?
+- **Ứng dụng:** Được sử dụng ở đâu trong thực tế? Sử dụng ví dụ từ tài liệu gốc nếu có.
+
+#### 3. Sử dụng ảnh trích xuất
+- Ảnh phải lấy từ thư mục đã trích xuất: `assets/attachments/<doc_name>/chapter_X/`.
+- Sắp xếp ảnh theo đúng thứ tự xuất hiện trong tài liệu gốc.
+- Format: `![[assets/attachments/<doc_name>/chapter_X/img-XXX.png]]`.

@@ -16,381 +16,397 @@ aliases:
 # Chapter 2 — Part-of-Speech Tagging
 
 > [!NOTE] Source
-> Tài liệu gốc: `assets/Library/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang.pdf` (Chapter 2). Nội dung dưới đây là **dịch + diễn giải có phê bình** dựa trên slide; các đoạn được đánh dấu "Suy luận thêm" là phần mở rộng từ kiến thức nền.
+> Tài liệu gốc: `assets/Library/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang.pdf` (Chapter 2, slide 1-35). Nội dung dưới đây bám sát 100% cấu trúc gốc với phần ELI5 và giải thích mục đích/ứng dụng bổ sung.
 
 ---
 
-## 1. Từ và Lớp Từ (Words and Word Classes)
+## 1. Words and Word Classes
 
 > [!NOTE] ELI5
-> Hãy tưởng tượng bạn có một hộp đồ chơi Lego. Mỗi viên Lego có **hình dạng** khác nhau: có viên vuông, viên dài, viên cong. Trong ngôn ngữ, mỗi **từ** cũng có một "hình dạng ngữ pháp" — ta gọi đó là **loại từ** (Part-of-Speech). Ví dụ: "chạy" là động từ, "nhanh" là tính từ, "con mèo" là danh từ. Việc xác định loại từ giúp máy tính "hiểu" câu giống như ta hiểu được viên Lego nào lắp vào đâu.
+> Hãy tưởng tượng bạn có một hộp đồ chơi Lego. Mỗi viên Lego có **hình dạng** khác nhau: viên vuông, viên dài, viên cong. Trong ngôn ngữ, mỗi **từ** cũng có một "hình dạng ngữ pháp" — ta gọi đó là **loại từ** (Part-of-Speech). Ví dụ: "chạy" là động từ, "nhanh" là tính từ, "con mèo" là danh từ.
 
-### 1.1 Định nghĩa "Từ" trong NLP
+### 1.1 What counts as a word?
 
-Trong xử lý ngôn ngữ tự nhiên, khái niệm **từ** (word) phức tạp hơn ta tưởng. Xét câu tiếng Anh từ Brown Corpus:
+**Corpus** (số nhiều: corpora) là tập hợp văn bản hoặc lời nói được lưu trữ trên máy tính để phân tích.
 
+**Ví dụ từ tài liệu gốc:** Brown Corpus là bộ sưu tập một triệu từ từ 500 văn bản tiếng Anh thuộc nhiều thể loại (báo chí, tiểu thuyết, phi hư cấu, học thuật, v.v.).
+
+Xét câu từ Brown Corpus:
 > *"He stepped out into the hall, was delighted to encounter a water brother."*
 
-Câu này có **13 từ** nếu không tính dấu câu, hoặc **15 từ** nếu tính cả dấu phẩy và dấu chấm như token riêng. Quyết định này phụ thuộc vào mục đích phân tích — trong POS tagging và parsing, dấu câu thường được coi là token riêng vì chúng mang thông tin ranh giới cú pháp.
+Câu này có bao nhiêu từ?
+- **13 từ** nếu không tính dấu câu
+- **15 từ** nếu tính dấu phẩy và dấu chấm như token riêng
 
-**Phân biệt Type vs Token:** Đây là distinction cốt lõi trong corpus linguistics. **Token** là tổng số từ xuất hiện (bao gồm lặp lại), trong khi **Type** là số từ phân biệt (distinct). Ví dụ, trong câu "the cat sat on the mat", có 6 token nhưng chỉ 5 type (vì "the" xuất hiện 2 lần). Tỷ lệ Type/Token (TTR - Type-Token Ratio) là một metric đo độ phong phú từ vựng của văn bản.
+**Mục đích:** Xác định chính xác "từ" là bước đầu tiên trong mọi xử lý ngôn ngữ — ta cần biết đơn vị cơ bản để phân tích.
 
-**Lemma vs Wordform:** Một **lemma** - [[Lemmatization]] là tập hợp các từ có cùng gốc, cùng loại từ và cùng nghĩa. Ví dụ, "cats" và "cat" chia sẻ lemma "cat". Các **wordform** là các biến thể hình thái đầy đủ của từ (số nhiều, thì quá khứ, v.v.). Sự phân biệt này quan trọng vì lemmatization giúp giảm độ thưa (sparsity) trong các mô hình thống kê.
+**Ứng dụng:** 
+- Trong POS tagging và parsing, dấu câu thường được coi là token riêng vì chúng đánh dấu ranh giới cú pháp
+- Tokenization là bước tiền xử lý bắt buộc cho mọi pipeline NLP
 
-### 1.2 Closed Class vs Open Class
+### 1.2 Types vs Tokens
 
-Các loại từ được chia thành hai nhóm lớn dựa trên tính "mở" hay "đóng" của tập thành viên:
+Trong NLP, ta phân biệt rõ giữa **types** và **tokens**:
 
-**Closed Classes** (lớp đóng) có tập thành viên tương đối cố định và hiếm khi thêm từ mới. Bao gồm:
+| Khái niệm | Định nghĩa | Ví dụ với câu "the cat sat on the mat" |
+|-----------|------------|----------------------------------------|
+| **Tokens** | Tổng số từ xuất hiện (bao gồm lặp lại) | 6 tokens |
+| **Types** | Số từ phân biệt (distinct) | 5 types (vì "the" xuất hiện 2 lần) |
+
+**Mục đích:** Phân biệt này giúp ta đo lường độ phong phú từ vựng (vocabulary richness) của văn bản.
+
+**Ứng dụng:** Type-Token Ratio (TTR) là metric đánh giá độ đa dạng từ vựng — văn bản học thuật thường có TTR cao hơn văn bản hội thoại.
+
+### 1.3 Lemma vs Wordforms
+
+- **Lemma:** Tập hợp các từ có cùng gốc, cùng loại từ và cùng nghĩa
+  - Ví dụ: "cats" và "cat" chia sẻ lemma "cat"
+- **Wordforms:** Các biến thể hình thái đầy đủ của từ (số nhiều, thì quá khứ, v.v.)
+
+**Mục đích:** Lemmatization giúp giảm độ thưa (sparsity) trong các mô hình thống kê — thay vì học riêng "run", "runs", "running", ta chỉ cần học "run".
+
+### 1.4 Closed Class vs Open Class
+
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-004.png]]
+
+Các loại từ được chia thành hai nhóm lớn:
+
+**Closed Classes** (lớp đóng) — tập thành viên tương đối cố định:
 - **Prepositions** (giới từ): in, on, at, by, with...
 - **Determiners** (mạo từ/từ hạn định): the, a, this, that...
 - **Pronouns** (đại từ): I, you, he, she, it...
 - **Conjunctions** (liên từ): and, but, or, because...
 - **Auxiliary verbs** (trợ động từ): will, can, should, have...
 
-**Open Classes** (lớp mở) liên tục có thêm từ mới theo sự phát triển của ngôn ngữ:
-- **Nouns** (danh từ): có thể tạo từ mới bất cứ lúc nào (smartphone, selfie, blockchain...)
+**Open Classes** (lớp mở) — liên tục có thêm từ mới:
+- **Nouns** (danh từ): smartphone, selfie, blockchain...
 - **Verbs** (động từ): google, tweet, zoom...
 - **Adjectives** (tính từ): viral, sustainable...
 - **Adverbs** (trạng từ): digitally, remotely...
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-004.png]]
+**Mục đích:** Closed class words có phân phối ổn định và dễ học hơn. Open class words đòi hỏi khả năng xử lý **OOV (Out-of-Vocabulary)**.
 
-> [!NOTE] Suy luận thêm — Tại sao phân biệt closed/open class quan trọng?
-> Trong thực tế xây dựng POS tagger, closed class words thường có phân phối ổn định và dễ học hơn. Open class words đòi hỏi khả năng xử lý **OOV (Out-of-Vocabulary)** — những từ chưa từng xuất hiện trong tập huấn luyện. Đây là lý do các kỹ thuật như subword tokenization (BPE, WordPiece) trở nên quan trọng trong NLP hiện đại.
+**Ứng dụng:** Trong thực tế, các kỹ thuật như subword tokenization (BPE, WordPiece) được phát triển để xử lý open class words chưa từng xuất hiện trong tập huấn luyện.
 
 ---
 
-## 2. Part-of-Speech Tagging: Bài Toán và Ý Nghĩa
+## 2. Part-of-Speech Tagging
 
 > [!NOTE] ELI5
-> POS Tagging giống như việc đánh dấu mỗi viên Lego trong câu với nhãn: "đây là danh từ", "đây là động từ". Máy tính đọc câu và tự gắn nhãn cho từng từ. Việc này quan trọng vì cùng một từ có thể là nhiều loại khác nhau — "book" vừa là danh từ (cuốn sách) vừa là động từ (đặt chỗ).
+> POS Tagging giống như việc đánh dấu mỗi viên Lego trong câu với nhãn: "đây là danh từ", "đây là động từ". Máy tính đọc câu và tự gắn nhãn cho từng từ.
 
-### 2.1 Định nghĩa Formal
+### 2.1 Định nghĩa
 
-[[Part-of-Speech Tagging]] (còn gọi là POS tagging, word-class tagging, hoặc grammatical tagging) là quá trình gán nhãn loại từ cho mỗi từ trong văn bản. Formally:
+[[Part-of-Speech Tagging]] là quá trình gán nhãn loại từ cho mỗi từ trong văn bản:
 
-- **Input:** Một chuỗi từ (đã tokenize) $x_1, x_2, ..., x_n$ và một tagset $T$
-- **Output:** Một chuỗi nhãn $y_1, y_2, ..., y_n$ sao cho mỗi $y_i \in T$ tương ứng với $x_i$
+- **Input:** Một chuỗi từ (đã tokenize) $x_1, x_2, ..., x_n$ và một tagset
+- **Output:** Một chuỗi nhãn $y_1, y_2, ..., y_n$ sao cho mỗi $y_i$ tương ứng với $x_i$
 
-Ví dụ với câu *"Hanoi is the capital of Vietnam"*:
+**Ví dụ từ tài liệu gốc:**
+
+> "Hanoi is the capital of Vietnam."
 
 | Word    | POS Tag                                 |
 | ------- | --------------------------------------- |
-| Hanoi   | NNP (Proper Noun)                       |
+| Hanoi   | NN (Noun)                               |
 | is      | VBZ (Verb, 3rd person singular present) |
 | the     | DT (Determiner)                         |
-| capital | NN (Noun, singular)                     |
+| capital | NN (Noun)                               |
 | of      | IN (Preposition)                        |
-| Vietnam | NNP (Proper Noun)                       |
+| Vietnam | NN (Noun)                               |
 
 ![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-009.jpg]]
 
-### 2.2 Tại Sao POS Tagging Là Bài Toán Disambiguation?
+### 2.2 Ambiguity — Tại sao POS Tagging là bài toán Disambiguation?
 
-Điểm then chốt của POS tagging là **từ có thể nhập nhằng** (ambiguous) về loại từ. Xét các ví dụ:
+Tagging là **bài toán disambiguation** vì từ có thể **nhập nhằng** — có nhiều hơn một POS tag khả dĩ.
 
-> *"Book that fight"* → "Book" là **Verb** (hãy đặt/ghi lại trận đấu đó)
-> *"Hand me that book"* → "book" là **Noun** (đưa tôi cuốn sách đó)
+**Ví dụ từ tài liệu gốc:**
 
-> *"Does that fight serve dinner"* → "that" là **Determiner** (trận đấu đó)
-> *"I thought that your fight was earlier"* → "that" là **Complementizer** (rằng)
+| Câu | Từ "book" | POS |
+|-----|-----------|-----|
+| "Book that fight" | book | **Verb** (đặt/ghi lại) |
+| "Hand me that book" | book | **Noun** (cuốn sách) |
 
-Thống kê từ các corpus lớn cho thấy khoảng **40-60% từ trong từ điển tiếng Anh** có nhiều hơn một POS tag khả dĩ. Tuy nhiên, trong ngữ cảnh cụ thể, con người (và các tagger tốt) có thể disambiguate với độ chính xác rất cao (>97%).
+| Câu | Từ "that" | POS |
+|-----|-----------|-----|
+| "Does that fight serve dinner" | that | **Determiner** (trận đấu đó) |
+| "I thought that your fight was earlier" | that | **Complementizer** (rằng) |
 
 ![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-006.png]]
 
-### 2.3 Penn Treebank Tagset
+**Mục đích:** Mục tiêu của POS tagging là giải quyết các trường hợp nhập nhằng này, chọn đúng tag cho ngữ cảnh.
 
-[[Penn Treebank]] tagset là hệ thống nhãn POS được sử dụng rộng rãi nhất cho tiếng Anh, phát triển từ dự án Penn Treebank tại University of Pennsylvania. Tagset này bao gồm **36 tags** chính (không kể punctuation), được thiết kế để cân bằng giữa độ chi tiết ngữ pháp và khả năng annotation nhất quán.
+### 2.3 Importance of POS Tagging
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-008.png]]
+POS tagging là **backbone** cho nhiều tác vụ NLP:
 
-Một số tags quan trọng:
-- **NN/NNS/NNP/NNPS:** Noun singular/plural, Proper noun singular/plural
-- **VB/VBD/VBG/VBN/VBP/VBZ:** Verb base/past tense/gerund/past participle/non-3rd person present/3rd person singular present
-- **JJ/JJR/JJS:** Adjective/Comparative/Superlative
-- **RB/RBR/RBS:** Adverb/Comparative/Superlative
-- **DT:** Determiner
-- **IN:** Preposition or subordinating conjunction
-- **MD:** Modal auxiliary (can, could, may, might, will, would...)
+1. **Improves Language Understanding:** Hiểu cấu trúc ngữ pháp của câu
+2. **Facilitates Syntax Analysis:** Parser cần biết loại từ để xây dựng cây cú pháp
+3. **Enhances Search and Information Retrieval:** Lọc theo loại từ cải thiện precision
+4. **Enables Machine Translation:** Alignment và reordering phụ thuộc vào cấu trúc ngữ pháp
+5. **Assists Sentiment Analysis:** Adjectives và adverbs mang tín hiệu cảm xúc mạnh
 
-> [!NOTE] Suy luận thêm — Universal Dependencies vs Penn Treebank
-> Trong nghiên cứu đa ngôn ngữ hiện đại, **Universal Dependencies (UD)** tagset với 17 tags "phổ quát" đang thay thế Penn Treebank. UD được thiết kế để áp dụng cross-linguistically, cho phép so sánh và transfer learning giữa các ngôn ngữ. Tuy nhiên, Penn Treebank vẫn là baseline quan trọng cho tiếng Anh.
+### 2.4 How POS Tagging Works — Supervised vs Unsupervised
 
-### 2.4 Tầm Quan Trọng Của POS Tagging
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-011.jpg]]
 
-POS tagging là **backbone** cho nhiều tác vụ NLP downstream:
+**Supervised POS tagging:**
+- Sử dụng training dataset đã được gán nhãn
+- Học mối quan hệ giữa từ và POS tags
+- Dùng model đã train để dự đoán tag cho từ mới dựa trên context
+- **Độ chính xác cao** (>97% trên WSJ)
 
-1. **Syntax Parsing:** Parser cần biết loại từ để xây dựng cây cú pháp đúng
-2. **Named Entity Recognition:** Proper nouns (NNP) là tín hiệu quan trọng cho entity
-3. **Information Retrieval:** Lọc theo loại từ giúp cải thiện precision
-4. **Machine Translation:** Alignment và reordering phụ thuộc vào cấu trúc ngữ pháp
-5. **Sentiment Analysis:** Adjectives và adverbs mang tín hiệu cảm xúc mạnh
+**Unsupervised POS tagging:**
+- Không sử dụng labeled training data
+- Dựa vào phương pháp thống kê để học quan hệ từ-tag
+- **Độ chính xác thấp hơn** (~70-80%)
+- Hữu ích cho ngôn ngữ ít tài nguyên (low-resource languages)
 
 ---
 
-## 3. Hidden Markov Model (HMM) cho POS Tagging
+## 3. Penn Treebank Part-of-Speech Tagset
 
 > [!NOTE] ELI5
-> Tưởng tượng bạn là thám tử đang theo dõi một người qua cửa sổ. Bạn **không thể thấy trực tiếp** người đó đang làm gì (nấu ăn? đọc sách? ngủ?), nhưng bạn **có thể thấy ánh đèn bật tắt** trong các phòng. Từ việc quan sát đèn (observable), bạn suy luận ngược lại hoạt động (hidden state). HMM cũng vậy: từ **các từ ta thấy** (observable), ta suy ra **các POS tag ẩn** (hidden states).
+> Penn Treebank giống như một "bảng màu" chuẩn cho nhãn POS — thay vì mỗi người tự đặt tên nhãn riêng, tất cả dùng chung một bộ 36 nhãn này để hiểu nhau.
 
-### 3.1 Markov Chains: Nền Tảng Xác Suất
+[[Penn Treebank]] tagset là hệ thống nhãn POS được sử dụng rộng rãi nhất cho tiếng Anh:
 
-[[Markov Chain]] là mô hình xác suất mô tả một chuỗi các trạng thái, trong đó xác suất chuyển sang trạng thái tiếp theo **chỉ phụ thuộc vào trạng thái hiện tại**, không phụ thuộc vào lịch sử trước đó. Đây được gọi là **Markov assumption** (giả định Markov) hay tính chất **memoryless**.
+- Phát triển từ dự án Penn Treebank tại University of Pennsylvania
+- Nhằm annotate một large corpus tiếng Anh với thông tin cú pháp và cấu trúc
+- Bao gồm **36 tags** chính (không kể punctuation)
 
-Formally, cho chuỗi trạng thái $q_1, q_2, ..., q_i$:
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-008.png]]
+
+**Một số tags quan trọng:**
+
+| Tag | Nghĩa | Ví dụ |
+|-----|-------|-------|
+| NN/NNS | Noun singular/plural | cat, cats |
+| NNP/NNPS | Proper noun singular/plural | Hanoi, Americans |
+| VB/VBD/VBG/VBN/VBP/VBZ | Verb các dạng | run, ran, running, run, run, runs |
+| JJ/JJR/JJS | Adjective/Comparative/Superlative | good, better, best |
+| RB/RBR/RBS | Adverb/Comparative/Superlative | quickly, more quickly, most quickly |
+| DT | Determiner | the, a, this |
+| IN | Preposition or subordinating conjunction | in, on, because |
+| MD | Modal auxiliary | can, could, will, would |
+
+**Link:** https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
+
+---
+
+## 4. HMM Part-of-Speech Tagging
+
+> [!NOTE] ELI5
+> Tưởng tượng bạn là thám tử đang theo dõi người qua cửa sổ. Bạn **không thể thấy trực tiếp** người đó đang làm gì (nấu ăn? đọc sách? ngủ?), nhưng bạn **có thể thấy ánh đèn** bật tắt trong các phòng. Từ việc quan sát đèn (observable), bạn suy luận ngược lại hoạt động (hidden state). HMM cũng vậy: từ **các từ ta thấy**, ta suy ra **các POS tag ẩn**.
+
+[[Hidden Markov Model|Hidden Markov Model (HMM)]] là phương pháp thống kê để xác định POS tags cho từ trong câu.
+
+**Các thành phần chính:**
+1. Hidden Markov Model
+2. Training
+3. Tagging Process
+4. Decoding
+
+### 4.1 Markov Chains
+
+> [!NOTE] ELI5
+> Markov chain giống như chơi cờ cá ngựa: vị trí tiếp theo của bạn chỉ phụ thuộc vào vị trí hiện tại + số xúc xắc, không cần biết bạn đi qua những ô nào trước đó.
+
+Năm 1906, Andrey Markov giới thiệu **Markov chains**.
+
+**Nguyên tắc "Memorylessness":** Xác suất chuyển sang trạng thái tiếp theo **chỉ phụ thuộc vào trạng thái hiện tại**, không phụ thuộc vào chuỗi trạng thái trước đó.
 
 $$P(q_i | q_1, q_2, ..., q_{i-1}) = P(q_i | q_{i-1})$$
 
 ![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-014.png]]
 
-**Các thành phần của Markov Chain:**
-1. **Tập trạng thái** $Q = \{q_1, q_2, ..., q_N\}$: N trạng thái khả dĩ
-2. **Ma trận chuyển trạng thái** $A$: với $a_{ij} = P(q_j | q_i)$ là xác suất chuyển từ trạng thái $i$ sang $j$
-3. **Phân phối khởi tạo** $\pi$: với $\pi_i = P(q_1 = i)$ là xác suất bắt đầu ở trạng thái $i$
-
-Ràng buộc: $\sum_j a_{ij} = 1$ (xác suất chuyển từ mỗi trạng thái phải tổng bằng 1) và $\sum_i \pi_i = 1$.
+**Ví dụ từ tài liệu gốc:** Để dự đoán thời tiết **ngày mai**, bạn có thể xét thời tiết **hôm nay** nhưng không được phép xem thời tiết **hôm qua**.
 
 ![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-015.png]]
 
 ![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-016.jpg]]
 
 **Ứng dụng của Markov Chains:**
-- Dự báo thời tiết, thị trường chứng khoán
-- Mô hình hóa chuỗi DNA trong genetics
-- PageRank của Google (random walk trên đồ thị web)
-- Text generation (Markov text generators)
+- Market share predictions
+- Markov text generators
+- Financial predictions (stock market)
+- Customer journey predictions
+- Population genetics
+- Algorithmic music composition
+- Page ranks (Google search results)
 
-### 3.2 Hidden Markov Model: Khi Trạng Thái Bị Ẩn
+### 4.2 Hidden Markov Model
 
-[[Hidden Markov Model (HMM)]] mở rộng Markov Chain bằng cách thêm một lớp **quan sát** (observation) được sinh ra từ các trạng thái ẩn. Trong POS tagging:
-- **Hidden states:** Các POS tags (NN, VB, DT, ...) — ta không "thấy" trực tiếp
-- **Observations:** Các từ (the, dog, runs, ...) — ta thấy trong văn bản
+**Markov Model** là mô hình stochastic mô tả hệ thống thay đổi ngẫu nhiên, trong đó trạng thái tương lai chỉ phụ thuộc vào trạng thái hiện tại.
 
 ![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-019.png]]
 
-**Các thành phần của HMM:**
-1. **Tập trạng thái ẩn** $Q = \{q_1, ..., q_N\}$: N POS tags
-2. **Tập quan sát** $O = \{o_1, ..., o_M\}$: M từ trong vocabulary
-3. **Ma trận chuyển trạng thái** $A$ ($N \times N$): $a_{ij} = P(t_j | t_i)$ — xác suất tag $j$ xuất hiện sau tag $i$
-4. **Ma trận phát xạ** $B$ ($N \times M$): $b_i(o_k) = P(w_k | t_i)$ — xác suất từ $k$ được sinh ra từ tag $i$
-5. **Phân phối khởi tạo** $\pi$: xác suất bắt đầu câu với mỗi tag
+**Hidden Markov Model** mở rộng Markov Model bằng cách thêm lớp **observations** được sinh ra từ các **hidden states**:
+
+- **Hidden states:** Các POS tags (NN, VB, DT, ...) — ta không "thấy" trực tiếp
+- **Observations:** Các từ (the, dog, runs, ...) — ta thấy trong văn bản
+- **Transitions:** Xác suất chuyển từ state này sang state khác (ví dụ: DT → NN)
+- **Emissions:** Xác suất sinh từ từ một state (ví dụ: NN → "dog")
 
 ![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-021.jpg]]
 
-### 3.3 Ước Lượng Tham Số HMM (Training)
+### 4.3 The Components of an HMM Tagger
 
-Các tham số $A$ và $B$ được ước lượng từ **corpus đã gán nhãn** (supervised learning) sử dụng **Maximum Likelihood Estimation (MLE)**:
+HMM có hai thành phần chính: **A probabilities** và **B probabilities**.
 
-**Transition probabilities (A):**
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-023.png]]
+
+**Ma trận A — Transition Probabilities:**
+- $P(t_i | t_{i-1})$ = xác suất tag $t_i$ xuất hiện ngay sau tag $t_{i-1}$
+- Tính bằng Maximum Likelihood Estimation (MLE):
+
 $$P(t_i | t_{i-1}) = \frac{C(t_{i-1}, t_i)}{C(t_{i-1})}$$
 
-Trong đó $C(t_{i-1}, t_i)$ là số lần tag $t_i$ xuất hiện ngay sau tag $t_{i-1}$ trong corpus.
+**Ma trận B — Emission Probabilities:**
+- $P(w_i | t_i)$ = xác suất từ $w_i$ được gán tag $t_i$
+- Tính bằng MLE:
 
-**Emission probabilities (B):**
 $$P(w_i | t_i) = \frac{C(t_i, w_i)}{C(t_i)}$$
 
-Trong đó $C(t_i, w_i)$ là số lần từ $w_i$ được gán tag $t_i$.
+**Ví dụ từ WSJ Corpus (tài liệu gốc):**
 
-**Ví dụ từ WSJ Corpus:**
-- MD (modal) xuất hiện 13,124 lần
+MD (modal auxiliary verb) xuất hiện 13,124 lần:
 - MD được theo sau bởi VB (verb base) 10,471 lần
 - Vậy: $P(VB|MD) = \frac{10471}{13124} = 0.7968$
 
-Tương tự:
-- Trong 13,124 lần MD xuất hiện, nó được gán cho từ "will" 4,046 lần
+Emission probability:
+- Từ "will" được gán tag MD 4,046 lần trong 13,124 lần MD xuất hiện
 - Vậy: $P(\text{will}|MD) = \frac{4046}{13124} = 0.3083$
 
 ![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-024.jpg]]
 
-### 3.4 HMM Tagging as Decoding
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-025.png]]
 
-**Bài toán Decoding:** Cho HMM $\lambda = (A, B, \pi)$ và chuỗi quan sát (từ) $W = w_1, w_2, ..., w_n$, tìm chuỗi trạng thái ẩn (tags) $T = t_1, t_2, ..., t_n$ **có xác suất cao nhất**.
+### 4.4 HMM Tagging as Decoding
 
-Sử dụng Bayes' theorem:
+**Decoding** là task xác định chuỗi hidden states (tags) tương ứng với chuỗi observations (từ).
 
-$$\hat{T} = \argmax_T P(T|W) = \argmax_T \frac{P(W|T) \cdot P(T)}{P(W)} = \argmax_T P(W|T) \cdot P(T)$$
+**Bài toán:** Cho HMM $\lambda = (A, B)$ và chuỗi quan sát $O = o_1, o_2, ..., o_T$, tìm chuỗi states $Q = q_1, q_2, ..., q_T$ có xác suất cao nhất:
 
-(Bỏ $P(W)$ vì nó không phụ thuộc vào $T$)
+$$\hat{t}_{1:n} = \argmax_{t_{1:n}} P(t_{1:n} | w_{1:n}) \tag{1}$$
 
 **Hai giả định đơn giản hóa:**
 
-1. **Output independence:** Xác suất của một từ chỉ phụ thuộc vào tag của chính nó:
-$$P(W|T) = \prod_{i=1}^{n} P(w_i | t_i)$$
+**1. Output Independence:** Xác suất của từ chỉ phụ thuộc vào tag của chính nó:
+$$P(w_i | w_1, ..., w_n, t_1, ..., t_n) \approx P(w_i | t_i) \tag{2}$$
 
-2. **Bigram assumption (Markov assumption):** Xác suất của một tag chỉ phụ thuộc vào tag ngay trước:
-$$P(T) = \prod_{i=1}^{n} P(t_i | t_{i-1})$$
-
-Kết hợp lại:
-$$\hat{T} = \argmax_T \prod_{i=1}^{n} P(w_i | t_i) \cdot P(t_i | t_{i-1})$$
+**2. Bigram Assumption:** Xác suất của tag chỉ phụ thuộc vào tag ngay trước:
+$$P(t_i | t_1, ..., t_{i-1}) \approx P(t_i | t_{i-1}) \tag{3}$$
 
 ![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-026.png]]
 
-> [!NOTE] Suy luận thêm — Tại sao công thức này hoạt động?
-> Công thức này mã hóa hai loại "tri thức ngôn ngữ": (1) **Tri thức từ vựng** qua $P(w|t)$ — từ nào thường là danh từ, từ nào thường là động từ; (2) **Tri thức cú pháp** qua $P(t_i|t_{i-1})$ — sau mạo từ thường là danh từ, sau modal thường là verb base. Sự kết hợp này cho phép mô hình disambiguate dựa trên cả hai nguồn bằng chứng.
+Kết hợp (2) và (3) vào (1):
+$$\hat{t}_{1:n} = \argmax_{t_{1:n}} \prod_{i=1}^{n} P(w_i | t_i) \cdot P(t_i | t_{i-1})$$
 
----
+**Mục đích:** Công thức này kết hợp hai nguồn tri thức:
+- **Tri thức từ vựng** qua $P(w|t)$: từ nào thường là danh từ, từ nào thường là động từ
+- **Tri thức cú pháp** qua $P(t|t')$: sau mạo từ thường là danh từ, sau modal thường là verb base
 
-## 4. Thuật Toán Viterbi
+### 4.5 The Viterbi Algorithm
 
 > [!NOTE] ELI5
-> Tưởng tượng bạn đang chơi game tìm đường trong mê cung. Tại mỗi ngã rẽ, có nhiều lựa chọn. **Viterbi** là cách thông minh để tìm con đường tốt nhất: thay vì thử TẤT CẢ các đường (rất lâu!), bạn chỉ nhớ **đường tốt nhất đến mỗi điểm** rồi dần dần xây lên đường tốt nhất tổng thể. Giống như bạn không cần nhớ toàn bộ lịch sử đi qua — chỉ cần biết cách tốt nhất để đến đây.
+> Tưởng tượng bạn đang chơi game tìm đường trong mê cung. Tại mỗi ngã rẽ, có nhiều lựa chọn. **Viterbi** là cách thông minh để tìm con đường tốt nhất: thay vì thử TẤT CẢ các đường (rất lâu!), bạn chỉ nhớ **đường tốt nhất đến mỗi điểm** rồi dần dần xây lên đường tốt nhất tổng thể.
 
-### 4.1 Vấn Đề Với Brute Force
-
-Nếu có $N$ tags và câu có $n$ từ, tổng số chuỗi tag khả dĩ là $N^n$. Với Penn Treebank (36 tags) và câu 10 từ, đó là $36^{10} \approx 3.6 \times 10^{15}$ — không khả thi để duyệt hết!
-
-### 4.2 Dynamic Programming với Viterbi
-
-[[Viterbi Algorithm]] giải quyết vấn đề này bằng **quy hoạch động** (dynamic programming), dựa trên nhận xét: **đường đi tốt nhất đến trạng thái $(i, t)$ (vị trí $i$, tag $t$) phải đi qua đường đi tốt nhất đến một trạng thái nào đó ở vị trí $i-1$**.
-
-**Định nghĩa:**
-$$v_t(j) = \max_{t_1,...,t_{j-1}} P(t_1,...,t_{j-1}, w_1,...,w_j, t_j = t)$$
-
-$v_t(j)$ là xác suất cao nhất của bất kỳ chuỗi tag nào kết thúc ở tag $t$ tại vị trí $j$.
-
-**Công thức đệ quy:**
-$$v_t(j) = \max_{t' \in Tags} \left[ v_{t'}(j-1) \cdot a_{t',t} \cdot b_t(w_j) \right]$$
-
-Trong đó:
-- $v_{t'}(j-1)$: xác suất tốt nhất đến vị trí $j-1$ với tag $t'$
-- $a_{t',t} = P(t|t')$: xác suất chuyển từ $t'$ sang $t$
-- $b_t(w_j) = P(w_j|t)$: xác suất phát xạ từ $w_j$ từ tag $t$
+[[Viterbi Algorithm]] là thuật toán decoding cho HMM, sử dụng **dynamic programming**.
 
 ![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-027.jpg]]
 
-### 4.3 Thuật Toán Viterbi Chi Tiết
+**Vấn đề với Brute Force:**
+- Nếu có $N$ tags và câu có $n$ từ, tổng số chuỗi tag khả dĩ là $N^n$
+- Với 36 tags và câu 10 từ: $36^{10} \approx 3.6 \times 10^{15}$ — không khả thi!
 
-**Khởi tạo (j = 1):**
-$$v_t(1) = \pi_t \cdot b_t(w_1)$$
+**Giải pháp Dynamic Programming:**
+- Độ phức tạp giảm xuống $O(N^2 \cdot n)$ — một cải tiến khổng lồ!
 
-**Đệ quy (j = 2 đến n):**
-$$v_t(j) = \max_{t'} \left[ v_{t'}(j-1) \cdot a_{t',t} \right] \cdot b_t(w_j)$$
-$$bt_t(j) = \argmax_{t'} \left[ v_{t'}(j-1) \cdot a_{t',t} \right]$$
+**Ví dụ từ tài liệu gốc: "Janet will back the bill"**
 
-Trong đó $bt_t(j)$ lưu **backpointer** — tag trước đó tốt nhất để đến $(j, t)$.
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-000.jpg]]
 
-**Kết thúc:**
-$$\hat{t}_n = \argmax_t v_t(n)$$
-
-**Backtracing:** Từ $\hat{t}_n$, đi ngược theo backpointers để lấy toàn bộ chuỗi tag.
-
-**Độ phức tạp:** $O(N^2 \cdot n)$ thay vì $O(N^n)$ — một cải tiến khổng lồ!
-
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-028.jpg]]
-
-### 4.4 Ví Dụ Minh Họa
-
-Xét câu: *"Janet will back the bill"*
-
-**Bước 1:** Xây dựng lattice với các tag khả dĩ cho mỗi từ:
+**Bước 1:** Lattice với các tag khả dĩ:
 - Janet: NNP (proper noun)
 - will: MD (modal), NN (noun), VB (verb)
 - back: VB (verb), JJ (adjective), NN (noun), RB (adverb)
 - the: DT (determiner)
 - bill: NN (noun), VB (verb)
 
+**Transition probabilities (A)** từ WSJ corpus:
+
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-010.png]]
+
+**Observation likelihoods (B):**
+
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-012.jpg]]
+
+**Bước 2:** Điền Viterbi lattice
+
 ![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-028.jpg]]
 
-**Bước 2:** Tính $v_t(j)$ cho mỗi ô trong lattice:
+Mỗi cell giữ:
+- Xác suất của best path đến cell đó
+- Pointer đến previous cell trên path đó
 
-Ví dụ, tại vị trí "will" với tag MD:
-$$v_{MD}(2) = v_{NNP}(1) \cdot P(MD|NNP) \cdot P(\text{will}|MD)$$
-
-**Bước 3:** Tại mỗi ô, lưu backpointer đến ô tốt nhất ở cột trước.
-
-**Bước 4:** Sau khi điền xong, backtrace từ ô có xác suất cao nhất ở cột cuối.
+**Bước 3:** Backtracing từ end state để reconstruct chuỗi tag tối ưu:
 
 **Kết quả:** Janet/NNP will/MD back/VB the/DT bill/NN
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-000.jpg]]
-
 > [!NOTE] Suy luận thêm — Underflow và Log Probabilities
-> Trong thực tế, tích của nhiều xác suất nhỏ dẫn đến **numerical underflow**. Giải pháp: làm việc trong không gian log-probability, biến phép nhân thành phép cộng: $\log(ab) = \log(a) + \log(b)$. Điều này không thay đổi argmax.
+> Trong thực tế, tích của nhiều xác suất nhỏ dẫn đến **numerical underflow**. Giải pháp: làm việc trong không gian log-probability, biến phép nhân thành phép cộng: $\log(ab) = \log(a) + \log(b)$.
 
----
-
-## 5. Beam Search: Khi Cần Tốc Độ Hơn Nữa
+### 4.6 Beam Search
 
 > [!NOTE] ELI5
-> Viterbi giữ **tất cả** các đường tốt nhất đến mỗi tag tại mỗi vị trí. Beam Search "tiết kiệm" hơn: chỉ giữ **top k đường tốt nhất** (gọi là "beam width"). Giống như cuộc thi chạy — thay vì để tất cả vận động viên chạy đến cuối rồi mới xếp hạng, ta loại bớt người chậm sau mỗi vòng.
+> Viterbi giữ **tất cả** các đường tốt nhất đến mỗi tag tại mỗi vị trí. Beam Search "tiết kiệm" hơn: chỉ giữ **top k đường tốt nhất**. Giống như cuộc thi chạy — thay vì để tất cả vận động viên chạy đến cuối, ta loại bớt người chậm sau mỗi vòng.
 
-### 5.1 Thuật Toán Beam Search
+[[Beam Search]] là thuật toán tìm kiếm approximate, nhanh hơn Viterbi.
 
-[[Beam Search]] là một **approximate search** algorithm giữ $k$ (beam width) chuỗi tốt nhất tại mỗi bước:
-
-1. **Khởi tạo:** Tạo tags cho $w_1$, giữ top $k$ chuỗi, gọi là $S_{1,1}, ..., S_{1,k}$
-2. **Lặp:** Với $i = 2$ đến $n$:
-   - Với mỗi chuỗi $S_{i-1,j}$ trong beam hiện tại:
-     - Sinh tất cả tags khả dĩ cho $w_i$
-     - Nối mỗi tag vào $S_{i-1,j}$ để tạo chuỗi mới
-   - Từ tất cả chuỗi mới sinh ra, giữ top $k$ có xác suất cao nhất
-3. **Kết thúc:** Trả về chuỗi có xác suất cao nhất trong beam cuối
-
-### 5.2 Ưu và Nhược Điểm
+**Thuật toán:**
+1. Generate tags cho $w_1$, tìm top N, set $s_{1j}$ tương ứng ($j = 1, 2, ..., N$)
+2. For $i = 2$ to $n$ (độ dài câu):
+   - For $j = 1$ to $N$:
+     - Generate tags cho $w_i$ given $S_{(i-1)j}$ làm previous tag context
+     - Append mỗi tag vào $S_{(i-1)j}$ để tạo sequence mới
+   - Tìm N sequences có probability cao nhất, set $s_{ij}$ tương ứng
+3. Return sequence có probability cao nhất: $S_{n1}$
 
 **Ưu điểm:**
-- **Nhanh:** Độ phức tạp $O(k \cdot N \cdot n)$ — tuyến tính theo độ dài câu
-- **Đơn giản:** Không cần cấu trúc dữ liệu phức tạp của DP
-- **Thực tiễn:** Beam width 3-5 thường cho kết quả gần tối ưu
+- **Fast:** Beam sizes của 3-5 thường cho kết quả gần tối ưu
+- **Easy to implement:** Không cần dynamic programming phức tạp
 
 **Nhược điểm:**
-- **Inexact:** Chuỗi tốt nhất toàn cục có thể bị loại sớm (fall off the beam)
-- **Không có guarantee:** Không đảm bảo tìm được optimal solution
+- **Inexact:** Globally best sequence có thể bị loại sớm (fall off the beam)
 
-> [!NOTE] Suy luận thêm — Beam Search trong Deep Learning
-> Beam Search không chỉ dùng cho HMM mà còn là thuật toán decoding tiêu chuẩn cho các mô hình sequence-to-sequence (machine translation, text generation với LLM). Trong các hệ thống như GPT, beam search được dùng để sinh văn bản có chất lượng cao hơn greedy decoding.
+**Ứng dụng:** Beam Search không chỉ dùng cho HMM mà còn là thuật toán decoding tiêu chuẩn cho machine translation, text generation với LLM (GPT, etc.).
 
 ---
 
-## 6. Supervised vs Unsupervised POS Tagging
+## 5. Kết Luận
 
-### 6.1 Supervised Methods
+Chapter này đã thiết lập **POS tagging** như một bài toán **sequence labeling** cơ bản trong NLP:
 
-Các phương pháp **supervised** yêu cầu corpus đã gán nhãn (labeled training data):
+1. **Words and Word Classes:** Phân biệt types/tokens, lemma/wordforms, closed/open class — ảnh hưởng đến cách xây dựng mô hình
 
-- **HMM Tagger:** Như đã mô tả ở trên
-- **Maximum Entropy (MaxEnt) Tagger:** Discriminative model sử dụng nhiều features
-- **Conditional Random Fields (CRF):** Sequence labeling với global normalization
-- **Neural Taggers:** LSTM/Transformer-based models (state-of-the-art hiện tại)
+2. **Ambiguity:** Thách thức trung tâm của POS tagging — cùng một wordform có thể có nhiều POS tags
 
-Các phương pháp supervised thường đạt accuracy > 97% trên tiếng Anh benchmark (WSJ).
+3. **Penn Treebank:** Tagset chuẩn với 36 tags cho tiếng Anh
 
-### 6.2 Unsupervised Methods
+4. **HMM Tagger:** Framework xác suất kết hợp:
+   - Tri thức từ vựng: $P(w|t)$
+   - Tri thức cú pháp: $P(t|t')$
 
-Khi không có labeled data (nhiều ngôn ngữ ít tài nguyên), các phương pháp **unsupervised** học cấu trúc từ raw text:
+5. **Viterbi Algorithm:** Dynamic programming tìm chuỗi tag tối ưu trong $O(N^2n)$
 
-- **Clustering-based:** Nhóm từ theo distributional similarity
-- **Bayesian HMM:** Học tham số HMM mà không có labels (EM algorithm)
-- **Neural approaches:** Sử dụng cross-lingual transfer từ ngôn ngữ giàu tài nguyên
-
-Unsupervised taggers thường có accuracy thấp hơn đáng kể (~70-80%), nhưng là lựa chọn duy nhất cho nhiều ngôn ngữ.
-
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-011.jpg]]
-
----
-
-## 7. Kết Luận và Định Hướng Học
-
-Chapter này đã thiết lập POS tagging như một **bài toán sequence labeling** cơ bản trong NLP. Các điểm chính:
-
-1. **Từ và lớp từ** là đơn vị phân tích nền tảng; sự phân biệt type/token, lemma/wordform, closed/open class ảnh hưởng đến cách xây dựng mô hình.
-
-2. **Ambiguity** là thách thức trung tâm — cùng một wordform có thể có nhiều POS tags, và việc disambiguation phụ thuộc vào ngữ cảnh.
-
-3. **HMM** cung cấp framework xác suất để kết hợp tri thức từ vựng ($P(w|t)$) và tri thức cú pháp ($P(t|t')$) một cách coherent.
-
-4. **Viterbi Algorithm** cho phép tìm chuỗi tag tối ưu trong thời gian đa thức, là ví dụ kinh điển của dynamic programming trong NLP.
-
-5. **Beam Search** cung cấp trade-off giữa độ chính xác và tốc độ, quan trọng cho ứng dụng thực tế.
-
-Các chapter tiếp theo sẽ xây dựng trên POS tagging để giải quyết các bài toán phức tạp hơn: parsing (phân tích cú pháp), NER (nhận dạng thực thể), và semantic analysis.
+6. **Beam Search:** Trade-off giữa accuracy và speed
 
 ---
 
 ## TODO
 
-- [ ] Liên kết sâu hơn với [[Conditional Random Fields (CRF)]] khi tạo concept note
-- [ ] So sánh HMM tagger với neural tagger hiện đại (BiLSTM-CRF, BERT-based)
-- [ ] Thêm ví dụ POS tagging cho tiếng Việt (đặc thù tokenization)
+- [ ] Liên kết với [[Conditional Random Fields (CRF)]]
+- [ ] So sánh HMM tagger với neural tagger (BiLSTM-CRF, BERT-based)
+- [ ] Thêm ví dụ POS tagging cho tiếng Việt
