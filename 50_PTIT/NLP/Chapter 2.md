@@ -67,8 +67,6 @@ Trong NLP, ta phân biệt rõ giữa **types** và **tokens**:
 
 ### 1.4 Closed Class vs Open Class
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-004.png]]
-
 Các loại từ được chia thành hai nhóm lớn:
 
 **Closed Classes** (lớp đóng) — tập thành viên tương đối cố định:
@@ -83,6 +81,9 @@ Các loại từ được chia thành hai nhóm lớn:
 - **Verbs** (động từ): google, tweet, zoom...
 - **Adjectives** (tính từ): viral, sustainable...
 - **Adverbs** (trạng từ): digitally, remotely...
+
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-001.png]]
+*Bảng phân loại POS tags theo Open Class, Closed Class và Other*
 
 **Mục đích:** Closed class words có phân phối ổn định và dễ học hơn. Open class words đòi hỏi khả năng xử lý **OOV (Out-of-Vocabulary)**.
 
@@ -115,8 +116,6 @@ Các loại từ được chia thành hai nhóm lớn:
 | of      | IN (Preposition)                        |
 | Vietnam | NN (Noun)                               |
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-009.jpg]]
-
 ### 2.2 Ambiguity — Tại sao POS Tagging là bài toán Disambiguation?
 
 Tagging là **bài toán disambiguation** vì từ có thể **nhập nhằng** — có nhiều hơn một POS tag khả dĩ.
@@ -133,8 +132,6 @@ Tagging là **bài toán disambiguation** vì từ có thể **nhập nhằng** 
 | "Does that fight serve dinner" | that | **Determiner** (trận đấu đó) |
 | "I thought that your fight was earlier" | that | **Complementizer** (rằng) |
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-006.png]]
-
 **Mục đích:** Mục tiêu của POS tagging là giải quyết các trường hợp nhập nhằng này, chọn đúng tag cho ngữ cảnh.
 
 ### 2.3 Importance of POS Tagging
@@ -149,7 +146,8 @@ POS tagging là **backbone** cho nhiều tác vụ NLP:
 
 ### 2.4 How POS Tagging Works — Supervised vs Unsupervised
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-011.jpg]]
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-004.png]]
+*Sơ đồ phân loại các phương pháp POS Tagging: Supervised (Rule-based, Stochastic, Neural) và Unsupervised*
 
 **Supervised POS tagging:**
 - Sử dụng training dataset đã được gán nhãn
@@ -175,8 +173,6 @@ POS tagging là **backbone** cho nhiều tác vụ NLP:
 - Phát triển từ dự án Penn Treebank tại University of Pennsylvania
 - Nhằm annotate một large corpus tiếng Anh với thông tin cú pháp và cấu trúc
 - Bao gồm **36 tags** chính (không kể punctuation)
-
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-008.png]]
 
 **Một số tags quan trọng:**
 
@@ -219,13 +215,21 @@ Năm 1906, Andrey Markov giới thiệu **Markov chains**.
 
 $$P(q_i | q_1, q_2, ..., q_{i-1}) = P(q_i | q_{i-1})$$
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-014.png]]
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-005.jpg]]
+*Sơ đồ Markov đơn giản với 2 trạng thái E và A*
+
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-006.png]]
+*Markov chain với xác suất chuyển đổi giữa các trạng thái E và A*
 
 **Ví dụ từ tài liệu gốc:** Để dự đoán thời tiết **ngày mai**, bạn có thể xét thời tiết **hôm nay** nhưng không được phép xem thời tiết **hôm qua**.
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-015.png]]
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-009.jpg]]
+*Ví dụ Markov chain với 3 trạng thái thời tiết: HOT, COLD, WARM và xác suất chuyển đổi*
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-016.jpg]]
+**Các thành phần của Markov Chain:**
+
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-010.png]]
+*Định nghĩa formal: Q (tập states), A (transition matrix), π (initial distribution)*
 
 **Ứng dụng của Markov Chains:**
 - Market share predictions
@@ -236,11 +240,15 @@ $$P(q_i | q_1, q_2, ..., q_{i-1}) = P(q_i | q_{i-1})$$
 - Algorithmic music composition
 - Page ranks (Google search results)
 
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-011.jpg]]
+*Ví dụ ứng dụng PageRank sử dụng Markov Chain*
+
 ### 4.2 Hidden Markov Model
 
 **Markov Model** là mô hình stochastic mô tả hệ thống thay đổi ngẫu nhiên, trong đó trạng thái tương lai chỉ phụ thuộc vào trạng thái hiện tại.
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-019.png]]
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-012.jpg]]
+*State transition diagram với 5 states và các transition probabilities*
 
 **Hidden Markov Model** mở rộng Markov Model bằng cách thêm lớp **observations** được sinh ra từ các **hidden states**:
 
@@ -249,25 +257,18 @@ $$P(q_i | q_1, q_2, ..., q_{i-1}) = P(q_i | q_{i-1})$$
 - **Transitions:** Xác suất chuyển từ state này sang state khác (ví dụ: DT → NN)
 - **Emissions:** Xác suất sinh từ từ một state (ví dụ: NN → "dog")
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-021.jpg]]
-
 ### 4.3 The Components of an HMM Tagger
 
 HMM có hai thành phần chính: **A probabilities** và **B probabilities**.
-
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-023.png]]
 
 **Ma trận A — Transition Probabilities:**
 - $P(t_i | t_{i-1})$ = xác suất tag $t_i$ xuất hiện ngay sau tag $t_{i-1}$
 - Tính bằng Maximum Likelihood Estimation (MLE):
 
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-014.png]]
+*Công thức tính Transition Probability*
+
 $$P(t_i | t_{i-1}) = \frac{C(t_{i-1}, t_i)}{C(t_{i-1})}$$
-
-**Ma trận B — Emission Probabilities:**
-- $P(w_i | t_i)$ = xác suất từ $w_i$ được gán tag $t_i$
-- Tính bằng MLE:
-
-$$P(w_i | t_i) = \frac{C(t_i, w_i)}{C(t_i)}$$
 
 **Ví dụ từ WSJ Corpus (tài liệu gốc):**
 
@@ -275,13 +276,24 @@ MD (modal auxiliary verb) xuất hiện 13,124 lần:
 - MD được theo sau bởi VB (verb base) 10,471 lần
 - Vậy: $P(VB|MD) = \frac{10471}{13124} = 0.7968$
 
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-015.png]]
+*Ví dụ tính P(VB|MD) = 0.80*
+
+**Ma trận B — Emission Probabilities:**
+- $P(w_i | t_i)$ = xác suất từ $w_i$ được gán tag $t_i$
+- Tính bằng MLE:
+
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-016.jpg]]
+*Công thức tính Emission Probability*
+
+$$P(w_i | t_i) = \frac{C(t_i, w_i)}{C(t_i)}$$
+
 Emission probability:
 - Từ "will" được gán tag MD 4,046 lần trong 13,124 lần MD xuất hiện
 - Vậy: $P(\text{will}|MD) = \frac{4046}{13124} = 0.3083$
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-024.jpg]]
-
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-025.png]]
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-017.png]]
+*Ví dụ tính P(will|MD) = 0.31*
 
 ### 4.4 HMM Tagging as Decoding
 
@@ -289,17 +301,22 @@ Emission probability:
 
 **Bài toán:** Cho HMM $\lambda = (A, B)$ và chuỗi quan sát $O = o_1, o_2, ..., o_T$, tìm chuỗi states $Q = q_1, q_2, ..., q_T$ có xác suất cao nhất:
 
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-019.png]]
+*Công thức Decoding: argmax P(tags|words)*
+
 $$\hat{t}_{1:n} = \argmax_{t_{1:n}} P(t_{1:n} | w_{1:n}) \tag{1}$$
 
 **Hai giả định đơn giản hóa:**
 
 **1. Output Independence:** Xác suất của từ chỉ phụ thuộc vào tag của chính nó:
+
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-021.jpg]]
+*Output Independence Assumption*
+
 $$P(w_i | w_1, ..., w_n, t_1, ..., t_n) \approx P(w_i | t_i) \tag{2}$$
 
 **2. Bigram Assumption:** Xác suất của tag chỉ phụ thuộc vào tag ngay trước:
 $$P(t_i | t_1, ..., t_{i-1}) \approx P(t_i | t_{i-1}) \tag{3}$$
-
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-026.png]]
 
 Kết hợp (2) và (3) vào (1):
 $$\hat{t}_{1:n} = \argmax_{t_{1:n}} \prod_{i=1}^{n} P(w_i | t_i) \cdot P(t_i | t_{i-1})$$
@@ -315,7 +332,8 @@ $$\hat{t}_{1:n} = \argmax_{t_{1:n}} \prod_{i=1}^{n} P(w_i | t_i) \cdot P(t_i | t
 
 [[Viterbi Algorithm]] là thuật toán decoding cho HMM, sử dụng **dynamic programming**.
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-027.jpg]]
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-023.png]]
+*Pseudocode thuật toán Viterbi*
 
 **Vấn đề với Brute Force:**
 - Nếu có $N$ tags và câu có $n$ từ, tổng số chuỗi tag khả dĩ là $N^n$
@@ -326,7 +344,8 @@ $$\hat{t}_{1:n} = \argmax_{t_{1:n}} \prod_{i=1}^{n} P(w_i | t_i) \cdot P(t_i | t
 
 **Ví dụ từ tài liệu gốc: "Janet will back the bill"**
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-000.jpg]]
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-024.jpg]]
+*Viterbi trellis cho câu "Janet will back the bill" với các tags khả dĩ*
 
 **Bước 1:** Lattice với các tag khả dĩ:
 - Janet: NNP (proper noun)
@@ -337,21 +356,27 @@ $$\hat{t}_{1:n} = \argmax_{t_{1:n}} \prod_{i=1}^{n} P(w_i | t_i) \cdot P(t_i | t
 
 **Transition probabilities (A)** từ WSJ corpus:
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-010.png]]
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-025.png]]
+*Ma trận Transition Probabilities A*
 
 **Observation likelihoods (B):**
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-012.jpg]]
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-026.png]]
+*Ma trận Emission Probabilities B*
 
 **Bước 2:** Điền Viterbi lattice
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-028.jpg]]
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-027.jpg]]
+*Viterbi trellis với các giá trị và backpointers được tính toán*
 
 Mỗi cell giữ:
 - Xác suất của best path đến cell đó
 - Pointer đến previous cell trên path đó
 
 **Bước 3:** Backtracing từ end state để reconstruct chuỗi tag tối ưu:
+
+![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-028.jpg]]
+*Kết quả cuối cùng: Janet/NNP will/MD back/VB the/DT bill/NN*
 
 **Kết quả:** Janet/NNP will/MD back/VB the/DT bill/NN
 

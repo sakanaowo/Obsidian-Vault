@@ -100,3 +100,12 @@ Mỗi concept quan trọng cần có:
 - Ảnh phải lấy từ thư mục đã trích xuất: `assets/attachments/<doc_name>/chapter_X/`.
 - Sắp xếp ảnh theo đúng thứ tự xuất hiện trong tài liệu gốc.
 - Format: `![[assets/attachments/<doc_name>/chapter_X/img-XXX.png]]`.
+
+#### 4. Quy trình xem hình trước khi dùng (BẮT BUỘC)
+Trước khi đưa hình vào tài liệu, **PHẢI** thực hiện các bước sau:
+1. **Xem hình**: Sử dụng `view_file` để xem nội dung thực tế của mỗi hình ảnh.
+2. **Phân loại**:
+   - **Nội dung học thuật** (công thức, sơ đồ, bảng, biểu đồ) → Sử dụng
+   - **Trang trí (decorative)** (hình abstract, icon trang trí) → **Bỏ qua**
+3. **Đặt hình đúng ngữ cảnh**: Mỗi hình phải được đặt ngay sau đoạn văn giải thích nó.
+4. **Caption**: Thêm mô tả ngắn nếu cần thiết để người đọc hiểu hình.
