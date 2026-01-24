@@ -30,8 +30,33 @@
               "icon": "lucide-file",
               "title": "21-01-2026"
             }
+          },
+          {
+            "id": "aae11abf61d79f12",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "50_PTIT/NLP/Chapter 2.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Chapter 2"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -88,7 +113,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 237.5
+    "width": 237.5,
+    "collapsed": true
   },
   "right": {
     "id": "ae95f377b707bd71",
@@ -203,7 +229,7 @@
       "agent-client:Open agent client": false
     }
   },
-  "active": "73181e71dc9ee7fb",
+  "active": "aae11abf61d79f12",
   "lastOpenFiles": [
     "50_PTIT/NLP/Chapter 2.md",
     "00_DailyNote/21-01-2026.md",
