@@ -63,14 +63,14 @@ Với $t = 2, 3, ..., T$:
 
 $$v_s(t) = \max_{s' \in Q} \left[ v_{s'}(t-1) \cdot a_{s',s} \right] \cdot b_s(o_t)$$
 
-$$bt_s(t) = \argmax_{s' \in Q} \left[ v_{s'}(t-1) \cdot a_{s',s} \right]$$
+$$bt_s(t) = argmax_{s' \in Q} \left[ v_{s'}(t-1) \cdot a_{s',s} \right]$$
 
 Trong đó $bt_s(t)$ là **backpointer** — lưu trạng thái trước đó tốt nhất.
 
 **Bước 3: Kết thúc (Termination)**
 
 $$P^* = \max_{s \in Q} v_s(T)$$
-$$q_T^* = \argmax_{s \in Q} v_s(T)$$
+$$q_T^* = argmax_{s \in Q} v_s(T)$$
 
 **Bước 4: Backtracking**
 

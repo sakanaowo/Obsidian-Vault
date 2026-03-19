@@ -1,14 +1,15 @@
 {
-  "accentColor": "",
+  "accentColor": "#6bffda",
   "enabledCssSnippets": [
     "terminal-font",
-    "latex-style",
-    "bg"
+    "latex-style"
   ],
-  "cssTheme": "Border",
+  "cssTheme": "Cupertino",
   "theme": "obsidian",
   "monospaceFontFamily": "SpaceMono Nerd Font Mono",
-  "interfaceFontFamily": "SF Pro",
-  "textFontFamily": "SF Pro",
-  "baseFontSize": 17
+  "interfaceFontFamily": "SF Pro Display",
+  "textFontFamily": "SF Pro Display,SF Pro Text",
+  "baseFontSize": 17,
+  "showViewHeader": true,
+  "showRibbon": true
 }

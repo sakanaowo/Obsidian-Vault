@@ -118,7 +118,7 @@ Trong đó $C(\cdot)$ là count (số lần xuất hiện) trong training corpus
 
 **Ví dụ từ tài liệu gốc:**
 
-```
+```python
 P(<s> i want english food </s>)
 = P(i|<s>) × P(want|i) × P(english|want) × P(food|english) × P(</s>|food)
 = 0.25 × 0.33 × 0.0011 × 0.5 × 0.68 = 0.000031
@@ -214,8 +214,6 @@ $$PP(W) = P(w_1, w_2, ..., w_N)^{-\frac{1}{N}} = \sqrt[N]{\frac{1}{P(w_1, w_2, .
 - Hyperparameters
 
 ### 5.2 Balancing Bias and Variance
-
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_3/img-000.jpg]]
 
 | Aspect | High Bias (Underfitting) | High Variance (Overfitting) |
 |--------|--------------------------|----------------------------|

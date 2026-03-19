@@ -1,0 +1,43 @@
+{
+  "source_pdf": "giao-trinh-lich-su-dang-cong-san-viet-nam.pdf",
+  "total_pages": 221,
+  "total_chapters": 4,
+  "chapters": [
+    {
+      "title": "Chương nhập môn",
+      "chapter_num": 0,
+      "directory": "chuong_nhap_mon",
+      "pdf_file": "chuong_nhap_mon.pdf",
+      "start_page": 1,
+      "end_page": 12,
+      "page_count": 12
+    },
+    {
+      "title": "Chương 1",
+      "chapter_num": 1,
+      "directory": "chuong_1",
+      "pdf_file": "chuong_1.pdf",
+      "start_page": 13,
+      "end_page": 59,
+      "page_count": 47
+    },
+    {
+      "title": "Chương 2",
+      "chapter_num": 2,
+      "directory": "chuong_2",
+      "pdf_file": "chuong_2.pdf",
+      "start_page": 60,
+      "end_page": 115,
+      "page_count": 56
+    },
+    {
+      "title": "Chương 3",
+      "chapter_num": 3,
+      "directory": "chuong_3",
+      "pdf_file": "chuong_3.pdf",
+      "start_page": 116,
+      "end_page": 221,
+      "page_count": 106
+    }
+  ]
+}

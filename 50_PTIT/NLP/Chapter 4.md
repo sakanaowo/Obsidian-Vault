@@ -56,14 +56,12 @@ aliases:
 
 $$P(h|D) = \frac{P(D|h) \cdot P(h)}{P(D)}$$
 
-![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_4/img-000.jpg]]
-
-| Thành phần | Tên | Ý nghĩa |
-|------------|-----|---------|
-| $P(h)$ | **Prior** | Xác suất của hypothesis $h$ trước khi thấy data |
-| $P(D\|h)$ | **Likelihood** | Xác suất thấy data $D$ nếu $h$ đúng |
-| $P(D)$ | **Evidence** | Xác suất của data (thường ignore vì constant) |
-| $P(h\|D)$ | **Posterior** | Xác suất của $h$ sau khi thấy data |
+| Thành phần | Tên            | Ý nghĩa                                         |
+| ---------- | -------------- | ----------------------------------------------- |
+| $P(h)$     | **Prior**      | Xác suất của hypothesis $h$ trước khi thấy data |
+| $P(D\|h)$  | **Likelihood** | Xác suất thấy data $D$ nếu $h$ đúng             |
+| $P(D)$     | **Evidence**   | Xác suất của data (thường ignore vì constant)   |
+| $P(h\|D)$  | **Posterior**  | Xác suất của $h$ sau khi thấy data              |
 
 **Mục đích:** Cho phép cập nhật beliefs dựa trên evidence mới.
 

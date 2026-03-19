@@ -4,8 +4,8 @@
   "obsidian-style-settings",
   "obsidian-git",
   "tray",
-  "obsidian42-brat",
-  "agent-client",
   "obsidian-hover-editor",
-  "mehrmaid"
+  "mehrmaid",
+  "jupymd",
+  "obsidian-functionplot"
 ]

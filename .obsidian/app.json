@@ -4,5 +4,9 @@
   "alwaysUpdateLinks": true,
   "showUnsupportedFiles": true,
   "attachmentFolderPath": "assets/attachments",
-  "newFileLocation": "current"
+  "newFileLocation": "current",
+  "userIgnoreFilters": [
+    "progress"
+  ],
+  "showInlineTitle": true
 }

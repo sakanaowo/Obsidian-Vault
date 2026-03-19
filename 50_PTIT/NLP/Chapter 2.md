@@ -304,7 +304,7 @@ Emission probability:
 ![[assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-019.png]]
 *Công thức Decoding: argmax P(tags|words)*
 
-$$\hat{t}_{1:n} = \argmax_{t_{1:n}} P(t_{1:n} | w_{1:n}) \tag{1}$$
+$$\hat{t}_{1:n} = argmax_{t_{1:n}} P(t_{1:n} | w_{1:n}) \tag{1}$$
 
 **Hai giả định đơn giản hóa:**
 
