@@ -234,20 +234,21 @@ $$\text{CV Score} = \frac{1}{5} \sum_{i=1}^{5} \text{Score}_i$$
 
 ## 📖 Từ điển thuật ngữ Buổi 13
 
-| Thuật ngữ | Dịch nghĩa | Nghĩa trong buổi này | Ví dụ |
-| --- | --- | --- | --- |
-| **Generalization** | Tổng quát hóa | Khả năng đúng trên data mới | Model đạt val accuracy 90% |
-| **Training Error** ($R_{\text{emp}}$) | Lỗi huấn luyện | Trung bình lỗi trên training set | MSE = 0.001 trên train |
-| **Generalization Error** ($R$) | Lỗi tổng quát | Kỳ vọng lỗi trên phân phối thật | Ước lượng qua val/test error |
-| **Generalization Gap** | Khoảng cách tổng quát | Chênh lệch $R - R_{\text{emp}}$ | Gap = 0.3 → đáng lo |
-| **Overfitting** | Quá khớp / Học vẹt | Train tốt, test kém | Polynomial bậc 15 |
-| **Underfitting** | Kém khớp | Train kém, test kém | Đường thẳng fit data cong |
-| **IID** | Độc lập & cùng phân phối | Train và test từ cùng nguồn | Giả định cơ bản khi split data |
-| **Validation Set** | Tập xác nhận | Data để chọn model tốt nhất | 20% data dùng so sánh models |
-| **Test Set** | Tập kiểm tra | Data chỉ dùng 1 lần cuối | 20% data "niêm phong" |
-| **Cross-Validation** | Kiểm chứng chéo | Xoay vòng validation khi data ít | K-fold với K=5 |
-| **Model Complexity** | Độ phức tạp mô hình | Số tham số + phạm vi giá trị | Polynomial bậc 1 vs bậc 15 |
-| **Regularization** | Chính quy hóa | Ép buộc mô hình đơn giản hơn | L2, Dropout, Early Stopping |
+| Thuật ngữ                             | Dịch nghĩa               | Nghĩa trong buổi này                             | Ví dụ                          |
+| ------------------------------------- | ------------------------ | ------------------------------------------------ | ------------------------------ |
+| **Generalization**                    | Tổng quát hóa            | Khả năng đúng trên data mới                      | Model đạt val accuracy 90%     |
+| **Training Error** ($R_{\text{emp}}$) | Lỗi huấn luyện           | Trung bình lỗi trên training set                 | MSE = 0.001 trên train         |
+| **Generalization Error** ($R$)        | Lỗi tổng quát            | Kỳ vọng lỗi trên phân phối thật                  | Ước lượng qua val/test error   |
+| **Generalization Gap**                | Khoảng cách tổng quát    | Chênh lệch $R - R_{\text{emp}}$                  | Gap = 0.3 → đáng lo            |
+| **Overfitting**                       | Quá khớp / Học vẹt       | Train tốt, test kém                              | Polynomial bậc 15              |
+| **Underfitting**                      | Kém khớp                 | Train kém, test kém                              | Đường thẳng fit data cong      |
+| **IID**                               | Độc lập & cùng phân phối | Train và test từ cùng nguồn                      | Giả định cơ bản khi split data |
+| **Validation Set**                    | Tập xác nhận             | Data để chọn model tốt nhất                      | 20% data dùng so sánh models   |
+| **Test Set**                          | Tập kiểm tra             | Data chỉ dùng 1 lần cuối                         | 20% data "niêm phong"          |
+| **Cross-Validation**                  | Kiểm chứng chéo          | Xoay vòng validation khi data ít                 | K-fold với K=5                 |
+| **Model Complexity**                  | Độ phức tạp mô hình      | Số tham số + phạm vi giá trị                     | Polynomial bậc 1 vs bậc 15     |
+| **Regularization**                    | Chính quy hóa            | Ép buộc mô hình đơn giản hơn                     | L2, Dropout, Early Stopping    |
+| **Variance**                          | Phương sai               | mức mà mô hình sẽ lựa chọn để đánh giá một input |                                |
 
 ---
 

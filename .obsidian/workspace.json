@@ -109,8 +109,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "10_Projects/D2L/Buổi 13 - Tuần 4.md",
-                "mode": "source",
+                "file": "10_Projects/D2L/Buổi 14 - Tuần 4.md",
+                "mode": "preview",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -124,7 +124,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Buổi 13 - Tuần 4"
+              "title": "Buổi 14 - Tuần 4"
             }
           },
           {
@@ -306,8 +306,8 @@
             "state": {
               "type": "git-view",
               "state": {},
-              "icon": "lucide-ghost",
-              "title": "git-view"
+              "icon": "git-pull-request",
+              "title": "Source Control"
             }
           }
         ],
@@ -315,8 +315,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 555.5,
-    "collapsed": true
+    "width": 555.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -332,10 +331,15 @@
   },
   "active": "5dac8b1b2f5be792",
   "lastOpenFiles": [
+    "20_Areas/AI/Concepts/One-Hot Encoding.md",
+    "10_Projects/D2L/Buổi 14 - Tuần 4.md",
+    "20_Areas/AI/Concepts/Sigmoid Function.md",
+    "20_Areas/AI/Concepts/Maximum Likelihood Estimation.md",
+    "20_Areas/AI/Concepts/Softmax Function.md",
+    "10_Projects/D2L/Learning/Buoi 14.ipynb",
+    "10_Projects/D2L/Buổi 13 - Tuần 4.md",
     "10_Projects/D2L/Learning/Buoi 13.ipynb",
     "10_Projects/D2L/D2L Learning Plan - 4 Months.md",
-    "10_Projects/D2L/Buổi 13 - Tuần 4.md",
-    "20_Areas/AI/Concepts/Maximum Likelihood Estimation.md",
     "10_Projects/D2L/Buổi 12 - Tuần 3.md",
     "10_Projects/D2L/Buổi 13 - Tuần 3.md",
     "10_Projects/D2L/Buổi 11 - Tuần 3.md",
@@ -360,15 +364,10 @@
     "50_PTIT/Khai Pha Du Lieu/Untitled.md",
     "assets/attachments/Pasted image 20260311075000.png",
     "30_Resources/Books/Dive Into Deep Learning/d2l-en/chapter_preliminaries/pandas.md",
-    "30_Resources/Books/Dive Into Deep Learning/d2l-en/chapter_preliminaries/Untitled.md",
     "50_PTIT/DL/Untitled.base",
     "10_Projects/D2L/Learning/week2-s7-data-preprocessing.ipynb",
     "10_Projects/D2L/Learning/week1-5-Autograd.ipynb",
-    "10_Projects/D2L/Learning/week1-4-Automatic Differentiation.md",
-    "10_Projects/D2L/Learning/week1-3-Caculus.md",
     "10_Projects/D2L/Learning/week1-2.ipynb",
-    "10_Projects/D2L/Learning/week1-2-linear-algebra.ipynb",
-    "10_Projects/D2L/Learning",
     "assets/attachments/Pasted image 20260124155948.png",
     "assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-009.jpg",
     "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-006-059.jpg",

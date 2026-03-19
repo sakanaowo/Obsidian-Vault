@@ -1,6 +1,35 @@
 ---
 ---
 
+tác vụ: Chuẩn hóa tiếng Việt có dấu cho Sigmoid note - 2026-03-19
+nội dung: Đã chỉnh lại [[Sigmoid Function]] sang tiếng Việt có dấu đầy đủ.
+chi tiết:
+
+- Đã chuyển toàn bộ nội dung từ không dấu sang có dấu, giữ nguyên cấu trúc và công thức.
+- Đã chuẩn hóa lại alias tiếng Việt: "hàm sigmoid".
+- Không thay đổi ý nghĩa học thuật hay liên kết kiến thức liên quan.
+
+
+tác vụ: Bổ sung concept Sigmoid Function - 2026-03-19
+nội dung: Đã tạo [[Sigmoid Function]] trong thư mục Concepts.
+chi tiết:
+
+- Đã viết theo cấu trúc ELI5 -> First Principles -> Công thức -> Ứng dụng DL.
+- Đã thêm các tính chất quan trọng: range, monotonicity, đối xứng, đạo hàm và saturation.
+- Đã nối liên kết sang [[Softmax Function]], [[Cross-Entropy Loss]], [[Maximum Likelihood Estimation]].
+- Đã bổ sung checklist tự kiểm tra và các lỗi thực hành thường gặp với BCE/BCEWithLogitsLoss.
+
+
+tác vụ: Viết lại concept MLE theo First Principles - 2026-03-19
+nội dung: Đã viết lại [[Maximum Likelihood Estimation]] theo cấu trúc ELI5 -> Deep.
+chi tiết:
+
+- Đã mở rộng từ định nghĩa ngắn sang giải thích bản chất likelihood và NLL.
+- Đã thêm 2 cầu nối cốt lõi: Gaussian likelihood -> MSE, Categorical likelihood -> Cross-Entropy.
+- Đã bổ sung phần bias-variance, consistency, asymptotic properties và liên hệ MLE vs MAP.
+- Đã thêm checklist thực hành để chọn loss đúng theo phân phối dữ liệu.
+
+
 tác vụ: D2L Learning - Tuần 4, Buổi 14 - Softmax Regression - 2026-03-19
 nội dung: Đã viết [[Buổi 14 - Tuần 4]] (chapter_linear-classification/softmax-regression.md) theo hướng nhập môn, kèm hình ảnh minh họa.
 chi tiết:
