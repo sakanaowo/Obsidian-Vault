@@ -3,6 +3,6 @@
 .env
 /Agent Client/
 /.obsidian/plugins
-
+.data/
 # Ignore large binary documents (handled outside git)
 *.pdf

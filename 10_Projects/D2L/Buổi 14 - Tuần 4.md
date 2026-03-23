@@ -163,7 +163,7 @@ Cho $\mathbf{o} = (2.0, 1.0, 0.1)$:
 | Công thức | $\frac{1}{1+e^{-x}}$ | $\frac{e^{o_i}}{\sum_j e^{o_j}}$ |
 | Quan hệ | = Softmax với 2 classes | = Sigmoid tổng quát |
 
-> Xem thêm: [[Softmax Function]]
+> Xem thêm: [[Softmax Function]], [[Sigmoid Function]]
 
 ---
 

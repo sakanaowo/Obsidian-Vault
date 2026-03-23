@@ -1,6 +1,71 @@
 ---
 ---
 
+tác vụ: D2L Learning - Tuần 4, Buổi 17 - Softmax Regression Concise + Review - 2026-03-23
+nội dung: Đã viết [[Buổi 17 - Tuần 4]] (chapter_linear-classification/softmax-regression-concise.md) + Review Tuần 4.
+chi tiết:
+
+- Đã tạo note tại 10_Projects/D2L/Buổi 17 - Tuần 4.md.
+- So sánh scratch vs concise, giải thích LogSumExp trick chi tiết.
+- Đã thêm Mini Test 10 câu tổng ôn Tuần 4 (Buổi 13-17) kèm đáp án ẩn.
+- Đã thêm Mermaid knowledge map cho Tuần 4.
+- Đã thêm bảng từ điển 11 thuật ngữ.
+
+
+
+tác vụ: D2L Learning - Tuần 4, Buổi 16 - Softmax Regression from Scratch - 2026-03-22
+nội dung: Đã viết [[Buổi 16 - Tuần 4]] (chapter_linear-classification/softmax-regression-scratch.md) theo hướng nhập môn, kèm code đầy đủ.
+chi tiết:
+
+- Đã tạo note tại 10_Projects/D2L/Buổi 16 - Tuần 4.md theo chuẩn ELI5 → Deep cho người mới.
+- Nội dung: implement softmax, cross-entropy, model class, training loop, error analysis.
+- Đã thêm Mermaid flowchart cho training loop (image gen quota exhausted).
+- Đã thêm bảng từ điển 13 thuật ngữ + 5 bài tập thực hành.
+- Đã thêm code Python đầy đủ chạy được (Phần 6 — all-in-one).
+
+
+
+tác vụ: D2L Learning - Tuần 4, Buổi 15 - Image Classification Dataset (Fashion-MNIST) - 2026-03-22
+nội dung: Đã viết [[Buổi 15 - Tuần 4]] (chapter_linear-classification/image-classification-dataset.md) theo hướng nhập môn, kèm hình ảnh minh họa.
+chi tiết:
+
+- Đã tạo note tại 10_Projects/D2L/Buổi 15 - Tuần 4.md theo chuẩn ELI5 → Deep cho người mới.
+- Đã tạo 2 hình ảnh: Fashion-MNIST samples overview, DataLoader pipeline diagram.
+- Đã tạo 2 concept notes mới: [[Fashion-MNIST Dataset]], [[DataLoader (PyTorch)]].
+- Đã thêm code PyTorch load + visualize Fashion-MNIST, giải thích tensor shape $(n,c,h,w)$.
+- Đã thêm bảng từ điển 11 thuật ngữ + 5 câu tự kiểm tra.
+
+
+
+tác vụ: Chuẩn hóa tiếng Việt có dấu cho Sigmoid note - 2026-03-19
+nội dung: Đã chỉnh lại [[Sigmoid Function]] sang tiếng Việt có dấu đầy đủ.
+chi tiết:
+
+- Đã chuyển toàn bộ nội dung từ không dấu sang có dấu, giữ nguyên cấu trúc và công thức.
+- Đã chuẩn hóa lại alias tiếng Việt: "hàm sigmoid".
+- Không thay đổi ý nghĩa học thuật hay liên kết kiến thức liên quan.
+
+
+tác vụ: Bổ sung concept Sigmoid Function - 2026-03-19
+nội dung: Đã tạo [[Sigmoid Function]] trong thư mục Concepts.
+chi tiết:
+
+- Đã viết theo cấu trúc ELI5 -> First Principles -> Công thức -> Ứng dụng DL.
+- Đã thêm các tính chất quan trọng: range, monotonicity, đối xứng, đạo hàm và saturation.
+- Đã nối liên kết sang [[Softmax Function]], [[Cross-Entropy Loss]], [[Maximum Likelihood Estimation]].
+- Đã bổ sung checklist tự kiểm tra và các lỗi thực hành thường gặp với BCE/BCEWithLogitsLoss.
+
+
+tác vụ: Viết lại concept MLE theo First Principles - 2026-03-19
+nội dung: Đã viết lại [[Maximum Likelihood Estimation]] theo cấu trúc ELI5 -> Deep.
+chi tiết:
+
+- Đã mở rộng từ định nghĩa ngắn sang giải thích bản chất likelihood và NLL.
+- Đã thêm 2 cầu nối cốt lõi: Gaussian likelihood -> MSE, Categorical likelihood -> Cross-Entropy.
+- Đã bổ sung phần bias-variance, consistency, asymptotic properties và liên hệ MLE vs MAP.
+- Đã thêm checklist thực hành để chọn loss đúng theo phân phối dữ liệu.
+
+
 tác vụ: D2L Learning - Tuần 4, Buổi 14 - Softmax Regression - 2026-03-19
 nội dung: Đã viết [[Buổi 14 - Tuần 4]] (chapter_linear-classification/softmax-regression.md) theo hướng nhập môn, kèm hình ảnh minh họa.
 chi tiết:

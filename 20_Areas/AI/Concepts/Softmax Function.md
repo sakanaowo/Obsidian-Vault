@@ -1,7 +1,16 @@
 ---
-title: "Softmax Function"
-aliases: [softmax, hàm softmax, normalized exponential, softargmax]
-tags: [concept, machine-learning, activation-function, classification]
+title: Softmax Function
+aliases:
+  - softmax
+  - hàm softmax
+  - normalized exponential
+  - softargmax
+tags:
+  - concept
+  - machine-learning
+  - activation-function
+  - classification
+  - sigmoid
 created: 2026-03-19
 ---
 
