@@ -1,6 +1,31 @@
 ---
 ---
 
+tác vụ: D2L Learning - Tuần 5, Buổi 18 - Multilayer Perceptrons - 2026-03-24
+nội dung: Đã viết [[Buổi 18 - Tuần 5]] (chapter_multilayer-perceptrons/mlp.md) — bước đầu vào Deep Learning.
+chi tiết:
+
+- Đã tạo note tại 10_Projects/D2L/Buổi 18 - Tuần 5.md theo chuẩn ELI5 → Deep.
+- Đã tạo 2 concept notes mới: [[Activation Function]], [[Multilayer Perceptron]].
+- Nội dung: giới hạn linear model, hidden layers, chứng minh affine collapse, 3 activation functions (ReLU, Sigmoid, Tanh), Universal Approximation Theorem.
+- Đã thêm bảng từ điển 13 thuật ngữ + 5 câu tự kiểm tra.
+- Image gen quota hết → dùng Mermaid diagrams thay thế.
+
+
+
+tác vụ: D2L Learning - Tuần 4, Tổng ôn - 2026-03-23
+nội dung: Đã tạo [[Tổng ôn Tuần 4]] — buổi ôn tập tổng hợp cho toàn bộ Tuần 4.
+chi tiết:
+
+- Bản đồ kiến thức Mermaid cho 5 buổi (13-17).
+- Tóm tắt 1 dòng cho mỗi khái niệm theo từng buổi.
+- 5 công thức cốt lõi cần nhớ (softmax, cross-entropy, gradient, SGD, LogSumExp).
+- 6 sai lầm phổ biến kèm cách tránh.
+- 4 bài trắc nghiệm + 3 bài tính tay + 3 bài code (tất cả có đáp án ẩn).
+- Preview Tuần 5 (MLP).
+
+
+
 tác vụ: D2L Learning - Tuần 4, Buổi 17 - Softmax Regression Concise + Review - 2026-03-23
 nội dung: Đã viết [[Buổi 17 - Tuần 4]] (chapter_linear-classification/softmax-regression-concise.md) + Review Tuần 4.
 chi tiết:
