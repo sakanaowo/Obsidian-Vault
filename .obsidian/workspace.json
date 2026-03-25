@@ -246,9 +246,23 @@
               "icon": "lucide-file",
               "title": "Buổi 18 - Tuần 5"
             }
+          },
+          {
+            "id": "6e631540279da648",
+            "type": "leaf",
+            "state": {
+              "type": "split-diff-view",
+              "state": {
+                "aFile": "conflict-files-obsidian-git.md",
+                "bFile": "conflict-files-obsidian-git.md",
+                "aRef": ""
+              },
+              "icon": "diff",
+              "title": "Diff: conflict-files-obsidian-git"
+            }
           }
         ],
-        "currentTab": 9
+        "currentTab": 10
       }
     ],
     "direction": "vertical"
@@ -426,8 +440,9 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "1cd9ad1079b57f45",
+  "active": "6e631540279da648",
   "lastOpenFiles": [
+    "conflict-files-obsidian-git.md",
     "10_Projects/D2L/Buổi 18 - Tuần 5.md",
     "20_Areas/AI/Concepts/Viterbi Algorithm.md",
     "30_Resources/Books/Dive Into Deep Learning/d2l-en/chapter_computer-vision/anchor.md",
@@ -463,7 +478,6 @@
     "10_Projects/D2L/Buổi 11 - Tuần 3.md",
     "10_Projects/D2L/Learning/Buoi 12.ipynb",
     "10_Projects/D2L/Buổi 10 - Tuần 3.md",
-    "10_Projects/D2L/Buổi 9 - Tuần 2.md",
     "assets/attachments/Pasted image 20260311075000.png",
     "assets/attachments/Pasted image 20260124155948.png",
     "assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-009.jpg",
