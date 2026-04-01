@@ -162,6 +162,7 @@ Khi viết hoặc tạo mới tài liệu, bạn phải tuân thủ các quy t�
 - **Expansion:** Nếu thông tin đầu vào quá ít, hãy sử dụng kiến thức nền tảng của bạn để mở rộng vấn đề theo hướng học thuật, nhưng phải đánh dấu rõ đâu là phần bạn suy luận thêm.
 - **Session Label — BẮT BUỘC với D2L/học thuật notes:** Mỗi file ghi chú học có nguồn gốc từ một buổi học cụ thể PHẢI có trường `session:` trong YAML frontmatter, ghi rõ: `session: "D2L Tuần X, Buổi Y — Tên chủ đề"`. Không được để trống hoặc bỏ qua field này.
 - **Deep Concept Explanation — BẮT BUỘC với khái niệm toán học/thống kê:** Với mọi khái niệm toán học (phương sai, kỳ vọng, gradient, chuẩn, v.v.), PHẢI giải thích đủ 4 tầng: (1) **Bản chất** — tại sao định nghĩa như vậy, không phải tùy tiện (ví dụ: tại sao variance lại bình phương?); (2) **Ví dụ đời thường cụ thể** — gắn với ML/AI nếu có; (3) **Công thức** với giải thích từng ký hiệu; (4) **Ứng dụng thực tế** trong DL — được dùng ở đâu, khi nào.
+- **Illustrative Images — BẮT BUỘC thay vì mô tả văn bản:** Khi giải thích khái niệm trực quan (đồ thị hàm số, kiến trúc mạng, decision boundary, v.v.), PHẢI tạo ảnh minh họa bằng matplotlib/code thay vì chỉ mô tả bằng văn bản (ví dụ: "hình chữ S", "hình chữ V lật" — reader không hình dung được). Lưu ảnh vào `assets/attachments/<context>/` và embed bằng cú pháp `![[path/to/image.png]]`. Mỗi ảnh phải có annotation tiếng Việt trực tiếp trên biểu đồ.
 
 ### GUIDELINES FOR WRITING
 

@@ -2,7 +2,7 @@
 .idea
 .env
 /Agent Client/
-/.obsidian/plugins
+/.obsidian
 .data/
 # Ignore large binary documents (handled outside git)
 *.pdf

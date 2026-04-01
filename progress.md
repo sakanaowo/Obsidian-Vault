@@ -1,7 +1,6 @@
 ---
 ---
 
-<<<<<<< HEAD
 tác vụ: D2L Learning - Tuần 5, Buổi 18 - Multilayer Perceptrons - 2026-03-24
 nội dung: Đã viết [[Buổi 18 - Tuần 5]] (chapter_multilayer-perceptrons/mlp.md) — bước đầu vào Deep Learning.
 chi tiết:
@@ -63,8 +62,6 @@ chi tiết:
 
 
 
-=======
->>>>>>> origin/main
 tác vụ: Chuẩn hóa tiếng Việt có dấu cho Sigmoid note - 2026-03-19
 nội dung: Đã chỉnh lại [[Sigmoid Function]] sang tiếng Việt có dấu đầy đủ.
 chi tiết:

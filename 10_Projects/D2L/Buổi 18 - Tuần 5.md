@@ -55,6 +55,9 @@ Mô hình tuyến tính có dạng $y = wx + b$. Ý nghĩa: nếu tăng $x$ lên
 >
 > Mô hình tuyến tính **bắt buộc** mọi thứ phải đi 1 hướng → nó không biểu diễn nổi những mối quan hệ phức tạp như trên.
 
+![[assets/attachments/D2L/Buoi18/linear_limitation.png]]
+*Trái: Nhiệt cơ thể vs Sức khỏe — đường cong chữ U, linear model (đường nét đứt) hoàn toàn sai. Phải: Dữ liệu xếp vòng tròn lồng nhau — không đường thẳng nào tách được.*
+
 ### 1.2 Pixel đơn lẻ không có ý nghĩa
 
 Trong phân loại ảnh:
@@ -227,6 +230,8 @@ $$\text{ReLU}(x) = \max(0, x)$$
 
 Tiếng Việt rõ ràng: **nếu x âm → trả về 0; nếu x dương → giữ nguyên x**.
 
+![[assets/attachments/D2L/Buoi18/relu_plot.png]]
+
 ```python
 import torch
 x = torch.arange(-8, 8, 0.1, requires_grad=True)
@@ -266,7 +271,9 @@ y = torch.relu(x)
 
 $$\sigma(x) = \frac{1}{1 + e^{-x}}, \qquad \text{Kết quả luôn nằm trong } (0, 1)$$
 
-Tiếng Việt: **ép mọi số về khoảng 0→1**. Số rất âm → gần 0. Số rất dương → gần 1. Số = 0 → đúng 0.5.
+Tiếng Việt: **ép mọi số về khoảng 0→1**.
+
+![[assets/attachments/D2L/Buoi18/sigmoid_plot.png]] Số rất âm → gần 0. Số rất dương → gần 1. Số = 0 → đúng 0.5.
 
 **Đạo hàm**: $\sigma(x)(1 - \sigma(x))$ — giá trị lớn nhất chỉ **0.25** (tại $x = 0$).
 
@@ -287,6 +294,8 @@ Tiếng Việt: **ép mọi số về khoảng 0→1**. Số rất âm → gần
 $$\tanh(x) = \frac{1 - e^{-2x}}{1 + e^{-2x}}, \qquad \text{Kết quả nằm trong } (-1, 1)$$
 
 Tiếng Việt: giống sigmoid nhưng output **đối xứng qua 0** — có cả giá trị âm lẫn dương.
+
+![[assets/attachments/D2L/Buoi18/tanh_plot.png]]
 
 > [!question]- ❓ "Zero-centered" là gì? Tại sao quan trọng?
 > **Zero-centered** = output trung bình bằng 0 (có cả giá trị âm lẫn dương, cân bằng quanh 0).
@@ -342,6 +351,15 @@ axes[2].axhline(0, color='gray', linewidth=0.5)
 plt.tight_layout()
 plt.show()
 ```
+
+![[assets/attachments/D2L/Buoi18/activation_comparison.png]]
+*So sánh trực quan 3 activation functions*
+
+![[assets/attachments/D2L/Buoi18/gradient_comparison.png]]
+*Đạo hàm (gradient) của 3 hàm — chú ý Sigmoid gradient max chỉ 0.25!*
+
+![[assets/attachments/D2L/Buoi18/vanishing_gradient.png]]
+*Vanishing gradient: Sigmoid (cam) tụt dốc thảm hại qua từng tầng. ReLU (xanh) giữ nguyên gradient = 1.*
 
 > Xem thêm chi tiết: [[Activation Function]]
 

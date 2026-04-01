@@ -6,40 +6,16 @@
         "type": "split",
         "children": [
           {
-            "id": "1f931480b748c70c",
+            "id": "f59326233936053a",
             "type": "tabs",
             "children": [
               {
-                "id": "69e8f63745631406",
+                "id": "a8615b43b04e14f6",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "10_Projects/D2L/DL/Calculus for Deep Learning.md",
-                    "mode": "preview",
-                    "source": false,
-                    "backlinks": true,
-                    "backlinkOpts": {
-                      "collapseAll": false,
-                      "extraContext": false,
-                      "sortOrder": "alphabetical",
-                      "showSearch": false,
-                      "searchQuery": "",
-                      "backlinkCollapsed": false,
-                      "unlinkedCollapsed": true
-                    }
-                  },
-                  "icon": "lucide-file",
-                  "title": "Calculus for Deep Learning"
-                }
-              },
-              {
-                "id": "db228400c92cc308",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "10_Projects/D2L/Buổi 10 - Tuần 3.md",
+                    "file": "10_Projects/D2L/Buổi 2 - Tuần 1.md",
                     "mode": "source",
                     "source": false,
                     "backlinks": true,
@@ -54,11 +30,59 @@
                     }
                   },
                   "icon": "lucide-file",
-                  "title": "Buổi 10 - Tuần 3"
+                  "title": "Buổi 2 - Tuần 1"
                 }
               },
               {
-                "id": "55d7cdb874064701",
+                "id": "cec61e9328b01a84",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Buổi 8 - Tuần 2.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Buổi 8 - Tuần 2"
+                }
+              },
+              {
+                "id": "29464dc4bc154e66",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Buổi 9 - Tuần 2.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Buổi 9 - Tuần 2"
+                }
+              },
+              {
+                "id": "2a0fb7ac081f1bcb",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
@@ -82,13 +106,37 @@
                 }
               },
               {
-                "id": "557ab3c0ffe5a906",
+                "id": "5a4ea02557816d3e",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Buổi 11 - Tuần 3.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Buổi 11 - Tuần 3"
+                }
+              },
+              {
+                "id": "dcc9a20cf35d4c95",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
                   "state": {
                     "file": "10_Projects/D2L/Buổi 12 - Tuần 3.md",
-                    "mode": "preview",
+                    "mode": "source",
                     "source": false,
                     "backlinks": true,
                     "backlinkOpts": {
@@ -106,13 +154,37 @@
                 }
               },
               {
-                "id": "5dac8b1b2f5be792",
+                "id": "3542b511c582f760",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Buổi 13 - Tuần 4.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Buổi 13 - Tuần 4"
+                }
+              },
+              {
+                "id": "a237d9d74d125d22",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
                   "state": {
                     "file": "10_Projects/D2L/Buổi 14 - Tuần 4.md",
-                    "mode": "preview",
+                    "mode": "source",
                     "source": false,
                     "backlinks": true,
                     "backlinkOpts": {
@@ -130,13 +202,13 @@
                 }
               },
               {
-                "id": "4bf712c21499e95f",
+                "id": "e88ab8b11be1679f",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
                   "state": {
                     "file": "10_Projects/D2L/Buổi 15 - Tuần 4.md",
-                    "mode": "preview",
+                    "mode": "source",
                     "source": false,
                     "backlinks": true,
                     "backlinkOpts": {
@@ -154,12 +226,12 @@
                 }
               },
               {
-                "id": "dd1fff9ff46411ee",
+                "id": "efb73da0b17009cd",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "20_Areas/AI/Concepts/Cross-Entropy Loss.md",
+                    "file": "10_Projects/D2L/Buổi 16 - Tuần 4.md",
                     "mode": "source",
                     "source": false,
                     "backlinks": true,
@@ -174,17 +246,17 @@
                     }
                   },
                   "icon": "lucide-file",
-                  "title": "Cross-Entropy Loss"
+                  "title": "Buổi 16 - Tuần 4"
                 }
               },
               {
-                "id": "89c8de8cc6aa3eec",
+                "id": "e850e2b2627f923c",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
                   "state": {
                     "file": "10_Projects/D2L/Buổi 17 - Tuần 4.md",
-                    "mode": "preview",
+                    "mode": "source",
                     "source": false,
                     "backlinks": true,
                     "backlinkOpts": {
@@ -202,31 +274,7 @@
                 }
               },
               {
-                "id": "8eb5adcc944514f0",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "10_Projects/D2L/Tổng ôn Tuần 4.md",
-                    "mode": "preview",
-                    "source": false,
-                    "backlinks": true,
-                    "backlinkOpts": {
-                      "collapseAll": false,
-                      "extraContext": false,
-                      "sortOrder": "alphabetical",
-                      "showSearch": false,
-                      "searchQuery": "",
-                      "backlinkCollapsed": false,
-                      "unlinkedCollapsed": true
-                    }
-                  },
-                  "icon": "lucide-file",
-                  "title": "Tổng ôn Tuần 4"
-                }
-              },
-              {
-                "id": "1cd9ad1079b57f45",
+                "id": "e34f37718a23ae80",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
@@ -248,9 +296,153 @@
                   "icon": "lucide-file",
                   "title": "Buổi 18 - Tuần 5"
                 }
+              },
+              {
+                "id": "24f6c56acd071a7c",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Buổi 19 - Tuần 5.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Buổi 19 - Tuần 5"
+                }
+              },
+              {
+                "id": "a9c60c1500086700",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Buổi 20 - Tuần 5.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Buổi 20 - Tuần 5"
+                }
+              },
+              {
+                "id": "7bb9b3bebdc7b27b",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Buổi 21 - Tuần 6.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Buổi 21 - Tuần 6"
+                }
+              },
+              {
+                "id": "2ab021eb36aede15",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Buổi 22 - Tuần 6.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Buổi 22 - Tuần 6"
+                }
+              },
+              {
+                "id": "a203d3a55a2139a2",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/D2L Learning Plan - 4 Months.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "D2L Learning Plan - 4 Months"
+                }
+              },
+              {
+                "id": "8045f355bbd6e20e",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Tổng ôn Tuần 4.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Tổng ôn Tuần 4"
+                }
               }
             ],
-            "currentTab": 9
+            "currentTab": 16
           }
         ],
         "direction": "vertical"
@@ -282,7 +474,7 @@
                 "state": {
                   "type": "search",
                   "state": {
-                    "query": "",
+                    "query": "loss function",
                     "matchingCase": false,
                     "explainSearch": false,
                     "collapseAll": false,
@@ -307,7 +499,7 @@
           }
         ],
         "direction": "horizontal",
-        "width": 211.5
+        "width": 290.5
       },
       "right": {
         "id": "ae95f377b707bd71",
@@ -389,30 +581,21 @@
                 "state": {
                   "type": "outline",
                   "state": {
+                    "file": "10_Projects/D2L/D2L Learning Plan - 4 Months.md",
                     "followCursor": false,
                     "showSearch": false,
                     "searchQuery": ""
                   },
                   "icon": "lucide-list",
-                  "title": "Outline"
-                }
-              },
-              {
-                "id": "a60d96f7f591ed0a",
-                "type": "leaf",
-                "state": {
-                  "type": "git-view",
-                  "state": {},
-                  "icon": "git-pull-request",
-                  "title": "Source Control"
+                  "title": "Outline of D2L Learning Plan - 4 Months"
                 }
               }
             ],
-            "currentTab": 4
+            "currentTab": 3
           }
         ],
         "direction": "horizontal",
-        "width": 555.5,
+        "width": 568.5,
         "collapsed": true
       },
       "left-ribbon": {
@@ -428,11 +611,297 @@
           "workspaces:Manage workspace layouts": false
         }
       },
-      "active": "1cd9ad1079b57f45",
-      "mtime": "2026-03-25T13:07:17+07:00",
+      "active": "a203d3a55a2139a2",
+      "mtime": "2026-03-27T10:14:59+07:00",
       "workspaces-plus:settings-v1": {
         "explorerFoldState": [
+          "10_Projects",
+          "10_Projects/D2L",
           "50_PTIT"
+        ]
+      }
+    },
+    "NLP": {
+      "main": {
+        "id": "a5467ccac092e1d8",
+        "type": "split",
+        "children": [
+          {
+            "id": "2ead3c5ffd22f835",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "1603dbde9526a6d3",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "50_PTIT/NLP/Chapter 1.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Chapter 1"
+                }
+              },
+              {
+                "id": "545a3b1b17701500",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "50_PTIT/NLP/Chapter 2.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Chapter 2"
+                }
+              },
+              {
+                "id": "0b5151f0c869c04f",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "50_PTIT/NLP/Chapter 3.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Chapter 3"
+                }
+              },
+              {
+                "id": "14882dac4f0f2efb",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "50_PTIT/NLP/Chapter 4.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Chapter 4"
+                }
+              }
+            ],
+            "currentTab": 3
+          }
+        ],
+        "direction": "vertical"
+      },
+      "left": {
+        "id": "5a51d7987bc3c689",
+        "type": "split",
+        "children": [
+          {
+            "id": "65b399a6b11295ac",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "c5a7e2d7cabeccb8",
+                "type": "leaf",
+                "state": {
+                  "type": "file-explorer",
+                  "state": {
+                    "sortOrder": "alphabetical",
+                    "autoReveal": false
+                  },
+                  "icon": "lucide-folder-closed",
+                  "title": "Files"
+                }
+              },
+              {
+                "id": "e87fc3034e3e12d9",
+                "type": "leaf",
+                "state": {
+                  "type": "search",
+                  "state": {
+                    "query": "loss function",
+                    "matchingCase": false,
+                    "explainSearch": false,
+                    "collapseAll": false,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical"
+                  },
+                  "icon": "lucide-search",
+                  "title": "Search"
+                }
+              },
+              {
+                "id": "bd965901eba565bf",
+                "type": "leaf",
+                "state": {
+                  "type": "bookmarks",
+                  "state": {},
+                  "icon": "lucide-bookmark",
+                  "title": "Bookmarks"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "horizontal",
+        "width": 290.5,
+        "collapsed": true
+      },
+      "right": {
+        "id": "ae95f377b707bd71",
+        "type": "split",
+        "children": [
+          {
+            "id": "8c01bff06eba2261",
+            "type": "tabs",
+            "dimension": 54.68468468468468,
+            "children": [
+              {
+                "id": "cb21d001e64c5293",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "graph",
+                  "state": {},
+                  "pinned": true,
+                  "icon": "lucide-git-fork",
+                  "title": "Graph view"
+                }
+              }
+            ]
+          },
+          {
+            "id": "39cc47149cd52f4d",
+            "type": "tabs",
+            "dimension": 45.31531531531531,
+            "children": [
+              {
+                "id": "833b9142351c80b8",
+                "type": "leaf",
+                "state": {
+                  "type": "backlink",
+                  "state": {
+                    "collapseAll": true,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical",
+                    "showSearch": false,
+                    "searchQuery": "",
+                    "backlinkCollapsed": false,
+                    "unlinkedCollapsed": true
+                  },
+                  "icon": "links-coming-in",
+                  "title": "Backlinks"
+                }
+              },
+              {
+                "id": "3415be512b4fde52",
+                "type": "leaf",
+                "state": {
+                  "type": "outgoing-link",
+                  "state": {
+                    "linksCollapsed": false,
+                    "unlinkedCollapsed": true
+                  },
+                  "icon": "links-going-out",
+                  "title": "Outgoing links"
+                }
+              },
+              {
+                "id": "92c0dfeb25d857e0",
+                "type": "leaf",
+                "state": {
+                  "type": "tag",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "useHierarchy": true,
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-tags",
+                  "title": "Tags"
+                }
+              },
+              {
+                "id": "675467455b5a3fc2",
+                "type": "leaf",
+                "state": {
+                  "type": "outline",
+                  "state": {
+                    "file": "50_PTIT/NLP/Chapter 4.md",
+                    "followCursor": false,
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-list",
+                  "title": "Outline of Chapter 4"
+                }
+              }
+            ],
+            "currentTab": 3
+          }
+        ],
+        "direction": "horizontal",
+        "width": 568.5
+      },
+      "left-ribbon": {
+        "hiddenItems": {
+          "bases:Create new base": false,
+          "switcher:Open quick switcher": false,
+          "graph:Open graph view": false,
+          "canvas:Create new canvas": false,
+          "daily-notes:Open today's daily note": false,
+          "templates:Insert template": false,
+          "command-palette:Open command palette": false,
+          "obsidian-git:Open Git source control": false,
+          "workspaces:Manage workspace layouts": false
+        }
+      },
+      "active": "14882dac4f0f2efb",
+      "mtime": "2026-03-27T10:10:45+07:00",
+      "workspaces-plus:settings-v1": {
+        "explorerFoldState": [
+          "50_PTIT",
+          "50_PTIT/NLP"
         ]
       }
     }

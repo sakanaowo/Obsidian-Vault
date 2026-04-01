@@ -4,209 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "1f931480b748c70c",
+        "id": "f59326233936053a",
         "type": "tabs",
         "children": [
           {
-            "id": "69e8f63745631406",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "10_Projects/D2L/DL/Calculus for Deep Learning.md",
-                "mode": "preview",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Calculus for Deep Learning"
-            }
-          },
-          {
-            "id": "db228400c92cc308",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "10_Projects/D2L/Buổi 10 - Tuần 3.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Buổi 10 - Tuần 3"
-            }
-          },
-          {
-            "id": "55d7cdb874064701",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "10_Projects/D2L/Buổi 11 - Tuần 3.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Buổi 11 - Tuần 3"
-            }
-          },
-          {
-            "id": "557ab3c0ffe5a906",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "10_Projects/D2L/Buổi 12 - Tuần 3.md",
-                "mode": "preview",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Buổi 12 - Tuần 3"
-            }
-          },
-          {
-            "id": "5dac8b1b2f5be792",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "10_Projects/D2L/Buổi 14 - Tuần 4.md",
-                "mode": "preview",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Buổi 14 - Tuần 4"
-            }
-          },
-          {
-            "id": "4bf712c21499e95f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "10_Projects/D2L/Buổi 15 - Tuần 4.md",
-                "mode": "preview",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Buổi 15 - Tuần 4"
-            }
-          },
-          {
-            "id": "dd1fff9ff46411ee",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "20_Areas/AI/Concepts/Cross-Entropy Loss.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Cross-Entropy Loss"
-            }
-          },
-          {
-            "id": "89c8de8cc6aa3eec",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "10_Projects/D2L/Buổi 17 - Tuần 4.md",
-                "mode": "preview",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Buổi 17 - Tuần 4"
-            }
-          },
-          {
-            "id": "8eb5adcc944514f0",
+            "id": "8045f355bbd6e20e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "10_Projects/D2L/Tổng ôn Tuần 4.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
@@ -224,12 +32,36 @@
             }
           },
           {
-            "id": "1cd9ad1079b57f45",
+            "id": "44fed39c7bed59ce",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "10_Projects/D2L/Buổi 18 - Tuần 5.md",
+                "file": "10_Projects/D2L/Buổi 24 - Tuần 7.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Buổi 24 - Tuần 7"
+            }
+          },
+          {
+            "id": "a279a2169f476608",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "10_Projects/D2L/Tổng ôn Buổi 8-24.md",
                 "mode": "preview",
                 "source": false,
                 "backlinks": true,
@@ -244,25 +76,60 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Buổi 18 - Tuần 5"
+              "title": "Tổng ôn Buổi 8-24"
             }
           },
           {
-            "id": "6e631540279da648",
+            "id": "fcf96b769f9c0b9f",
             "type": "leaf",
             "state": {
-              "type": "split-diff-view",
+              "type": "markdown",
               "state": {
-                "aFile": "conflict-files-obsidian-git.md",
-                "bFile": "conflict-files-obsidian-git.md",
-                "aRef": ""
+                "file": "10_Projects/D2L/Buổi 25 - Tuần 7.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "diff",
-              "title": "Diff: conflict-files-obsidian-git"
+              "icon": "lucide-file",
+              "title": "Buổi 25 - Tuần 7"
+            }
+          },
+          {
+            "id": "0f3a529e5233f818",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "10_Projects/D2L/Buổi 26 - Tuần 8.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Buổi 26 - Tuần 8"
             }
           }
         ],
-        "currentTab": 10
+        "currentTab": 4,
+        "stacked": true
       }
     ],
     "direction": "vertical"
@@ -294,7 +161,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "argmax",
+                "query": "MSE",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -306,7 +173,7 @@
             }
           },
           {
-            "id": "bd965901eba565bf",
+            "id": "ef854bb2319827a2",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -315,12 +182,12 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 290.5
+    "width": 290.5,
+    "collapsed": true
   },
   "right": {
     "id": "ae95f377b707bd71",
@@ -382,6 +249,16 @@
             }
           },
           {
+            "id": "4200dd0051346414",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
+          },
+          {
             "id": "92c0dfeb25d857e0",
             "type": "leaf",
             "state": {
@@ -402,30 +279,21 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "10_Projects/D2L/Buổi 26 - Tuần 8.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline"
-            }
-          },
-          {
-            "id": "a60d96f7f591ed0a",
-            "type": "leaf",
-            "state": {
-              "type": "git-view",
-              "state": {},
-              "icon": "git-pull-request",
-              "title": "Source Control"
+              "title": "Outline of Buổi 26 - Tuần 8"
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
-    "width": 555.5
+    "width": 568.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -436,58 +304,58 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "obsidian-git:Open Git source control": false,
-      "workspaces:Manage workspace layouts": false
+      "workspaces:Manage workspace layouts": false,
+      "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6e631540279da648",
+  "active": "0f3a529e5233f818",
   "lastOpenFiles": [
-    "conflict-files-obsidian-git.md",
-    "10_Projects/D2L/Buổi 18 - Tuần 5.md",
-    "20_Areas/AI/Concepts/Viterbi Algorithm.md",
-    "30_Resources/Books/Dive Into Deep Learning/d2l-en/chapter_computer-vision/anchor.md",
-    "30_Resources/Books/NLPBook/00_Book_Notes/Chapter 01 - Foundations of Machine Learning.md",
-    "10_Projects/D2L/Tổng ôn Tuần 4.md",
-    "20_Areas/AI/Concepts/Activation Function.md",
-    "50_PTIT/NLP/Chapter 3.md",
-    "50_PTIT/NLP/Chapter 2.md",
-    "50_PTIT/NLP/Chapter 1.md",
-    "10_Projects/D2L/Buổi 17 - Tuần 4.md",
-    "20_Areas/AI/Concepts/Cross-Entropy Loss.md",
-    "10_Projects/D2L/Buổi 14 - Tuần 4.md",
-    "20_Areas/AI/Concepts/Dependency Parsing.md",
+    "10_Projects/D2L/Buổi 26 - Tuần 8.md",
+    "10_Projects/D2L/Buổi 25 - Tuần 7.md",
+    "10_Projects/D2L/Tổng ôn Buổi 8-24.md",
+    "assets/attachments/D2L/Buoi26/edge_detection.png",
+    "assets/attachments/D2L/Buoi26/cross_correlation_op.png",
+    "assets/attachments/D2L/Buoi25/cpu_vs_gpu.png",
+    "assets/attachments/D2L/Buoi25/save_load_workflow.png",
+    "assets/attachments/D2L/Buoi26",
+    "assets/attachments/D2L/Buoi25",
     "10_Projects/D2L/D2L Learning Plan - 4 Months.md",
-    "10_Projects/D2L/Buổi 12 - Tuần 3.md",
-    "assets/Library/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang.pdf",
-    "20_Areas/AI/Concepts/Generalization.md",
-    "10_Projects/D2L/Learning/buoi 17.ipynb",
-    "10_Projects/D2L/Learning/Buoi 15-16.ipynb",
-    "10_Projects/D2L/Buổi 16 - Tuần 4.md",
-    "10_Projects/D2L/Learning/data/FashionMNIST/raw/train-images-idx3-ubyte.gz",
-    "10_Projects/D2L/Learning/data/FashionMNIST/raw",
-    "10_Projects/D2L/Learning/data/FashionMNIST",
-    "10_Projects/D2L/Learning/data",
-    "10_Projects/D2L/Buổi 15 - Tuần 4.md",
-    "20_Areas/AI/Concepts/Sigmoid Function.md",
-    "20_Areas/AI/Concepts/Maximum Likelihood Estimation.md",
-    "20_Areas/AI/Concepts/Softmax Function.md",
-    "10_Projects/D2L/Learning/Buoi 14.ipynb",
-    "10_Projects/D2L/Buổi 13 - Tuần 4.md",
-    "10_Projects/D2L/Learning/Buoi 13.ipynb",
-    "10_Projects/D2L/Buổi 13 - Tuần 3.md",
-    "10_Projects/D2L/Buổi 11 - Tuần 3.md",
-    "10_Projects/D2L/Learning/Buoi 12.ipynb",
+    "10_Projects/D2L/Buổi 24 - Tuần 7.md",
+    "10_Projects/D2L/Buổi 23 - Tuần 6.md",
+    "assets/attachments/D2L/Buoi24/tied_parameters.png",
+    "assets/attachments/D2L/Buoi24/sequential_vs_custom.png",
+    "assets/attachments/D2L/Buoi24/module_hierarchy.png",
     "10_Projects/D2L/Buổi 10 - Tuần 3.md",
-    "assets/attachments/Pasted image 20260311075000.png",
-    "assets/attachments/Pasted image 20260124155948.png",
-    "assets/attachments/Natural-Language-Processing-PTIT-Nguyen-Thi-Mai-Trang/chapter_2/img-009.jpg",
-    "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-006-059.jpg",
-    "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-006-058.jpg",
-    "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-006-057.jpg",
-    "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-006-056.jpg",
-    "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-006-055.jpg",
-    "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-006-054.jpg",
-    "assets/attachments/He_Masked_Autoencoders_Are_Scalable_Vision_Learners_CVPR_2022/fig-003-053.jpg",
+    "10_Projects/D2L/Learning/buoi 24 - kaggle house price.ipynb",
+    "50_PTIT/NLP/Chapter 1.md",
+    "assets/attachments/D2L/Buoi24/model_comparison.png",
+    "assets/attachments/D2L/Buoi24/log_transform.png",
+    "assets/attachments/D2L/Buoi24/kfold.png",
+    "assets/attachments/D2L/Buoi24",
+    "10_Projects/D2L/Buổi 22 - Tuần 6.md",
+    "10_Projects/D2L/Buổi 11 - Tuần 3.md",
+    "10_Projects/D2L/Buổi 9 - Tuần 2.md",
+    "10_Projects/D2L/Buổi 8 - Tuần 2.md",
+    "10_Projects/D2L/Buổi 2 - Tuần 1.md",
+    "10_Projects/D2L/Buổi 21 - Tuần 6.md",
+    "10_Projects/D2L/Tổng ôn Tuần 4.md",
+    "50_PTIT/NLP/Chapter 4.md",
+    "10_Projects/D2L/D2L Test Results.md",
+    "10_Projects/D2L/Buổi 20 - Tuần 5.md",
+    "10_Projects/D2L/Buổi 19 - Tuần 5.md",
+    "10_Projects/D2L/Buổi 18 - Tuần 5.md",
+    "10_Projects/D2L/Buổi 17 - Tuần 4.md",
+    "10_Projects/D2L/Buổi 16 - Tuần 4.md",
+    "10_Projects/D2L/Buổi 15 - Tuần 4.md",
+    "10_Projects/D2L/Buổi 14 - Tuần 4.md",
+    "10_Projects/D2L/Buổi 13 - Tuần 4.md",
+    "10_Projects/D2L/Buổi 12 - Tuần 3.md",
+    "assets/attachments/D2L/Buoi23",
+    "assets/attachments/D2L/Buoi22",
+    "10_Projects/D2L/Learning/buoi 21-anti overfitting.ipynb",
+    "assets/attachments/D2L/Buoi21",
+    "assets/attachments/D2L/Buoi20",
+    "10_Projects/D2L/Learning/data/FashionMNIST/raw/train-images-idx3-ubyte.gz",
     "Untitled.canvas"
   ]
 }
