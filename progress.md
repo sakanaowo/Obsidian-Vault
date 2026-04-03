@@ -1,6 +1,49 @@
 ---
 ---
 
+tác vụ: D2L Learning - Tuần 8, Buổi 30 - VGG (Viết lại lần 2) - 2026-04-03
+nội dung: Đã viết lại hoàn toàn [[Buổi 30 - Tuần 8]] — 8.2 Networks Using Blocks (VGG) với ảnh minh họa và nội dung mở rộng.
+chi tiết:
+
+- Tạo 3 ảnh minh họa: receptive field comparison, VGG-11 architecture, VGG block detail → `assets/attachments/d2l-buoi-30/`.
+- Mở rộng phần VLSI analogy: thêm cột "Tương đồng", giải thích tại sao phép loại suy quan trọng.
+- Mở rộng phần receptive field analysis: thêm công thức tổng quát $r = n(k-1) + 1$, giải thích chi tiết tại sao $k^2 c^2$ params.
+- Mở rộng phần "Deep and Narrow > Shallow and Wide": chia rõ 3 lý do (ít params, nhiều ReLU → expressive power, implicit regularization), thêm giải thích ELI5 cho từng lý do.
+- Cải thiện phần VGG family: giải thích tại sao VGG-11 và VGG-13 cùng ~133M params, phân tích tỉ lệ FC vs Conv params.
+- Mở rộng phần Discussion: thêm trích dẫn gốc d2l.ai, phân biệt rõ "breakthrough" vs "blueprint".
+- Nâng bài tự kiểm tra từ 7 → 8 câu, thêm câu về FC params percentage.
+- Tuân thủ AGENTS.md: ELI5 → Deep ở mọi section, Mermaid + ảnh minh họa, bảng thuật ngữ 11 mục.
+
+tác vụ: D2L Learning - Tuần 8, Buổi 30 - VGG (Networks Using Blocks) - 2026-04-02
+nội dung: Đã tạo [[Buổi 30 - Tuần 8]] — 8.2 Networks Using Blocks (VGG).
+chi tiết:
+
+- Bám sát 100% cấu trúc d2l.ai 8.2, ELI5 → Deep.
+- Bối cảnh: VLSI analogy, từ ad-hoc design → block-based design.
+- Core insight: receptive field analysis — tại sao 2×Conv 3×3 > 1×Conv 5×5 (ít params, nhiều ReLU, regularize tốt hơn).
+- VGG Block definition + VGG Network implementation (PyTorch).
+- VGG family table (VGG-11/13/16/19) + so sánh chi tiết VGG vs AlexNet.
+- Data flow analysis VGG-11: spatial halving + channel doubling pattern.
+- Training trên Fashion-MNIST (phiên bản channels thu nhỏ).
+- Discussion: VGG là CNN hiện đại đầu tiên "thực sự", hạn chế FC layers.
+- 4 exercises gốc + 7 câu tự kiểm tra.
+
+tác vụ: D2L Plan Restructure + Buổi 29 Rewrite - 2026-04-02
+nội dung: Restructured D2L learning plan từ Buổi 29. Đã viết lại [[Buổi 29 - Tuần 8]] — 8.1 Deep Convolutional Neural Networks (AlexNet).
+chi tiết:
+
+- Xóa Buổi 29 cũ (nội dung quá tóm tắt, không bám sát d2l.ai).
+- Cập nhật `D2L Learning Plan - 4 Months.md`: remapping Tuần 7-9 bám sát 1:1 theo d2l.ai chapters 7-8.
+- Viết lại Buổi 29 hoàn toàn mới (~500 dòng), bám sát 100% cấu trúc d2l.ai 8.1:
+  - Bối cảnh lịch sử: Feature Engineering → Representation Learning
+  - Missing ingredients: Data (ImageNet), Hardware (GPU), Techniques (ReLU, Dropout, Xavier init)
+  - Kiến trúc AlexNet chi tiết, so sánh AlexNet vs LeNet
+  - Full implementation code PyTorch + training trên Fashion-MNIST
+  - Discussion: Achilles heel (FC layers), overfitting paradox, adoption chậm
+  - 8 bài tập gốc từ d2l + bài tự kiểm tra 7 câu
+- Tuân thủ AGENTS.md: ELI5 → Deep, ví dụ cụ thể, Mermaid diagrams, bảng thuật ngữ.
+
+
 tác vụ: D2L Learning - Tuần 5, Buổi 18 - Multilayer Perceptrons - 2026-03-24
 nội dung: Đã viết [[Buổi 18 - Tuần 5]] (chapter_multilayer-perceptrons/mlp.md) — bước đầu vào Deep Learning.
 chi tiết:

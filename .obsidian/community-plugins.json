@@ -1,6 +1,5 @@
 [
   "quick-latex",
-  "obsidian-file-color",
   "obsidian-style-settings",
   "obsidian-git",
   "tray",
@@ -8,5 +7,6 @@
   "mehrmaid",
   "jupymd",
   "obsidian-functionplot",
-  "workspaces-plus"
+  "workspaces-plus",
+  "obsidian-linter"
 ]

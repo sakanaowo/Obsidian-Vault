@@ -366,93 +366,93 @@ MIKU sẽ:
 
 ---
 
-### TUẦN 7: Convolutional Neural Networks (13/04 - 19/04)
+### TUẦN 7: Convolutional Neural Networks — Ch 7 (13/04 - 19/04)
 
-**Mục tiêu:** Hiểu sâu về convolution, pooling, và tại sao CNNs hoạt động
+**Mục tiêu:** Hiểu sâu về convolution, pooling, channels, và CNN cơ bản (LeNet)
 
-#### Buổi 26 (13/04 - CN)
+> [!NOTE] Mapping d2l.ai
+> Tuần 7 cover **Chapter 7** (7.1–7.6) — toàn bộ phần CNN cơ bản.
 
-- **Tài liệu:** `chapter_convolutional-neural-networks/conv-layer.md`
+#### Buổi 26 (13/04 - CN) — Ch 7.1–7.3
+
+- **Tài liệu:** `chapter_convolutional-neural-networks/why-conv.md` + `conv-layer.md` + `padding-and-strides.md`
 - **Nội dung:**
-  - Convolution operation
-  - Local connectivity
-  - Translation equivariance
-  - Padding & stride
+  - Tại sao cần Convolution? (From FC to Conv)
+  - Convolution operation, Translation equivariance
+  - Padding & Stride — công thức output size
 - **Bài tập:** Implement conv2d từ scratch
 
-#### Buổi 27 (15/04 - Thứ Ba)
+#### Buổi 27 (15/04 - Thứ Ba) — Ch 7.4–7.5
 
-- **Tài liệu:** `chapter_convolutional-neural-networks/pooling.md`
+- **Tài liệu:** `chapter_convolutional-neural-networks/channels.md` + `pooling.md`
 - **Nội dung:**
-  - Max pooling vs. Average pooling
-  - Why pooling? (translation invariance)
-- **Bài tập:** Compare pooling strategies
+  - Multiple Input/Output Channels, 1×1 Convolutions
+  - Max pooling vs. Average pooling, Translation invariance
+- **Bài tập:** Experiment với channel sizes + pooling strategies
 
-#### Buổi 28 (17/04 - Thứ Năm)
+#### Buổi 28 (17/04 - Thứ Năm) — Ch 7.6
 
 - **Tài liệu:** `chapter_convolutional-neural-networks/lenet.md`
 - **Nội dung:**
-  - LeNet architecture
-  - First successful CNN
-  - Training on MNIST
+  - LeNet-5 architecture (CNN đầu tiên thành công)
+  - Training on Fashion-MNIST
+  - Data flow analysis qua từng layer
 - **Bài tập:** Implement và train LeNet
-
-#### Buổi 29 (19/04 - Thứ Bảy)
-
-- **Tài liệu:** Các sections khác trong chapter (channels, etc.)
-- **Nội dung:**
-  - Multiple input/output channels
-  - 1x1 convolutions
-- **Bài tập:** Experiment với channel sizes
 
 ---
 
-### TUẦN 8: Modern CNNs - Part 1 (20/04 - 26/04)
+### TUẦN 8: Modern CNNs — Part 1, Ch 8.1–8.4 (19/04 - 26/04)
 
-**Mục tiêu:** Học các architectures quan trọng
+**Mục tiêu:** Hiểu các kiến trúc CNN hiện đại: AlexNet → VGG → NiN → GoogLeNet
 
-#### Buổi 30 (20/04 - CN)
+> [!NOTE] Mapping d2l.ai
+> Tuần 8 cover **Chapter 8.1–8.4** — từ AlexNet đến GoogLeNet.
+
+#### Buổi 29 (19/04 - Thứ Bảy) — Ch 8.1
 
 - **Tài liệu:** `chapter_convolutional-modern/alexnet.md`
 - **Nội dung:**
-  - AlexNet architecture
-  - ReLU activation
-  - Dropout in CNNs
-  - GPU training breakthrough
-- **Bài tập:** Train AlexNet trên Fashion-MNIST
+  - Bối cảnh lịch sử: Feature Engineering → Representation Learning
+  - Missing ingredients: Data (ImageNet), Hardware (GPU), Techniques (ReLU, Dropout)
+  - Kiến trúc AlexNet chi tiết — so sánh với LeNet
+  - Implement AlexNet + Training trên Fashion-MNIST
+  - Discussion: Achilles heel của AlexNet (FC layers quá lớn)
+- **Bài tập:** Train AlexNet, phân tích memory footprint
 
-#### Buổi 31 (22/04 - Thứ Ba)
+#### Buổi 30 (20/04 - CN) — Ch 8.2
 
 - **Tài liệu:** `chapter_convolutional-modern/vgg.md`
 - **Nội dung:**
-  - VGG blocks
-  - Depth matters
-  - 3x3 conv stacking
-- **Bài tập:** Build VGG-11
+  - VGG blocks: ý tưởng "dùng blocks lặp lại"
+  - Tại sao nhiều conv 3×3 > một conv lớn?
+  - VGG-11, VGG-16, VGG-19
+- **Bài tập:** Build VGG-11 từ scratch
 
-#### Buổi 32 (24/04 - Thứ Năm)
+#### Buổi 31 (22/04 - Thứ Ba) — Ch 8.3
 
 - **Tài liệu:** `chapter_convolutional-modern/nin.md`
 - **Nội dung:**
-  - Network in Network
-  - 1x1 convolutions
-  - Global average pooling
-- **Bài tập:** Replace FC layers với GAP
+  - Network in Network: 1×1 convolutions = "mlpconv"
+  - Global Average Pooling thay thế FC layers
+- **Bài tập:** Thay FC layers bằng GAP, so sánh params
 
-#### Buổi 33 (26/04 - Thứ Bảy)
+#### Buổi 32 (24/04 - Thứ Năm) — Ch 8.4
 
 - **Tài liệu:** `chapter_convolutional-modern/googlenet.md`
 - **Nội dung:**
-  - Inception modules
-  - Multi-scale features
+  - Inception modules: multi-scale features
+  - Thiết kế song song (1×1, 3×3, 5×5, MaxPool)
   - Auxiliary classifiers
 - **Bài tập:** Implement Inception block
 
 ---
 
-### TUẦN 9: Modern CNNs - Part 2 (27/04 - 03/05)
+### TUẦN 9: Modern CNNs — Part 2, Ch 8.5–8.8 + Review (27/04 - 03/05)
 
-#### Buổi 34 (27/04 - CN)
+> [!NOTE] Mapping d2l.ai
+> Tuần 9 cover **Chapter 8.5–8.8** + Review toàn bộ Modern CNNs.
+
+#### Buổi 33 (27/04 - CN) — Ch 8.5
 
 - **Tài liệu:** `chapter_convolutional-modern/batch-norm.md`
 - **Nội dung:**
@@ -461,27 +461,29 @@ MIKU sẽ:
   - Training vs. inference mode
 - **Bài tập:** Add BN vào LeNet, so sánh performance
 
-#### Buổi 35 (29/04 - Thứ Ba)
+#### Buổi 34 (29/04 - Thứ Ba) — Ch 8.6
 
 - **Tài liệu:** `chapter_convolutional-modern/resnet.md`
 - **Nội dung:**
-  - Residual connections
-  - Why ResNets work? (gradient flow)
-  - Skip connections
+  - Residual connections — tại sao mạng sâu hơn lại tệ hơn? (degradation problem)
+  - Skip connections giải quyết gradient flow
+  - ResNeXt
 - **Bài tập:** Implement ResNet block
 
-#### Buổi 36 (01/05 - Thứ Năm) - **Nghỉ lễ, có thể học nhẹ nhàng**
+#### Buổi 35 (01/05 - Thứ Năm) — Ch 8.7
 
 - **Tài liệu:** `chapter_convolutional-modern/densenet.md`
 - **Nội dung:**
-  - Dense connections
-  - Feature reuse
-  - DenseNet vs. ResNet
+  - Dense connections — feature reuse
+  - So sánh DenseNet vs ResNet
 - **Bài tập:** Compare parameter counts
 
-#### Buổi 37 (03/05 - Thứ Bảy)
+#### Buổi 36 (03/05 - Thứ Bảy) — Ch 8.8 + Review
 
-- **REVIEW CNNs**
+- **Tài liệu:** `chapter_convolutional-modern/cnn-design.md`
+- **Nội dung:**
+  - Designing CNN Architectures — AnyNet, RegNet
+  - **REVIEW CNNs**: so sánh tổng LeNet → AlexNet → VGG → NiN → GoogLeNet → BN → ResNet → DenseNet
 - **Mini Test:** Architecture comparison
 - **Project:** Train một modern CNN trên CIFAR-10
 
