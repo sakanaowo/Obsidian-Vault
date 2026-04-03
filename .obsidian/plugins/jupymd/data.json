@@ -1,0 +1,7 @@
+{
+  "autoSync": true,
+  "bidirectionalSync": false,
+  "pythonInterpreter": "/home/sakana/miniconda3/envs/d2l/bin/python",
+  "notebookEditorCommand": "jupyter-lab",
+  "enableCodeBlocks": true
+}

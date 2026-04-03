@@ -1,0 +1,15 @@
+{
+  "accentColor": "#3097b0",
+  "enabledCssSnippets": [
+    "terminal-font",
+    "latex-style"
+  ],
+  "cssTheme": "Cupertino",
+  "theme": "system",
+  "monospaceFontFamily": "SpaceMono Nerd Font Mono",
+  "interfaceFontFamily": "SF Pro Display",
+  "textFontFamily": "SF Pro Display,SF Pro Text",
+  "baseFontSize": 17,
+  "showViewHeader": true,
+  "showRibbon": true
+}

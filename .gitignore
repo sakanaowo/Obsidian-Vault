@@ -2,7 +2,7 @@
 .idea
 .env
 /Agent Client/
-/.obsidian
+
 /.obsidian/graph.json
 /.obsidian/workspace.json
 .data/
