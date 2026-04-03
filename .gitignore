@@ -8,3 +8,4 @@
 .data/
 # Ignore large binary documents (handled outside git)
 *.pdf
+30_Resources/Books/Dive Into Deep Learning/d2l-en
