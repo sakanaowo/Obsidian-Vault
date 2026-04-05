@@ -1,6 +1,36 @@
 ---
 ---
 
+tác vụ: D2L Learning - Tuần 8, Buổi 32 - GoogLeNet (Inception) - 2026-04-05
+nội dung: Đã tạo [[Buổi 32 - Tuần 8]] — 8.4 Multi-Branch Networks (GoogLeNet).
+chi tiết:
+
+- Tuân thủ rule mới: Concept Introduction Structure 3 tầng (ELI5 → Định nghĩa kỹ thuật → Cơ chế).
+- Tạo 2 ảnh minh họa: Inception block (4 nhánh), GoogLeNet architecture (Stem-Body-Head) → `assets/attachments/d2l-buoi-32/`.
+- Inception block: 4 nhánh song song (1x1, 1x1+3x3, 1x1+5x5, MaxPool+1x1), concatenate channels.
+- Phân tích bottleneck Conv 1x1: ví dụ cụ thể giảm params ~10x.
+- Kiến trúc GoogLeNet: Stem (b1+b2) / Body (b3+b4+b5, 9 Inception blocks) / Head (GAP + 1 FC).
+- Data flow analysis: 96→24→12→6→3→1, channels 64→192→480→832→1024.
+- So sánh: GoogLeNet ~5M params vs VGG-16 ~138M (giảm ~28x).
+- 5 exercises gốc + 8 câu tự kiểm tra.
+- Bảng thuật ngữ 11 mục.
+- Mermaid diagrams dùng `<br>` thay `\n`, không emoji/icon.
+
+tác vụ: D2L Learning - Tuần 8, Buổi 31 - NiN (Network in Network) - 2026-04-05
+nội dung: Đã tạo [[Buổi 31 - Tuần 8]] — 8.3 Network in Network (NiN).
+chi tiết:
+
+- Bám sát 100% cấu trúc d2l.ai 8.3, ELI5 → Deep ở mọi section.
+- Tạo 3 ảnh minh họa: NiN block vs VGG block, Global Average Pooling, NiN architecture → `assets/attachments/d2l-buoi-31/`.
+- 2 vấn đề của FC layers: chiếm ~90% params, không thể thêm vào giữa mạng.
+- Conv 1×1 = FC per pixel: chứng minh toán học chi tiết, so sánh NiN block vs VGG block.
+- Global Average Pooling: cơ chế hoạt động, tại sao cần num_classes channels, 0 params.
+- Kiến trúc NiN đầy đủ: 4 NiN blocks + GAP, data flow analysis.
+- So sánh NiN vs AlexNet vs VGG: params giảm ~60×.
+- Di sản: conv 1×1 trong GoogLeNet/ResNet/MobileNet, GAP là default trong CNN hiện đại.
+- 6 exercises gốc + 8 câu tự kiểm tra.
+- Bảng thuật ngữ 12 mục.
+
 tác vụ: D2L Learning - Tuần 8, Buổi 30 - VGG (Viết lại lần 2) - 2026-04-03
 nội dung: Đã viết lại hoàn toàn [[Buổi 30 - Tuần 8]] — 8.2 Networks Using Blocks (VGG) với ảnh minh họa và nội dung mở rộng.
 chi tiết:

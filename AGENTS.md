@@ -14,6 +14,12 @@ Khi viết hoặc tạo mới tài liệu, bạn phải tuân thủ các quy t�
 
 - **No Surface-Level Summaries:** Không bao giờ chỉ đưa ra định nghĩa đơn giản. Hãy trả lời các câu hỏi: _Tại sao? Hoạt động như thế nào? Ví dụ cụ thể là gì? So sánh với các khái niệm khác ra sao?_
 - **Explain Like I'm 5 (ELI5) — BẮT BUỘC:** Mỗi khi giải thích bất kỳ điều gì (concept, cơ chế, quy trình, v.v.), luôn thêm một lớp giải thích **ELI5** cực đơn giản (2–5 câu) trước, rồi mới đi vào phân tích sâu. Mục tiêu là vừa “dễ hiểu ngay lập tức” vừa “đúng và đủ ở tầng học thuật”.
+- **Concept Introduction Structure — BẮT BUỘC (3 tầng):** Khi giới thiệu bất kỳ concept/technique/module mới nào (ví dụ: Global Average Pooling, Batch Normalization, Residual Connection...), PHẢI tuân thủ cấu trúc 3 tầng theo đúng thứ tự:
+  1. **Tầng 1 — ELI5** (`> [!NOTE] ELI5`): Ẩn dụ đời thường, 2-5 câu, không dùng thuật ngữ chuyên ngành.
+  2. **Tầng 2 — Định nghĩa kỹ thuật** (ngay sau ELI5, TRƯỚC khi đi vào cơ chế): Phát biểu rõ ràng bằng ngôn ngữ kỹ thuật: (a) **Đây là gì?** — 1-2 câu định nghĩa chính xác; (b) **Nó làm gì?** — Input/output cụ thể (shape, type); (c) **Tại sao cần nó?** — Giải quyết vấn đề gì, thay thế cái gì. Tầng này là cầu nối giữa ELI5 và cơ chế chi tiết — người đọc phải hiểu WHAT và WHY trước khi đọc HOW.
+  3. **Tầng 3 — Cơ chế chi tiết** (subsections): Công thức toán, code implementation, data flow, so sánh.
+  **Sai:** ELI5 → ngay lập tức công thức/code (người đọc nhảy từ ẩn dụ sang toán, không hiểu gì).
+  **Đúng:** ELI5 → "GAP là phép pooling lấy trung bình toàn bộ HxW... Input (C,H,W) → Output (C,1,1)... Thay thế FC layers" → Công thức/code.
 - **Concrete Examples:** Luôn kèm theo ví dụ thực tế, đoạn mã (nếu là code), hoặc tình huống giả định (case study) để minh họa cho lý thuyết.
 - **Visual Examples Rule — BẮT BUỘC khi có biểu đồ:** Ví dụ trực quan phải bám sát nội dung đang học (không lạc đề), ưu tiên dùng plugin `obsidian-functionplot`; sau mỗi plot phải có phần kiểm tra mức dễ hiểu (reader checklist) và giải thích thuật ngữ chuyên ngành xuất hiện trong biểu đồ.
 - **Evidence & Reasoning:** Mọi khẳng định (Claim) phải đi kèm lập luận (Reasoning). Sử dụng cấu trúc: _"A đúng vì B, được thể hiện qua C"_.
@@ -29,9 +35,11 @@ Khi viết hoặc tạo mới tài liệu, bạn phải tuân thủ các quy t�
   - Sử dụng Headings phân cấp rõ ràng.
   - **Bold** các thuật ngữ chuyên môn.
   - Sử dụng Callouts (của Obsidian) cho các lưu ý quan trọng: `> [!NOTE] Title`.
-- **Layered Explanation Template (ELI5 → Deep):** Khi giải thích, ưu tiên cấu trúc 2 tầng:
+- **Layered Explanation Template (ELI5 → Definition → Deep):** Khi giải thích, ưu tiên cấu trúc 3 tầng:
   1. `> [!NOTE] ELI5` (2–5 câu, từ vựng tối giản, ví dụ đời thường),
-  2. Phần phân tích sâu (First Principles, cơ chế, nuance, công thức nếu cần).
+  2. **Định nghĩa kỹ thuật rõ ràng**: Đây là gì? Input/output gì? Giải quyết vấn đề gì? (đoạn văn ngắn, không phải callout),
+  3. Phần phân tích sâu (First Principles, cơ chế, nuance, công thức nếu cần).
+- **Diagram formatting (Mermaid/ảnh):** Trong Mermaid diagrams: (a) KHÔNG dùng emoji/icon; (b) Dùng `<br>` thay vì `\n` cho xuống dòng (Obsidian compatibility); (c) Không dùng ký tự Unicode đặc biệt (×, →, —) trong node labels, dùng ASCII thay (x, -->, --).
 - **Linking:** Khi nhắc đến khái niệm X, nếu chưa có file concept, hãy tạo nội dung sơ khởi cho [[X]] thay vì để link chết, và đi kèm là TODO ở cuối file concept đó để có thể tiếp tục phát triển sau này.
 
 ### WORKFLOW & PROGRESS TRACKING

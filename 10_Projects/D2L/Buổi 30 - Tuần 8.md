@@ -329,21 +329,21 @@ Block 12 (LazyLinear ) → torch.Size([1, 10])               ← Output
 
 ```mermaid
 flowchart TD
-    subgraph AlexNet["AlexNet — Ad-hoc Design 🔧"]
-        A1["Conv 11×11, 96, s=4"] --> A2["Conv 5×5, 256"]
-        A2 --> A3["Conv 3×3, 384"]
-        A3 --> A4["Conv 3×3, 384"]
-        A4 --> A5["Conv 3×3, 256"]
+    subgraph AlexNet["AlexNet -- Ad-hoc Design"]
+        A1["Conv 11x11, 96, s=4"] --> A2["Conv 5x5, 256"]
+        A2 --> A3["Conv 3x3, 384"]
+        A3 --> A4["Conv 3x3, 384"]
+        A4 --> A5["Conv 3x3, 256"]
         A5 --> A6["FC 4096"]
         A6 --> A7["FC 4096"]
         A7 --> A8["FC 10"]
     end
     
-    subgraph VGG["VGG-11 — Block Design 🧱"]
-        V1["🧱 Block 1: 1×Conv3, 64"] --> V2["🧱 Block 2: 1×Conv3, 128"]
-        V2 --> V3["🧱 Block 3: 2×Conv3, 256"]
-        V3 --> V4["🧱 Block 4: 2×Conv3, 512"]
-        V4 --> V5["🧱 Block 5: 2×Conv3, 512"]
+    subgraph VGG["VGG-11 -- Block Design"]
+        V1["Block 1: 1xConv3, 64"] --> V2["Block 2: 1xConv3, 128"]
+        V2 --> V3["Block 3: 2xConv3, 256"]
+        V3 --> V4["Block 4: 2xConv3, 512"]
+        V4 --> V5["Block 5: 2xConv3, 512"]
         V5 --> V6["FC 4096"]
         V6 --> V7["FC 4096"]
         V7 --> V8["FC 10"]
