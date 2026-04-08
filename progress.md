@@ -1,6 +1,33 @@
 ---
 ---
 
+tác vụ: D2L Learning - Bổ sung chuẩn hóa input vào Buổi 33 - 2026-04-07
+nội dung: Đã cập nhật [[Buổi 33 - Tuần 9]] để nhắc lại chuẩn hóa input và sửa tham chiếu buổi học.
+chi tiết:
+
+- Gỡ tham chiếu cụ thể đến [[Buổi 24 - Tuần 7]] vì không khớp ngữ cảnh nguồn.
+- Bổ sung callout "Ôn nhanh: chuẩn hóa input là gì?" với công thức $x'=(x-\mu_{train})/(\sigma_{train}+\epsilon)$.
+- Làm rõ khác biệt: chuẩn hóa input áp dụng ở dữ liệu đầu vào, còn BatchNorm áp dụng cho activations bên trong mạng.
+
+tác vụ: D2L Learning - Tuần 9, Buổi 33 - Batch Normalization - 2026-04-06
+nội dung: Đã tạo [[Buổi 33 - Tuần 9]] — 8.5 Batch Normalization.
+chi tiết:
+
+- Tuân thủ rule Concept Introduction Structure 3 tầng (ELI5 → Định nghĩa kỹ thuật → Cơ chế).
+- Tạo 2 ảnh minh họa: BN computation flow (4 bước + before/after distributions), BN cho FC vs Conv (normalize dimensions) → `assets/attachments/d2l-buoi-33/`.
+- 3 lý do cần BN: preprocessing bên trong mạng, ổn định số học, regularization tự nhiên.
+- Công thức BN đầy đủ: standardize → scale & shift, giải thích $\gamma, \beta$ learnable params.
+- BN cho FC (dim=0) vs Conv (dim=0,2,3): bảng so sánh chi tiết, lý do translation invariance.
+- So sánh BN vs Layer Normalization: bảng 6 tiêu chí, khi nào dùng cái nào.
+- Training vs Prediction mode: 2 chế độ hoạt động, moving average, lỗi phổ biến quên model.eval().
+- Implementation from scratch: hàm batch_norm + class BatchNorm, giải thích keepdim, momentum.
+- BNLeNet: chèn BN vào LeNet, training với lr=0.1 (gấp 10x LeNet gốc).
+- Concise: nn.LazyBatchNorm2d/1d, so sánh scratch vs concise.
+- Discussion: Internal Covariate Shift (tranh cãi), landscape smoothing, xu hướng LN thay BN.
+- 6 exercises gốc + 8 câu tự kiểm tra.
+- Bảng thuật ngữ 12 mục.
+- Mermaid diagrams dùng `<br>` thay `\n`, không emoji/icon.
+
 tác vụ: D2L Learning - Tuần 8, Buổi 32 - GoogLeNet (Inception) - 2026-04-05
 nội dung: Đã tạo [[Buổi 32 - Tuần 8]] — 8.4 Multi-Branch Networks (GoogLeNet).
 chi tiết:
@@ -73,7 +100,6 @@ chi tiết:
   - 8 bài tập gốc từ d2l + bài tự kiểm tra 7 câu
 - Tuân thủ AGENTS.md: ELI5 → Deep, ví dụ cụ thể, Mermaid diagrams, bảng thuật ngữ.
 
-
 tác vụ: D2L Learning - Tuần 5, Buổi 18 - Multilayer Perceptrons - 2026-03-24
 nội dung: Đã viết [[Buổi 18 - Tuần 5]] (chapter_multilayer-perceptrons/mlp.md) — bước đầu vào Deep Learning.
 chi tiết:
@@ -83,8 +109,6 @@ chi tiết:
 - Nội dung: giới hạn linear model, hidden layers, chứng minh affine collapse, 3 activation functions (ReLU, Sigmoid, Tanh), Universal Approximation Theorem.
 - Đã thêm bảng từ điển 13 thuật ngữ + 5 câu tự kiểm tra.
 - Image gen quota hết → dùng Mermaid diagrams thay thế.
-
-
 
 tác vụ: D2L Learning - Tuần 4, Tổng ôn - 2026-03-23
 nội dung: Đã tạo [[Tổng ôn Tuần 4]] — buổi ôn tập tổng hợp cho toàn bộ Tuần 4.
@@ -97,8 +121,6 @@ chi tiết:
 - 4 bài trắc nghiệm + 3 bài tính tay + 3 bài code (tất cả có đáp án ẩn).
 - Preview Tuần 5 (MLP).
 
-
-
 tác vụ: D2L Learning - Tuần 4, Buổi 17 - Softmax Regression Concise + Review - 2026-03-23
 nội dung: Đã viết [[Buổi 17 - Tuần 4]] (chapter_linear-classification/softmax-regression-concise.md) + Review Tuần 4.
 chi tiết:
@@ -108,8 +130,6 @@ chi tiết:
 - Đã thêm Mini Test 10 câu tổng ôn Tuần 4 (Buổi 13-17) kèm đáp án ẩn.
 - Đã thêm Mermaid knowledge map cho Tuần 4.
 - Đã thêm bảng từ điển 11 thuật ngữ.
-
-
 
 tác vụ: D2L Learning - Tuần 4, Buổi 16 - Softmax Regression from Scratch - 2026-03-22
 nội dung: Đã viết [[Buổi 16 - Tuần 4]] (chapter_linear-classification/softmax-regression-scratch.md) theo hướng nhập môn, kèm code đầy đủ.
@@ -121,8 +141,6 @@ chi tiết:
 - Đã thêm bảng từ điển 13 thuật ngữ + 5 bài tập thực hành.
 - Đã thêm code Python đầy đủ chạy được (Phần 6 — all-in-one).
 
-
-
 tác vụ: D2L Learning - Tuần 4, Buổi 15 - Image Classification Dataset (Fashion-MNIST) - 2026-03-22
 nội dung: Đã viết [[Buổi 15 - Tuần 4]] (chapter_linear-classification/image-classification-dataset.md) theo hướng nhập môn, kèm hình ảnh minh họa.
 chi tiết:
@@ -133,8 +151,6 @@ chi tiết:
 - Đã thêm code PyTorch load + visualize Fashion-MNIST, giải thích tensor shape $(n,c,h,w)$.
 - Đã thêm bảng từ điển 11 thuật ngữ + 5 câu tự kiểm tra.
 
-
-
 tác vụ: Chuẩn hóa tiếng Việt có dấu cho Sigmoid note - 2026-03-19
 nội dung: Đã chỉnh lại [[Sigmoid Function]] sang tiếng Việt có dấu đầy đủ.
 chi tiết:
@@ -142,7 +158,6 @@ chi tiết:
 - Đã chuyển toàn bộ nội dung từ không dấu sang có dấu, giữ nguyên cấu trúc và công thức.
 - Đã chuẩn hóa lại alias tiếng Việt: "hàm sigmoid".
 - Không thay đổi ý nghĩa học thuật hay liên kết kiến thức liên quan.
-
 
 tác vụ: Bổ sung concept Sigmoid Function - 2026-03-19
 nội dung: Đã tạo [[Sigmoid Function]] trong thư mục Concepts.
@@ -153,7 +168,6 @@ chi tiết:
 - Đã nối liên kết sang [[Softmax Function]], [[Cross-Entropy Loss]], [[Maximum Likelihood Estimation]].
 - Đã bổ sung checklist tự kiểm tra và các lỗi thực hành thường gặp với BCE/BCEWithLogitsLoss.
 
-
 tác vụ: Viết lại concept MLE theo First Principles - 2026-03-19
 nội dung: Đã viết lại [[Maximum Likelihood Estimation]] theo cấu trúc ELI5 -> Deep.
 chi tiết:
@@ -162,7 +176,6 @@ chi tiết:
 - Đã thêm 2 cầu nối cốt lõi: Gaussian likelihood -> MSE, Categorical likelihood -> Cross-Entropy.
 - Đã bổ sung phần bias-variance, consistency, asymptotic properties và liên hệ MLE vs MAP.
 - Đã thêm checklist thực hành để chọn loss đúng theo phân phối dữ liệu.
-
 
 tác vụ: D2L Learning - Tuần 4, Buổi 14 - Softmax Regression - 2026-03-19
 nội dung: Đã viết [[Buổi 14 - Tuần 4]] (chapter_linear-classification/softmax-regression.md) theo hướng nhập môn, kèm hình ảnh minh họa.
@@ -174,8 +187,6 @@ chi tiết:
 - Đã thêm bảng từ điển thuật ngữ 10 thuật ngữ + 5 câu tự kiểm tra.
 - Nội dung bao gồm: Regression vs Classification, One-Hot Encoding, Linear Model cho multi-class, Softmax, Cross-Entropy từ MLE, Information Theory basics.
 
-
-
 tác vụ: D2L Learning - Tuần 4, Buổi 13 - Generalization (Rewrite) - 2026-03-18
 nội dung: Đã viết lại [[Buổi 13 - Tuần 4]] (chapter_linear-regression/generalization.md) theo hướng nhập môn, kèm hình ảnh minh họa.
 chi tiết:
@@ -186,7 +197,6 @@ chi tiết:
 - Đã cập nhật/mở rộng concept [[Generalization]] từ 30 dòng lên version đầy đủ với links.
 - Đã thêm bảng từ điển thuật ngữ 12 thuật ngữ chuyên môn.
 - Đã thêm 5 câu tự kiểm tra cuối buổi.
-
 
 tác vụ: Viết lại Buổi 11 cho dễ hiểu hơn - 2026-03-17
 nội dung: Đã viết lại [[Buổi 11 - Tuần 3]] theo hướng nhập môn rõ ràng, giảm độ nặng thuật ngữ.

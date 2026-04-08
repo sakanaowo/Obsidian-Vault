@@ -174,6 +174,7 @@ Phân tích:
 
 ![[assets/attachments/d2l-buoi-32/googlenet_architecture.png]]
 
+![[Pasted image 20260406143102.png]]
 ### 3.1 Stem (b1 + b2) — Tiền xử lý
 
 ```python
