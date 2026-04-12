@@ -18,13 +18,14 @@ Khi viết hoặc tạo mới tài liệu, bạn phải tuân thủ các quy t�
   1. **Tầng 1 — ELI5** (`> [!NOTE] ELI5`): Ẩn dụ đời thường, 2-5 câu, không dùng thuật ngữ chuyên ngành.
   2. **Tầng 2 — Định nghĩa kỹ thuật** (ngay sau ELI5, TRƯỚC khi đi vào cơ chế): Phát biểu rõ ràng bằng ngôn ngữ kỹ thuật: (a) **Đây là gì?** — 1-2 câu định nghĩa chính xác; (b) **Nó làm gì?** — Input/output cụ thể (shape, type); (c) **Tại sao cần nó?** — Giải quyết vấn đề gì, thay thế cái gì. Tầng này là cầu nối giữa ELI5 và cơ chế chi tiết — người đọc phải hiểu WHAT và WHY trước khi đọc HOW.
   3. **Tầng 3 — Cơ chế chi tiết** (subsections): Công thức toán, code implementation, data flow, so sánh.
-  **Sai:** ELI5 → ngay lập tức công thức/code (người đọc nhảy từ ẩn dụ sang toán, không hiểu gì).
-  **Đúng:** ELI5 → "GAP là phép pooling lấy trung bình toàn bộ HxW... Input (C,H,W) → Output (C,1,1)... Thay thế FC layers" → Công thức/code.
+     **Sai:** ELI5 → ngay lập tức công thức/code (người đọc nhảy từ ẩn dụ sang toán, không hiểu gì).
+     **Đúng:** ELI5 → "GAP là phép pooling lấy trung bình toàn bộ HxW... Input (C,H,W) → Output (C,1,1)... Thay thế FC layers" → Công thức/code.
 - **Concrete Examples:** Luôn kèm theo ví dụ thực tế, đoạn mã (nếu là code), hoặc tình huống giả định (case study) để minh họa cho lý thuyết.
 - **Visual Examples Rule — BẮT BUỘC khi có biểu đồ:** Ví dụ trực quan phải bám sát nội dung đang học (không lạc đề), ưu tiên dùng plugin `obsidian-functionplot`; sau mỗi plot phải có phần kiểm tra mức dễ hiểu (reader checklist) và giải thích thuật ngữ chuyên ngành xuất hiện trong biểu đồ.
 - **Evidence & Reasoning:** Mọi khẳng định (Claim) phải đi kèm lập luận (Reasoning). Sử dụng cấu trúc: _"A đúng vì B, được thể hiện qua C"_.
 - **Expansion:** Nếu thông tin đầu vào quá ít, hãy sử dụng kiến thức nền tảng của bạn để mở rộng vấn đề theo hướng học thuật, nhưng phải đánh dấu rõ đâu là phần bạn suy luận thêm.
 - **Session Label — BẮT BUỘC với D2L/học thuật notes:** Mỗi file ghi chú học có nguồn gốc từ một buổi học cụ thể PHẢI có trường `session:` trong YAML frontmatter, ghi rõ: `session: "D2L Tuần X, Buổi Y — Tên chủ đề"`. Không được để trống hoặc bỏ qua field này.
+- **Active Recall Per Session — BẮT BUỘC cho mọi buổi D2L:** Mỗi note buổi học PHẢI có mục `## Active Recall` để ôn lại kiến thức cũ đã tạo từ các buổi trước. Tối thiểu gồm: (1) 5-10 câu hỏi truy hồi không nhìn tài liệu; (2) phần tự trả lời ngắn gọn theo format "Claim -> Reasoning -> Evidence"; (3) danh sách link tới concept notes cần ôn lại (ví dụ: [[Batch Normalization]], [[Overfitting and Underfitting]]). Không được bỏ qua mục này kể cả khi buổi mới tập trung vào kiến thức mới.
 - **Deep Concept Explanation — BẮT BUỘC với khái niệm toán học/thống kê:** Với mọi khái niệm toán học (phương sai, kỳ vọng, gradient, chuẩn, v.v.), PHẢI giải thích đủ 4 tầng: (1) **Bản chất** — tại sao định nghĩa như vậy, không phải tùy tiện (ví dụ: tại sao variance lại bình phương?); (2) **Ví dụ đời thường cụ thể** — gắn với ML/AI nếu có; (3) **Công thức** với giải thích từng ký hiệu; (4) **Ứng dụng thực tế** trong DL — được dùng ở đâu, khi nào.
 - **Illustrative Images — BẮT BUỘC thay vì mô tả văn bản:** Khi giải thích khái niệm trực quan (đồ thị hàm số, kiến trúc mạng, decision boundary, v.v.), PHẢI tạo ảnh minh họa bằng matplotlib/code thay vì chỉ mô tả bằng văn bản (ví dụ: "hình chữ S", "hình chữ V lật" — reader không hình dung được). Lưu ảnh vào `assets/attachments/<context>/` và embed bằng cú pháp `![[path/to/image.png]]`. Mỗi ảnh phải có annotation tiếng Việt trực tiếp trên biểu đồ.
 
@@ -45,8 +46,9 @@ Khi viết hoặc tạo mới tài liệu, bạn phải tuân thủ các quy t�
 ### WORKFLOW & PROGRESS TRACKING
 
 1.  **Context Check:** Trước khi thực hiện tác vụ, LUÔN tìm và đọc file `progress.md` trong thư mục hiện tại (nếu có) để nắm ngữ cảnh.
-2.  **Execution:** Thực hiện viết nội dung với độ dài và chiều sâu tối đa.
-3.  **Update Log:** Sau khi hoàn thành, đề xuất nội dung cập nhật cho `progress.md` theo format:
+2.  **Active Recall Check:** Trước khi viết nội dung buổi mới, tổng hợp nhanh các concept cũ liên quan và chuẩn bị bộ câu hỏi truy hồi cho mục `## Active Recall`.
+3.  **Execution:** Thực hiện viết nội dung với độ dài và chiều sâu tối đa.
+4.  **Update Log:** Sau khi hoàn thành, đề xuất nội dung cập nhật cho `progress.md` theo format:
     ```yaml
     ---
     tác vụ: [Tên tác vụ] - {{date}}

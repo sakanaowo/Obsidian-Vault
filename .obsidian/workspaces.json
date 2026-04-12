@@ -280,7 +280,7 @@
                   "type": "markdown",
                   "state": {
                     "file": "10_Projects/D2L/Buổi 33 - Tuần 9.md",
-                    "mode": "source",
+                    "mode": "preview",
                     "source": false,
                     "backlinks": true,
                     "backlinkOpts": {
@@ -296,9 +296,33 @@
                   "icon": "lucide-file",
                   "title": "Buổi 33 - Tuần 9"
                 }
+              },
+              {
+                "id": "2db8bb885d52058e",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Buổi 34 - Tuần 9.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Buổi 34 - Tuần 9"
+                }
               }
             ],
-            "currentTab": 11
+            "currentTab": 12
           }
         ],
         "direction": "vertical"
@@ -330,7 +354,7 @@
                 "state": {
                   "type": "search",
                   "state": {
-                    "query": "GAP",
+                    "query": "",
                     "matchingCase": false,
                     "explainSearch": false,
                     "collapseAll": false,
@@ -463,8 +487,7 @@
           }
         ],
         "direction": "horizontal",
-        "width": 568.5,
-        "collapsed": true
+        "width": 568.5
       },
       "left-ribbon": {
         "hiddenItems": {
@@ -479,8 +502,8 @@
           "obsidian-git:Open Git source control": false
         }
       },
-      "active": "2c7e136068f7a7fe",
-      "mtime": "2026-04-06T20:45:17+07:00",
+      "active": "2db8bb885d52058e",
+      "mtime": "2026-04-08T18:09:19+07:00",
       "workspaces-plus:settings-v1": {
         "explorerFoldState": [
           "10_Projects/D2L"

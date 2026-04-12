@@ -1,6 +1,67 @@
 ---
 ---
 
+tác vụ: Cập nhật concept node links - 2026-04-11
+nội dung: Tạo 4 concept notes mới và cập nhật Concepts links trong Buổi 33, 34, 35.
+chi tiết:
+
+- Tạo [[Batch Normalization]] (20_Areas/AI/Concepts/) — ELI5, cơ chế toán, training vs inference, FC vs Conv
+- Tạo [[Residual Connection]] (với alias [[Skip Connection]]) — degradation problem, gradient flow, addition vs concat
+- Tạo [[Grouped Convolution]] — cơ chế nhóm, tiết kiệm params 1/G, cardinality trong ResNeXt
+- Tạo [[Growth Rate (DenseNet)]] (với alias [[Growth Rate]]) — lý do k nhỏ hiệu quả, channel tracking formula
+- Cập nhật Buổi 33 footer: thêm [[Batch Normalization]] vào Concepts
+- Cập nhật Buổi 34 footer: thêm [[Residual Connection]], [[Skip Connection]], [[Grouped Convolution]] vào Concepts
+- Cập nhật Buổi 35: xóa alias Growth Rate khỏi frontmatter (nhường cho concept note), thêm footer ## Liên kết đầy đủ
+
+tác vụ: D2L Learning - Tạo mới Buổi 35 (DenseNet) - 2026-04-11
+nội dung: Đã tạo [[Buổi 35 - Tuần 9]] — 8.7 Densely Connected Networks (DenseNet).
+chi tiết:
+
+- Viết toàn bộ nội dung theo cấu trúc ELI5-to-Deep (3 tầng) cho mỗi concept.
+- Tạo và tích hợp 5 hình ảnh minh họa vào `assets/attachments/d2l-buoi-35/`:
+  - `resnet_vs_densenet.png` — So sánh Addition vs Concatenation (§1.2)
+  - `dense_block_flow.png` — Data flow và channel growth trong Dense Block (§2.4)
+  - `transition_layer.png` — Cấu trúc Transition Layer (§4.2)
+  - `densenet_architecture.png` — Kiến trúc tổng thể DenseNet (§5.1)
+  - `resnet_densenet_comparison.png` — 3 khác biệt cốt lõi (§6.1)
+- Active Recall đầu buổi (8 câu ôn kiến thức ResNet/ResNeXt từ Buổi 34).
+- Active Recall chuyên sâu DenseNet (10 câu + đáp án Claim/Reasoning/Evidence).
+- Mở rộng: DenseNet-BC (Bottleneck + Compression), bảng kiến trúc DenseNet-121/169/201/264.
+- Bảng thuật ngữ (§10) và mapping với D2L gốc (§11).
+
+tác vụ: D2L Learning - Viết lại toàn bộ Buổi 34 (ResNet & ResNeXt) - 2026-04-11
+nội dung: Đã viết lại hoàn toàn [[Buổi 34 - Tuần 9]] với hình ảnh trực quan và Active Recall chuyên sâu cho ResNeXt.
+chi tiết:
+
+- Viết lại toàn bộ nội dung theo cấu trúc ELI5-to-Deep (3 tầng) cho mỗi concept.
+- Tích hợp 7 hình ảnh minh họa từ `assets/attachments/d2l-buoi-34/` vào đúng ngữ cảnh:
+  - `resnet_function_classes.png` — Non-nested vs Nested function classes (§1.2)
+  - `resnet_residual_analogy.png` — Ẩn dụ họa sĩ: học f(x) vs học g(x) (§2.1)
+  - `resnet_residual_block.png` — Regular vs Residual block (§2.1)
+  - `gradient_flow_comparison.png` — Gradient flow có/không skip connection (§2.4)
+  - `grouped_convolution.png` — Standard vs Grouped convolution (§5.2)
+  - `resnext_bottleneck_flow.png` — Data flow qua ResNeXt bottleneck (§5.3)
+  - `resnext_cost_comparison.png` — So sánh chi phí Standard vs ResNeXt (§5.4)
+  - `resnet_vs_resnext_block.png` — So sánh cấu trúc 2 block (§5.5)
+- Bổ sung Active Recall đầu buổi (8 câu ôn kiến thức cũ) và Active Recall chuyên sâu ResNeXt (10 câu + đáp án Claim/Reasoning/Evidence).
+- Thêm bảng thuật ngữ đầy đủ (§9) và mapping với D2L gốc.
+
+tác vụ: D2L Learning - thêm Active Recall vào Buổi 34 - 2026-04-09
+nội dung: Đã cập nhật [[Buổi 34 - Tuần 9]] với mục `## Active Recall` theo rule mới.
+chi tiết:
+
+- Thêm 8 câu hỏi truy hồi cho kiến thức cũ (BatchNorm, NiN, GoogLeNet, Softmax/CE, Scratch vs Concise).
+- Thêm phần tự trả lời ngắn gọn theo format "Claim -> Reasoning -> Evidence".
+- Thêm danh sách concept notes cần ôn lại để chuẩn hóa review đầu buổi.
+
+tác vụ: Cập nhật AGENTS - thêm rule Active Recall bắt buộc - 2026-04-09
+nội dung: Đã cập nhật [[AGENTS]] để bắt buộc Active Recall ở mỗi buổi D2L.
+chi tiết:
+
+- Thêm rule mới: mọi buổi D2L phải có mục `## Active Recall` để ôn kiến thức cũ đã tạo.
+- Quy định tối thiểu: 5-10 câu hỏi truy hồi, phần tự trả lời theo "Claim -> Reasoning -> Evidence", và danh sách concept links cần ôn.
+- Bổ sung bước `Active Recall Check` vào workflow trước khi viết nội dung buổi mới.
+
 tác vụ: D2L Learning - Bổ sung chuẩn hóa input vào Buổi 33 - 2026-04-07
 nội dung: Đã cập nhật [[Buổi 33 - Tuần 9]] để nhắc lại chuẩn hóa input và sửa tham chiếu buổi học.
 chi tiết:

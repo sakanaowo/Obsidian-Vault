@@ -686,5 +686,5 @@ Paper gốc (Ioffe & Szegedy, 2015) giải thích BN hoạt động nhờ giảm
 
 - **Buổi trước**: [[Buổi 32 - Tuần 8]] — 8.4 GoogLeNet (Inception)
 - **Buổi sau**: [[Buổi 34 - Tuần 9]] — 8.6 Residual Networks (ResNet)
-- **Concepts**: [[Activation Function]], [[Dropout]]
+- **Concepts**: [[Activation Function]], [[Dropout]], [[Batch Normalization]]
 - **Source**: [d2l.ai — 8.5 Batch Normalization](https://d2l.ai/chapter_convolutional-modern/batch-norm.html)
