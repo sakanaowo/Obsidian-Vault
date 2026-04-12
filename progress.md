@@ -1,6 +1,37 @@
 ---
 ---
 
+tác vụ: D2L Tổng ôn Buổi 25-36 — Builders Guide + CNN + Modern CNN - 2026-04-12
+nội dung: Đã tạo [[Tổng ôn Buổi 25-36]] — Tổng ôn toàn diện từ Builders Guide đến Modern CNN.
+chi tiết:
+
+- Phạm vi: 12 buổi (25-36), kể từ lần tổng ôn gần nhất [[Tổng ôn Buổi 8-24]]
+- Dạy lại (không chỉ recall) toàn bộ kiến thức: Save/Load, GPU, Conv, Pooling, Channels, LeNet, AlexNet, VGG, NiN, GoogLeNet, BN, ResNet, ResNeXt, DenseNet, RegNet
+- 6 giai đoạn chính: Builders Guide → CNN Fundamentals → Modern CNN (9 kiến trúc) → Design Patterns
+- Bảng tổng hợp 9 kiến trúc CNN + 5 design patterns xuyên suốt
+- Công thức cốt lõi: Conv output size, params counting, BN, Residual gradient flow, DenseNet channels, Grouped conv
+- 50 câu hỏi ôn tập + đáp án (7 nhóm: A-G) bao phủ mọi concept
+- Checklist tự đánh giá 28 mục
+- Mermaid diagrams: bản đồ kiến thức tổng thể + 5 design patterns
+
+tác vụ: D2L Learning - Tuần 10, Buổi 36 - Designing CNN Architectures (AnyNet/RegNet) + Review - 2026-04-12
+nội dung: Đã tạo [[Buổi 36 - Tuần 10]] — 8.8 Designing Convolution Network Architectures.
+chi tiết:
+
+- Viết toàn bộ nội dung theo cấu trúc ELI5-to-Deep (3 tầng) cho mỗi concept.
+- Tạo và tích hợp 3 hình ảnh minh họa vào `assets/attachments/d2l-buoi-36/`:
+  - `anynet_design_space.png` — AnyNet template: Stem → Body (4 stages) → Head, 4 tham số per-stage (§2.1)
+  - `design_space_refinement.png` — Thu hẹp CDF: AnyNet_A → AnyNet_E qua 4 bước (§3.3)
+  - `cnn_evolution_timeline.png` — Dòng tiến hóa CNN: LeNet → RegNet → ViT (§5.1)
+- Active Recall đầu buổi (8 câu ôn kiến thức DenseNet từ Buổi 35).
+- Active Recall chuyên sâu (10 câu + đáp án Claim/Reasoning/Evidence).
+- AnyNet Design Space: template tổng quát, 17 free parameters, implementation PyTorch.
+- Thu hẹp design space: CDF, 4 bước từ AnyNet_A → AnyNet_E, giảm từ 17 params tự do.
+- RegNet: 4 nguyên tắc thiết kế (shared k, shared g, increasing c, increasing d), RegNetX-32.
+- Discussion: CNN vs ViT, NAS vs Design Spaces.
+- Tổng ôn Chapter 8: bảng so sánh 9 kiến trúc, 5 design patterns chung, Mermaid diagrams.
+- Bảng thuật ngữ 11 mục + mapping D2L gốc.
+
 tác vụ: Cập nhật concept node links - 2026-04-11
 nội dung: Tạo 4 concept notes mới và cập nhật Concepts links trong Buổi 33, 34, 35.
 chi tiết:
