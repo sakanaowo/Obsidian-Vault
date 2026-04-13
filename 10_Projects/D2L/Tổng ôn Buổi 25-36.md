@@ -102,11 +102,11 @@ clone.eval()                                 # BẮT BUỘC: tắt Dropout/BN
 
 **3 lỗi phổ biến:**
 
-| Lỗi | Sai | Đúng |
-|---|---|---|
-| Lưu cả model | `torch.save(net, 'f.pkl')` | `torch.save(net.state_dict(), 'f.pt')` |
-| Quên tạo model trước | `clone = torch.load(...)` | `clone = MLP(); clone.load_state_dict(...)` |
-| Quên eval | `clone(X)` → dao động | `clone.eval(); clone(X)` → ổn định |
+| Lỗi                  | Sai                        | Đúng                                        |
+| -------------------- | -------------------------- | ------------------------------------------- |
+| Lưu cả model         | `torch.save(net, 'f.pkl')` | `torch.save(net.state_dict(), 'f.pt')`      |
+| Quên tạo model trước | `clone = torch.load(...)`  | `clone = MLP(); clone.load_state_dict(...)` |
+| Quên eval            | `clone(X)` → dao động      | `clone.eval(); clone(X)` → ổn định          |
 
 **Checkpointing** — lưu định kỳ khi train lâu:
 
@@ -140,11 +140,11 @@ X, y = X.to(device), y.to(device)  # Data → GPU mỗi batch
 
 **Bẫy hiệu năng:**
 
-| Quy tắc | Lý do |
-|---|---|
-| Tránh `.item()`, `.cpu()` trong loop | Buộc GPU sync → chậm |
-| Tạo tensor trực tiếp trên GPU | `torch.rand(..., device='cuda')` — tránh copy |
-| Batch lớn hơn | GPU mạnh ở parallel |
+| Quy tắc                              | Lý do                                         |
+| ------------------------------------ | --------------------------------------------- |
+| Tránh `.item()`, `.cpu()` trong loop | Buộc GPU sync → chậm                          |
+| Tạo tensor trực tiếp trên GPU        | `torch.rand(..., device='cuda')` — tránh copy |
+| Batch lớn hơn                        | GPU mạnh ở parallel                           |
 
 ---
 
@@ -157,10 +157,10 @@ X, y = X.to(device), y.to(device)  # Data → GPU mỗi batch
 > [!NOTE] ELI5
 > MLP dùng cho ảnh HD (1000×1000) cần **1 tỷ tham số** — bất khả thi. CNN giải quyết bằng 2 nguyên tắc: (1) **mỗi neuron chỉ nhìn vùng nhỏ** (locality), (2) **dùng chung bộ lọc cho mọi vị trí** (translation invariance). Giống đọc sách: bạn rà mắt từng vùng, không nhìn cả trang cùng lúc.
 
-| Nguyên tắc | Ý nghĩa | Hệ quả |
-|---|---|---|
+| Nguyên tắc                 | Ý nghĩa                                    | Hệ quả                                       |
+| -------------------------- | ------------------------------------------ | -------------------------------------------- |
 | **Translation Invariance** | Cùng pattern trông giống nhau ở mọi vị trí | **Dùng chung kernel** → giảm params cực mạnh |
-| **Locality** | Pixel xa nhau không liên quan | Mỗi neuron chỉ nhìn **vùng nhỏ** (3×3, 5×5) |
+| **Locality**               | Pixel xa nhau không liên quan              | Mỗi neuron chỉ nhìn **vùng nhỏ** (3×3, 5×5)  |
 
 **Giảm tham số:**
 
@@ -199,11 +199,11 @@ $$\text{Output} = (n_h - k_h + 1) \times (n_w - k_w + 1)$$
 
 $$\text{Output} = \left\lfloor \frac{n_h - k_h + p_h + s_h}{s_h} \right\rfloor \times \left\lfloor \frac{n_w - k_w + p_w + s_w}{s_w} \right\rfloor$$
 
-| Config | Input | Kernel | Padding | Stride | Output |
-|---|---|---|---|---|---|
-| Giữ kích thước | 28×28 | 3×3 | 1 | 1 | **28×28** |
-| Giảm 2× | 28×28 | 3×3 | 1 | 2 | **14×14** |
-| AlexNet stem | 224×224 | 7×7 | 3 | 2 | **112×112** |
+| Config         | Input   | Kernel | Padding | Stride | Output      |
+| -------------- | ------- | ------ | ------- | ------ | ----------- |
+| Giữ kích thước | 28×28   | 3×3    | 1       | 1      | **28×28**   |
+| Giảm 2×        | 28×28   | 3×3    | 1       | 2      | **14×14**   |
+| AlexNet stem   | 224×224 | 7×7    | 3       | 2      | **112×112** |
 
 > [!TIP] Tại sao kernel lẻ (3, 5, 7)?
 > Kernel lẻ → padding đối xứng. Để giữ kích thước: $p = (k-1)/2$.
@@ -223,12 +223,12 @@ Kernel `[1, -1]` phát hiện cạnh dọc. Quan trọng hơn: model **tự họ
 
 **Max Pooling vs Average Pooling:**
 
-| | Max Pooling ⭐ | Average Pooling |
-|---|---|---|
-| Giữ lại | Giá trị **nổi bật nhất** | Giá trị **trung bình** |
-| Phổ biến | **Mặc định** ở hidden layers | Tầng cuối (Global Average Pooling) |
-| Parameters | **0** — không learnable! | **0** |
-| Translation inv. | Tốt hơn | Kém hơn |
+|                  | Max Pooling ⭐               | Average Pooling                    |
+| ---------------- | ---------------------------- | ---------------------------------- |
+| Giữ lại          | Giá trị **nổi bật nhất**     | Giá trị **trung bình**             |
+| Phổ biến         | **Mặc định** ở hidden layers | Tầng cuối (Global Average Pooling) |
+| Parameters       | **0** — không learnable!     | **0**                              |
+| Translation inv. | Tốt hơn                      | Kém hơn                            |
 
 **Quy tắc:** Hidden layers → Max Pooling. Tầng cuối trước classifier → Global Average Pooling.
 
@@ -246,10 +246,10 @@ $$\text{nn.Conv2d} \Rightarrow \text{Kernel shape} = (c_o, c_i, k_h, k_w)$$
 
 **Đếm params:** `nn.Conv2d(c_i, c_o, k)` có $c_o \times c_i \times k^2 + c_o$ params (weights + biases).
 
-| Layer | Params |
-|---|---|
-| `Conv2d(1, 6, 5)` | $6\times1\times25 + 6 = 156$ |
-| `Conv2d(3, 64, 3)` | $64\times3\times9 + 64 = 1{,}792$ |
+| Layer                | Params                                |
+| -------------------- | ------------------------------------- |
+| `Conv2d(1, 6, 5)`    | $6\times1\times25 + 6 = 156$          |
+| `Conv2d(3, 64, 3)`   | $64\times3\times9 + 64 = 1{,}792$     |
 | `Conv2d(64, 128, 3)` | $128\times64\times9 + 128 = 73{,}856$ |
 
 ### 2.7 1×1 Convolution — FC per pixel
@@ -258,6 +258,7 @@ $$\text{nn.Conv2d} \Rightarrow \text{Kernel shape} = (c_o, c_i, k_h, k_w)$$
 > 1×1 conv ban đầu nghe vô lý — kernel 1 pixel thì quét gì? Nhưng nó quét **channels**, không quét spatial. Tại mỗi pixel: lấy vector $c_i$ channels → nhân ma trận → ra $c_o$ channels. Tương đương FC layer áp dụng riêng cho từng pixel.
 
 **Ứng dụng:**
+
 - **Giảm channels** (bottleneck): 256 → 64 trước Conv 3×3
 - **Tăng channels** (expansion): 64 → 256
 - **Cross-channel interaction**: trộn thông tin giữa feature maps
@@ -266,14 +267,14 @@ $$\text{nn.Conv2d} \Rightarrow \text{Kernel shape} = (c_o, c_i, k_h, k_w)$$
 
 > [!IMPORTANT] **Channels tăng, Spatial giảm** — xuyên suốt mọi CNN!
 
-| Giai đoạn | Channels | Spatial | Thông tin |
-|---|---|---|---|
-| Input | 3 | 224×224 | Pixel thô |
-| Sau Conv+Pool 1 | 64 | 112×112 | Edges |
-| Sau Conv+Pool 2 | 128 | 56×56 | Textures |
-| Sau Conv+Pool 3 | 256 | 28×28 | Parts |
-| Sau Conv+Pool 4 | 512 | 7×7 | Objects |
-| GAP | 512 | 1×1 | Feature vector |
+| Giai đoạn       | Channels | Spatial | Thông tin      |
+| --------------- | -------- | ------- | -------------- |
+| Input           | 3        | 224×224 | Pixel thô      |
+| Sau Conv+Pool 1 | 64       | 112×112 | Edges          |
+| Sau Conv+Pool 2 | 128      | 56×56   | Textures       |
+| Sau Conv+Pool 3 | 256      | 28×28   | Parts          |
+| Sau Conv+Pool 4 | 512      | 7×7     | Objects        |
+| GAP             | 512      | 1×1     | Feature vector |
 
 ### 2.9 LeNet — CNN đầu tiên hoàn chỉnh (Buổi 28)
 
@@ -294,18 +295,18 @@ Input (1, 28, 28)
 
 **Modern LeNet — 4 nâng cấp:**
 
-| Classic (1998) | Modern | Lợi ích |
-|---|---|---|
-| Sigmoid | **ReLU** | Gradient không vanish → train nhanh 5-10× |
-| AvgPool | **MaxPool** | Giữ features nổi bật |
-| — | + **BatchNorm** | Ổn định training, lr cao hơn |
-| — | + **Dropout 0.5** | Chống overfitting |
+| Classic (1998) | Modern            | Lợi ích                                   |
+| -------------- | ----------------- | ----------------------------------------- |
+| Sigmoid        | **ReLU**          | Gradient không vanish → train nhanh 5-10× |
+| AvgPool        | **MaxPool**       | Giữ features nổi bật                      |
+| —              | + **BatchNorm**   | Ổn định training, lr cao hơn              |
+| —              | + **Dropout 0.5** | Chống overfitting                         |
 
-| Model | Params | Fashion-MNIST Accuracy |
-|---|---|---|
-| MLP 2 layers | ~200K | ~87% |
-| LeNet Classic | ~62K | ~84% |
-| **Modern LeNet** | ~62K | **~91%** |
+| Model            | Params | Fashion-MNIST Accuracy |
+| ---------------- | ------ | ---------------------- |
+| MLP 2 layers     | ~200K  | ~87%                   |
+| LeNet Classic    | ~62K   | ~84%                   |
+| **Modern LeNet** | ~62K   | **~91%**               |
 
 **CNN thắng MLP vì inductive bias đúng:** locality + weight sharing + hierarchical features.
 
@@ -327,10 +328,10 @@ Input (1, 28, 28)
 
 **3 Missing Ingredients trước 2012:**
 
-| Thành phần | Thiếu | Có (sau 2009-2012) |
-|---|---|---|
-| Data | MNIST 60K ảnh 28×28 | **ImageNet** 1.2M ảnh 224×224 |
-| Hardware | CPU ~1 GFLOPS | **GPU** GTX 580, 1.5 TFLOPS |
+| Thành phần | Thiếu                        | Có (sau 2009-2012)             |
+| ---------- | ---------------------------- | ------------------------------ |
+| Data       | MNIST 60K ảnh 28×28          | **ImageNet** 1.2M ảnh 224×224  |
+| Hardware   | CPU ~1 GFLOPS                | **GPU** GTX 580, 1.5 TFLOPS    |
 | Techniques | Sigmoid (vanishing gradient) | **ReLU**, Dropout, Xavier init |
 
 **Bước chuyển tư duy — Representation Learning:**
@@ -340,14 +341,14 @@ Input (1, 28, 28)
 
 **Kiến trúc AlexNet:** 8 layers (5 Conv + 3 FC), ~47M params
 
-| So sánh | LeNet | AlexNet |
-|---|---|---|
-| Input | 28×28 | **224×224** |
-| Depth | 5 layers | **8 layers** |
-| Activation | Sigmoid | **ReLU** |
-| Pooling | Average | **Max** |
+| So sánh        | LeNet        | AlexNet                |
+| -------------- | ------------ | ---------------------- |
+| Input          | 28×28        | **224×224**            |
+| Depth          | 5 layers     | **8 layers**           |
+| Activation     | Sigmoid      | **ReLU**               |
+| Pooling        | Average      | **Max**                |
 | Regularization | Weight Decay | **Dropout** + Data Aug |
-| Params | ~62K | **~47M** |
+| Params         | ~62K         | **~47M**               |
 
 **Achilles heel:** FC layers chiếm >56% params (~164MB) → các kiến trúc sau sẽ giải quyết bằng GAP.
 
@@ -375,6 +376,7 @@ def vgg_block(num_convs, out_channels):
 **VGG-11:** `arch = [(1,64), (1,128), (2,256), (2,512), (2,512)]` → 8 conv + 3 FC = 11 layers
 
 **Đóng góp quan trọng:**
+
 1. **Block-based design** — nền tảng cho mọi kiến trúc sau
 2. **Chỉ dùng kernel 3×3** — 2 tầng 3×3 = receptive field 5×5 nhưng ít params hơn + thêm ReLU
 3. **Channels tăng gấp đôi, spatial giảm nửa** — pattern chuẩn của CNN
@@ -415,11 +417,11 @@ Input ──┬── Conv 1×1 ────────────────
 
 **GoogLeNet (22 layers):** Stem → 9 Inception blocks → GAP → FC
 
-| So sánh | VGG-19 | GoogLeNet |
-|---|---|---|
-| Depth | 19 | **22** |
-| Params | **~138M** | **~5M** (ít hơn 28×!) |
-| Chiến lược | Sequential 3×3 | Multi-scale parallel |
+| So sánh    | VGG-19         | GoogLeNet             |
+| ---------- | -------------- | --------------------- |
+| Depth      | 19             | **22**                |
+| Params     | **~138M**      | **~5M** (ít hơn 28×!) |
+| Chiến lược | Sequential 3×3 | Multi-scale parallel  |
 
 ### 3.5 Batch Normalization (2015) (Buổi 33)
 
@@ -441,30 +443,30 @@ $$\mathbf{y} = \boldsymbol{\gamma} \odot \hat{\mathbf{x}} + \boldsymbol{\beta}$$
 
 **FC vs Conv BN:**
 
-| Tiêu chí | FC Layer | Conv Layer |
-|---|---|---|
-| Input shape | $(N, D)$ | $(N, C, H, W)$ |
-| Normalize theo | dim=0 (batch) | dim=(0,2,3) (batch + spatial) |
-| Lý do | Per-feature | Per-channel (**translation invariance**) |
-| Learnable params | $2D$ | $2C$ |
+| Tiêu chí         | FC Layer      | Conv Layer                               |
+| ---------------- | ------------- | ---------------------------------------- |
+| Input shape      | $(N, D)$      | $(N, C, H, W)$                           |
+| Normalize theo   | dim=0 (batch) | dim=(0,2,3) (batch + spatial)            |
+| Lý do            | Per-feature   | Per-channel (**translation invariance**) |
+| Learnable params | $2D$          | $2C$                                     |
 
 **Training vs Inference — 2 chế độ khác nhau:**
 
-| | `model.train()` | `model.eval()` |
-|---|---|---|
+|          | `model.train()`              | `model.eval()`              |
+| -------- | ---------------------------- | --------------------------- |
 | Mean/Var | Tính trên **batch hiện tại** | Dùng **running statistics** |
-| Cập nhật | Có (exponential moving avg) | Không |
-| Output | Noisy (regularization) | Deterministic |
+| Cập nhật | Có (exponential moving avg)  | Không                       |
+| Output   | Noisy (regularization)       | Deterministic               |
 
 > [!WARNING] Quên `model.eval()` khi inference → BN dùng batch test → kết quả sai!
 
 **BN vs Layer Normalization:**
 
-| | Batch Norm | Layer Norm |
-|---|---|---|
-| Tính trên | Batch (nhiều samples) | 1 sample (tất cả features) |
-| Phụ thuộc batch size | Có | **Không** |
-| Dùng phổ biến ở | **CNN** | **Transformer**, RNN |
+|                      | Batch Norm            | Layer Norm                 |
+| -------------------- | --------------------- | -------------------------- |
+| Tính trên            | Batch (nhiều samples) | 1 sample (tất cả features) |
+| Phụ thuộc batch size | Có                    | **Không**                  |
+| Dùng phổ biến ở      | **CNN**               | **Transformer**, RNN       |
 
 ### 3.6 ResNet (2015) — Residual Networks (Buổi 34)
 
@@ -476,9 +478,9 @@ $$\mathbf{y} = \boldsymbol{\gamma} \odot \hat{\mathbf{x}} + \boldsymbol{\beta}$$
 $$f(\mathbf{x}) = g(\mathbf{x}) + \mathbf{x}$$
 
 ```
-Input x ──┬── Conv 3×3 → BN → ReLU → Conv 3×3 → BN ──→ (+) → ReLU → Output
-           │                                              ↑
-           └────────────── Skip Connection ──────────────┘
+Input x ──┬── Conv 3×3 → BN → ReLU → Conv 3×3 → BN -> (+) → ReLU → Output
+          │                                           ↑
+          └────────────── Skip Connection ────────────┘
 ```
 
 **2 loại:** Identity shortcut (cùng shape) và Projection shortcut (1×1 conv khi đổi channels/size)
@@ -491,14 +493,14 @@ Thành phần $+\mathbf{I}$ đảm bảo gradient **luôn chảy qua** dù $\fra
 
 **ResNet-18: Stem → 4 stages → Head**
 
-| Stage | Blocks | Channels | Spatial |
-|---|---|---|---|
-| Stem (b1) | Conv 7×7, s=2 + MaxPool | 64 | 24×24 |
-| b2 | 2 × Residual(64) | 64 | 24×24 |
-| b3 | 2 × Residual(128) | 128 | 12×12 |
-| b4 | 2 × Residual(256) | 256 | 6×6 |
-| b5 | 2 × Residual(512) | 512 | 3×3 |
-| Head | GAP + FC | 10 | 1×1 |
+| Stage     | Blocks                  | Channels | Spatial |
+| --------- | ----------------------- | -------- | ------- |
+| Stem (b1) | Conv 7×7, s=2 + MaxPool | 64       | 24×24   |
+| b2        | 2 × Residual(64)        | 64       | 24×24   |
+| b3        | 2 × Residual(128)       | 128      | 12×12   |
+| b4        | 2 × Residual(256)       | 256      | 6×6     |
+| b5        | 2 × Residual(512)       | 512      | 3×3     |
+| Head      | GAP + FC                | 10       | 1×1     |
 
 **Tên gọi:** ResNet-**18** = 1 (stem conv) + 4×4 (conv layers) + 1 (FC) = 18 layers có weights.
 
@@ -513,10 +515,10 @@ Thành phần $+\mathbf{I}$ đảm bảo gradient **luôn chảy qua** dù $\fra
 
 **ResNeXt Bottleneck Block:** Conv 1×1 (squeeze) → Conv 3×3 grouped (transform) → Conv 1×1 (expand)
 
-| Cấu hình | Params | So với standard |
-|---|---|---|
-| Standard Conv 3×3 ($c=256$) | 589,824 | 100% |
-| ResNeXt g=32, b=128 | 70,000 | **12%** |
+| Cấu hình                    | Params  | So với standard |
+| --------------------------- | ------- | --------------- |
+| Standard Conv 3×3 ($c=256$) | 589,824 | 100%            |
+| ResNeXt g=32, b=128         | 70,000  | **12%**         |
 
 **Cardinality** = số groups song song — chiều thứ 3 của thiết kế mạng (ngoài depth và width). Tăng cardinality hiệu quả hơn tăng depth.
 
@@ -529,12 +531,12 @@ Thành phần $+\mathbf{I}$ đảm bảo gradient **luôn chảy qua** dù $\fra
 
 **Phép so sánh cốt lõi:**
 
-| | ResNet | DenseNet |
-|---|---|---|
-| **Công thức** | $\mathbf{x}_l = f(\mathbf{x}_{l-1}) + \mathbf{x}_{l-1}$ | $\mathbf{x}_l = f([\mathbf{x}_0, ..., \mathbf{x}_{l-1}])$ |
-| **Kết hợp** | Addition (+) | Concatenation ([,]) |
-| **Channels** | Giữ nguyên | **Tăng dần** (+k mỗi layer) |
-| **Feature reuse** | Chỉ từ layer ngay trước | Từ **tất cả** layers trước |
+|                   | ResNet                                                  | DenseNet                                                  |
+| ----------------- | ------------------------------------------------------- | --------------------------------------------------------- |
+| **Công thức**     | $\mathbf{x}_l = f(\mathbf{x}_{l-1}) + \mathbf{x}_{l-1}$ | $\mathbf{x}_l = f([\mathbf{x}_0, ..., \mathbf{x}_{l-1}])$ |
+| **Kết hợp**       | Addition (+)                                            | Concatenation ([,])                                       |
+| **Channels**      | Giữ nguyên                                              | **Tăng dần** (+k mỗi layer)                               |
+| **Feature reuse** | Chỉ từ layer ngay trước                                 | Từ **tất cả** layers trước                                |
 
 **Growth Rate ($k$):** Mỗi layer trong Dense Block thêm $k$ channels. Sau $n$ layers từ $c_0$ channels ban đầu:
 
@@ -563,12 +565,12 @@ Mỗi stage có 4 hyperparameters: $d_i$ (depth), $c_i$ (width/channels), $k_i$ 
 
 **Thu hẹp design space (AnyNet$_A$ → AnyNet$_E$):**
 
-| Bước | Ràng buộc | Từ → Đến |
-|---|---|---|
-| AnyNet$_A$ → $B$ | Shared bottleneck ratio: $k_i = k$ | 17 → 14 params |
-| AnyNet$_B$ → $C$ | Shared group width: $g_i = g$ | 14 → 11 params |
+| Bước             | Ràng buộc                            | Từ → Đến              |
+| ---------------- | ------------------------------------ | --------------------- |
+| AnyNet$_A$ → $B$ | Shared bottleneck ratio: $k_i = k$   | 17 → 14 params        |
+| AnyNet$_B$ → $C$ | Shared group width: $g_i = g$        | 14 → 11 params        |
 | AnyNet$_C$ → $D$ | Increasing width: $c_i \leq c_{i+1}$ | 11 → 11 (constrained) |
-| AnyNet$_D$ → $E$ | Increasing depth: $d_i \leq d_{i+1}$ | Thêm constraint |
+| AnyNet$_D$ → $E$ | Increasing depth: $d_i \leq d_{i+1}$ | Thêm constraint       |
 
 **RegNet — 4 nguyên tắc thiết kế:**
 
@@ -581,18 +583,18 @@ Mỗi stage có 4 hyperparameters: $d_i$ (depth), $c_i$ (width/channels), $k_i$ 
 
 ## 📐 Bảng tổng hợp — 9 kiến trúc CNN
 
-| Kiến trúc | Năm | Innovation | Params | Depth |
-|---|---|---|---|---|
-| **LeNet** | 1998 | CNN đầu tiên, Encoder+Classifier | 62K | 5 |
-| **AlexNet** | 2012 | ReLU, Dropout, GPU, ImageNet | 47M | 8 |
-| **VGG** | 2014 | Block-based, chỉ 3×3 | 138M | 11-19 |
-| **NiN** | 2013 | Conv 1×1, GAP thay FC | Ít | 12 |
-| **GoogLeNet** | 2014 | Inception (multi-branch), Bottleneck 1×1 | 5M | 22 |
-| **BN** | 2015 | Normalize activations, lr cao hơn | +2C per layer | — |
-| **ResNet** | 2015 | Skip connection, identity mapping | 11-60M | 18-152 |
-| **ResNeXt** | 2017 | Grouped conv, cardinality | Tùy g | 50+ |
-| **DenseNet** | 2017 | Concatenation, feature reuse, growth rate | Ít | 121-264 |
-| **RegNet** | 2020 | Design space optimization | Tùy | Tùy |
+| Kiến trúc     | Năm  | Innovation                                | Params        | Depth   |
+| ------------- | ---- | ----------------------------------------- | ------------- | ------- |
+| **LeNet**     | 1998 | CNN đầu tiên, Encoder+Classifier          | 62K           | 5       |
+| **AlexNet**   | 2012 | ReLU, Dropout, GPU, ImageNet              | 47M           | 8       |
+| **VGG**       | 2014 | Block-based, chỉ 3×3                      | 138M          | 11-19   |
+| **NiN**       | 2013 | Conv 1×1, GAP thay FC                     | Ít            | 12      |
+| **GoogLeNet** | 2014 | Inception (multi-branch), Bottleneck 1×1  | 5M            | 22      |
+| **BN**        | 2015 | Normalize activations, lr cao hơn         | +2C per layer | —       |
+| **ResNet**    | 2015 | Skip connection, identity mapping         | 11-60M        | 18-152  |
+| **ResNeXt**   | 2017 | Grouped conv, cardinality                 | Tùy g         | 50+     |
+| **DenseNet**  | 2017 | Concatenation, feature reuse, growth rate | Ít            | 121-264 |
+| **RegNet**    | 2020 | Design space optimization                 | Tùy           | Tùy     |
 
 ---
 
@@ -600,11 +602,11 @@ Mỗi stage có 4 hyperparameters: $d_i$ (depth), $c_i$ (width/channels), $k_i$ 
 
 ```mermaid
 graph TD
-    P1["1. Stem - Body - Head<br>Moi CNN deu co 3 phan"]
-    P2["2. Channels tang, Spatial giam<br>c x2, HW / 2 moi stage"]
-    P3["3. Conv 1x1 Bottleneck<br>Giam channels truoc op dat"]
-    P4["4. Information Preservation<br>Addition (ResNet)<br>Concatenation (DenseNet)"]
-    P5["5. GAP thay FC<br>0 params cho classifier head"]
+    P1["Pattern 1: Stem - Body - Head<br>Moi CNN deu co 3 phan"]
+    P2["Pattern 2: Channels tang, Spatial giam<br>c x2, HW / 2 moi stage"]
+    P3["Pattern 3: Conv 1x1 Bottleneck<br>Giam channels truoc op dat"]
+    P4["Pattern 4: Information Preservation<br>Addition (ResNet)<br>Concatenation (DenseNet)"]
+    P5["Pattern 5: GAP thay FC<br>0 params cho classifier head"]
 
     P1 --> P2 --> P3 --> P4 --> P5
 
@@ -615,13 +617,13 @@ graph TD
     style P5 fill:#E74C3C,color:#fff
 ```
 
-| Pattern | Xuất hiện từ | Dùng trong |
-|---|---|---|
-| **Stem-Body-Head** | GoogLeNet | ResNet, DenseNet, RegNet, ViT |
-| **Channel doubling + Spatial halving** | VGG | Mọi CNN |
-| **1×1 Conv bottleneck** | NiN | GoogLeNet, ResNet-50+, ResNeXt, DenseNet-BC |
-| **Skip connection** | ResNet | DenseNet (concat), Transformer, U-Net |
-| **GAP thay FC** | NiN | GoogLeNet+, ResNet+, DenseNet+, EfficientNet |
+| Pattern                                | Xuất hiện từ | Dùng trong                                   |
+| -------------------------------------- | ------------ | -------------------------------------------- |
+| **Stem-Body-Head**                     | GoogLeNet    | ResNet, DenseNet, RegNet, ViT                |
+| **Channel doubling + Spatial halving** | VGG          | Mọi CNN                                      |
+| **1×1 Conv bottleneck**                | NiN          | GoogLeNet, ResNet-50+, ResNeXt, DenseNet-BC  |
+| **Skip connection**                    | ResNet       | DenseNet (concat), Transformer, U-Net        |
+| **GAP thay FC**                        | NiN          | GoogLeNet+, ResNet+, DenseNet+, EfficientNet |
 
 ---
 
@@ -735,168 +737,141 @@ $$\text{Params} = \frac{c_i \times c_o \times k^2}{g} \quad \text{(giảm } g \t
 ## 📝 Đáp án
 
 > [!NOTE]- 📝 Nhóm A — Builders Guide
-
 > 1. (a) `state_dict()` chỉ lưu trọng số → **portable**, không phụ thuộc đường dẫn code. (b) Lưu cả model dùng pickle → dễ lỗi khi đổi tên/đổi máy, **nguy cơ bảo mật** (arbitrary code execution).
->
-> 2. ```python
->    torch.save({'epoch': e, 'model': model.state_dict(),
->                'optimizer': optimizer.state_dict()}, 'ckpt.pt')
->    ```
->    Cần lưu optimizer state vì Adam/SGD+momentum giữ **momentum** cho mỗi param. Không lưu → resume training reset momentum → train tệ hơn.
->
+> 2. `torch.save({'epoch': e, 'model': model.state_dict(), 'optimizer': optimizer.state_dict()}, 'ckpt.pt')` — Cần lưu optimizer state vì Adam/SGD+momentum giữ **momentum** cho mỗi param. Không lưu → resume training reset momentum → train tệ hơn.
 > 3. **RuntimeError** — tensors phải cùng device. Sửa: `X_cpu.cuda() + Y_gpu` hoặc `X_cpu.to(Y_gpu.device) + Y_gpu`.
->
 > 4. `.item()` buộc **GPU đồng bộ** (synchronize) với CPU → CPU **chờ** GPU tính xong → phá pipeline song song.
->
 > 5. (a) Tạo model **cùng kiến trúc**, (b) `clone.load_state_dict(torch.load('f.pt'))`, (c) `clone.eval()` — tắt Dropout/BN.
 
 > [!NOTE]- 📝 Nhóm B — CNN Fundamentals
-
 > 6. (a) **Translation Invariance** — dùng chung kernel cho mọi vị trí → giảm params. (b) **Locality** — mỗi neuron chỉ nhìn vùng nhỏ (3×3, 5×5) → giảm params.
->
 > 7. Output 1×1: $1\times1 + 0\times1 + 0\times1 + 1\times1 = 2$. Output = $(2)$.
->
 > 8. $\lfloor(224 - 7 + 6 + 2)/2\rfloor = \lfloor225/2\rfloor = 112$. Output = **112 × 112**.
->
 > 9. Stride=2 → không overlap: $\max(1,5,8,4)=8$, $\max(3,2,7,6)=7$, $\max(9,3,0,5)=9$, $\max(2,1,4,8)=8$. Output: $\begin{pmatrix} 8 & 7 \\ 9 & 8 \end{pmatrix}$.
->
 > 10. **0** — pooling chỉ lấy max/mean, phép toán cố định, không cần learn. Không có gradient cho params → nhanh.
->
 > 11. Kernel shape: $(64, 3, 3, 3)$. Params: $64\times3\times3\times3 + 64 = 1{,}792$.
->
 > 12. (a) **Bottleneck**: giảm channels 256→64 trước Conv 3×3 → tiết kiệm compute. (b) **Cross-channel interaction**: trộn thông tin giữa feature maps (NiN, GoogLeNet).
->
 > 13. Kernel lẻ → padding **đối xứng** (thêm bằng nhau trên/dưới, trái/phải). Kernel chẵn → padding không đối xứng → phức tạp.
->
 > 14. (a) Spatial giảm → receptive field tương đối rộng hơn → nhìn context lớn. (b) Channels tăng → bù thông tin mất do giảm spatial. (c) Giữ tổng computation ổn định: $c \times H \times W \approx \text{const}$.
->
 > 15. **2 tầng 3×3 tốt hơn**: (a) Ít params: $2\times9=18$ vs $25$. (b) Thêm 1 ReLU giữa → phi tuyến mạnh hơn. (c) Training dễ hơn. Đây là triết lý VGG.
 
 > [!NOTE]- 📝 Nhóm C — LeNet & AlexNet
-
 > 16. **2 Conv + 3 FC**. Tổng **~62K** params. FC chiếm **96%** (FC1 alone: 400×120 = 48K).
->
 > 17. Sigmoid→**ReLU** (gradient không vanish), AvgPool→**MaxPool** (giữ features nổi bật), +**BatchNorm** (ổn định training), +**Dropout** (chống overfitting).
->
 > 18. CNN có **inductive bias đúng** cho ảnh: locality, weight sharing, hierarchical features. MLP coi ảnh = vector phẳng → mất thông tin spatial.
->
 > 19. (a) **Data thiếu** (chỉ MNIST 60K, 28×28). (b) **Hardware yếu** (chưa có GPU framework cho DL). (c) **Techniques thiếu** (Sigmoid → vanishing gradient, chưa có Dropout, Xavier, Adam).
->
 > 20. **Feature Engineering**: con người **tự thiết kế** features (SIFT, HOG) → tốn thời gian, chỉ tốt cho 1 bài toán. **Representation Learning**: model **tự học** representations từ data → nhanh, tổng quát.
->
 > 21. Ảnh 224×224 lớn hơn 8× so với 28×28 → cần **receptive field lớn** ở tầng đầu. Stride 4 **giảm nhanh** 224→54, tiết kiệm compute cho tầng sau.
->
 > 22. $0.25^8 \approx 1.5 \times 10^{-5}$ → gradient gần 0 → tầng đầu **không học được**!
->
 > 23. **FC layers quá lớn** (~164MB, >56% params). Giải pháp: NiN/GoogLeNet thay FC bằng **Global Average Pooling** → giảm hàng triệu params.
 
 > [!NOTE]- 📝 Nhóm D — VGG, NiN, GoogLeNet
-
 > 24. **Block-based design**: gom Conv+ReLU+Pool thành block, xếp nhiều block → dễ mở rộng. Chỉ 3×3 vì: 2 tầng 3×3 = RF 5×5 với ít params + thêm ReLU.
->
 > 25. VGG block: N conv ww → MaxPool. NiN block: Conv ww → **Conv 1×1 → Conv 1×1** (thêm 2 lớp 1×1 = mini MLP per pixel).
->
 > 26. $(512, 7, 7) \to (512, 1, 1)$. Params = **0** (chỉ lấy mean).
->
 > 27. GAP **không có params** → không thể "nhớ thuộc" training data. FC head với hàng triệu params → dễ overfit.
->
 > 28. **4 nhánh**: Conv 1×1, Conv 1×1→Conv 3×3, Conv 1×1→Conv 5×5, MaxPool→Conv 1×1. Conv 1×1 = **bottleneck** giảm channels trước operation đắt (3×3, 5×5).
->
 > 29. GoogLeNet dùng: (a) **Bottleneck 1×1** giảm channels trước 3×3/5×5; (b) **GAP** thay 3 FC layers lớn; (c) **Inception** multi-scale → ít params cho cùng capacity.
->
 > 30. VGG: đơn giản, dễ hiểu, dễ transfer learning. Nhược: params rất lớn (138M). GoogLeNet: ít params (5M), multi-scale. Nhược: phức tạp, khó implement, khó tune.
 
 > [!NOTE]- 📝 Nhóm E — Batch Normalization
-
 > 31. **FC**: dim=0 (across batch, per-feature). **Conv**: dim=(0,2,3) (across batch + spatial, per-channel). Conv khác vì cần **translation invariance** — cùng filter phải nhìn dữ liệu ổn định ở mọi vị trí.
->
 > 32. **2 per layer**: $\gamma$ (scale, init=**1**) và $\beta$ (shift, init=**0**). Thêm 2 buffers (moving_mean, moving_var) nhưng không learnable.
->
 > 33. **Training**: batch statistics (noisy) + cập nhật running stats. **Eval**: running stats (deterministic) + không cập nhật. Phải gọi `model.eval()` trước inference!
->
 > 34. BN trừ mean → bias bị **hấp thụ** vào mean rồi trừ đi → vô nghĩa. $\beta$ của BN **thay thế** bias.
->
 > 35. BN giữ activations **ổn định** (mean~0, var~1) → gradients không bùng nổ dù lr cao → optimizer ổn định.
->
 > 36. **BN**: CNN (batch đủ lớn, translation invariance). **LN**: Transformer/RNN (batch nhỏ, sequence length thay đổi, cần deterministic). LN không phụ thuộc batch size.
->
 > 37. Batch size 1: mean = chính giá trị đó → chuẩn hóa = **0** → mọi activation = 0 → mạng không học được!
->
 > 38. Giải thích hiện đại: (a) **Landscape smoothing** — loss surface mượt hơn → optimizer đi hướng tốt. (b) **Implicit regularization** — noise từ batch stats. (c) **Scale stabilization** — ngăn activations phân kỳ.
 
 > [!NOTE]- 📝 Nhóm F — ResNet, ResNeXt, DenseNet
-
 > 39. Degradation: cả **training error lẫn test error đều tăng** khi thêm layers. Overfitting: training error thấp, test error cao. Degradation = **optimization difficulty**, không phải model complexity.
->
 > 40. $\frac{\partial L}{\partial x} = \frac{\partial L}{\partial y}(\frac{\partial g}{\partial x} + \mathbf{I})$. Thành phần $+\mathbf{I}$: dù $\frac{\partial g}{\partial x} \approx 0$, gradient **vẫn chảy qua** identity → không vanish. Tạo "đường tắt" cho gradient.
->
 > 41. Khi input và output **khác shape** (khác channels hoặc khác spatial size). Ví dụ: stage chuyển từ 64→128 channels và spatial giảm 2× → cần Conv 1×1 stride=2 để match shape.
->
 > 42. **8 residual blocks** (2 per stage × 4 stages). **16 conv layers** (2 per block × 8) + 1 stem conv + 1 FC = **18 layers** tổng cộng.
->
 > 43. **Giảm $g$ lần.** Standard: mỗi output kết nối tất cả $c_i$ inputs → $c_i \times c_o \times k^2$. Grouped: chia thành $g$ nhóm, mỗi nhóm $c_i/g$ → $c_o/g$ → params = $c_i \times c_o \times k^2 / g$.
->
 > 44. "32" = cardinality (32 groups). "4d" = group width (4 channels/group). Tổng bottleneck channels = $32 \times 4 = 128$.
->
 > 45. **Addition** (ResNet): giữ channels, ẩn thông tin trước vào gradient. **Concatenation** (DenseNet): channels tăng, giữ features nguyên vẹn, explicit feature reuse. DenseNet hiệu quả params hơn nhưng tốn memory (giữ tất cả features).
->
 > 46. $64 + 4 \times 12 = 64 + 48 = 112$ channels.
 
 > [!NOTE]- 📝 Nhóm G — Design Space & Tổng hợp
-
 > 47. (a) Shared bottleneck ratio ($k_i = k$), (b) Shared group width ($g_i = g$), (c) Increasing width ($c_i \leq c_{i+1}$), (d) Increasing depth ($d_i \leq d_{i+1}$).
->
 > 48. Shared $k$, shared $g$, increasing $c$, increasing $d$ (4 nguyên tắc trên).
->
 > 49. Stem-Body-Head, Channel doubling + Spatial halving, 1×1 Bottleneck, Information preservation (skip/concat), GAP thay FC.
->
 > 50. **LeNet** (1998) → **NiN** (2013) → **AlexNet** (2012) → **VGG** (2014) → **GoogLeNet** (2014) → **ResNet** (2015) → **DenseNet** (2017).
->    Chính xác hơn: LeNet → AlexNet → NiN → VGG ≈ GoogLeNet → ResNet → DenseNet.
+>     Chính xác hơn: LeNet → AlexNet → NiN → VGG ≈ GoogLeNet → ResNet → DenseNet.
 
 ---
 
 ## ✅ Checklist tự đánh giá — "Tôi đã hiểu thật chưa?"
 
 ### Builders Guide
+
 - [ ] Tôi viết được Save/Load pipeline không nhìn code mẫu
+  - → `torch.save(net.state_dict(), 'f.pt')` | `clone = MLP(); clone.load_state_dict(torch.load('f.pt')); clone.eval()` | Xem: Câu 1-5, [[Buổi 25 - Tuần 7]]
 - [ ] Tôi biết tại sao cần lưu optimizer state khi checkpointing
+  - → Adam/SGD+momentum lưu **momentum** cho mỗi param. Không lưu → resume training reset momentum → train tệ hơn. | Xem: Câu 2, [[Buổi 25 - Tuần 7]]
 - [ ] Tôi biết pattern GPU chuẩn (3 dòng code)
+  - → (1) `device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')` (2) `model.to(device)` (3) `X, y = X.to(device), y.to(device)` trong training loop. | Xem: Câu 3-4, [[Buổi 25 - Tuần 7]]
 
 ### CNN Fundamentals
+
 - [ ] Tôi tính tay được cross-correlation cho input/kernel bất kỳ
-- [ ] Tôi tính được output size với padding và stride
-- [ ] Tôi phân biệt Max Pooling vs Average Pooling — khi nào dùng cái nào
-- [ ] Tôi hiểu 1×1 convolution = FC per pixel
+  - → Đặt kernel lên patch cùng size → nhân từng phần tử tương ứng → cộng tất cả → 1 số. Trượt theo stride. Thử: Input $\begin{pmatrix}0&1&2\\3&4&5\\6&7&8\end{pmatrix}$, Kernel $\begin{pmatrix}0&1\\2&3\end{pmatrix}$ → vị trí (0,0) = $0\times0+1\times1+3\times2+4\times3=19$. | Xem: Câu 7, [[Buổi 26 - Tuần 8]]
+- [x] Tôi tính được output size với padding và stride
+- [x] Tôi phân biệt Max Pooling vs Average Pooling — khi nào dùng cái nào
+- [x] Tôi hiểu 1×1 convolution = FC per pixel
 - [ ] Tôi đếm được params cho `nn.Conv2d(c_i, c_o, k)` bất kỳ
+  - → Công thức: $c_o \times c_i \times k^2 + c_o$ (weights + bias mỗi filter). Ví dụ: `Conv2d(3, 64, 3)` = $64\times3\times9+64=1{,}792$. | Xem: Câu 11, [[Buổi 27 - Tuần 8]]
 
 ### LeNet → AlexNet
+
 - [ ] Tôi viết được LeNet + Modern LeNet từ đầu
+  - → **Classic**: Conv(1→6,5,p=2)→Sigmoid→AvgPool(2)→Conv(6→16,5)→Sigmoid→AvgPool(2)→Flatten→FC(400→120)→Sigmoid→FC(120→84)→FC(84→10). **Modern**: Sigmoid→ReLU, AvgPool→MaxPool, thêm BN sau Conv, thêm Dropout(0.5) trước FC. | Xem: Câu 16-17, [[Buổi 28 - Tuần 8]]
 - [ ] Tôi giải thích được 3 missing ingredients + representation learning
+  - → (a) **Data**: ImageNet 1.2M ảnh 224×224 vs MNIST 60K ảnh 28×28. (b) **Hardware**: GPU GTX 580 (1.5 TFLOPS). (c) **Techniques**: ReLU (không vanish), Dropout, Xavier init. **Rep. Learning**: model tự học features từ pixels thô — không cần SIFT/HOG thủ công. | Xem: Câu 19-20, [[Buổi 29 - Tuần 8]]
 - [ ] Tôi hiểu tại sao CNN ít params hơn nhưng chính xác hơn MLP
+  - → CNN có **inductive bias đúng** cho ảnh: (1) Locality — chỉ nhìn vùng nhỏ. (2) Weight sharing — dùng chung kernel. (3) Hierarchical features — từ edge → texture → object. MLP coi ảnh = vector phẳng → mất hoàn toàn thông tin spatial. | Xem: Câu 18, [[Buổi 28 - Tuần 8]]
 
 ### VGG, NiN, GoogLeNet
+
 - [ ] Tôi giải thích được block-based design (VGG)
-- [ ] Tôi hiểu GAP thay FC — và tại sao giảm overfitting
+  - → Gom N×(Conv 3×3 → ReLU) + MaxPool 2×2 thành 1 **VGG Block**. Xếp nhiều blocks như LEGO. 2 tầng Conv 3×3 liên tiếp = RF 5×5, nhưng ít params hơn ($2\times9=18$ vs $25$) + thêm 1 ReLU. | Xem: Câu 24, [[Buổi 30 - Tuần 8]]
+- [x] Tôi hiểu GAP thay FC — và tại sao giảm overfitting
 - [ ] Tôi vẽ được Inception block (4 nhánh)
+  - → Nhánh 1: Conv 1×1. Nhánh 2: Conv 1×1 → Conv 3×3. Nhánh 3: Conv 1×1 → Conv 5×5. Nhánh 4: MaxPool 3×3 → Conv 1×1. Ghép 4 outputs theo **channel dim** (concat). Conv 1×1 = bottleneck giảm channels trước operation đắt. | Xem: Câu 28, [[Buổi 32 - Tuần 8]]
 
 ### Batch Normalization
+
 - [ ] Tôi viết được công thức BN (2 bước)
+  - → Bước 1 Standardize: $\hat{x} = \dfrac{x - \hat{\mu}_\mathcal{B}}{\sqrt{\hat{\sigma}^2_\mathcal{B} + \epsilon}}$. Bước 2 Scale & Shift: $y = \gamma \odot \hat{x} + \beta$. Với $\gamma$ init=1, $\beta$ init=0, cả hai **learnable**. | Xem: Câu 31, [[Buổi 33 - Tuần 9]], [[Batch Normalization]]
 - [ ] Tôi phân biệt FC BN (dim=0) vs Conv BN (dim=0,2,3)
+  - → **FC** $(N, D)$: normalize per-feature, `dim=0`, $N$ values/mean. **Conv** $(N,C,H,W)$: normalize per-channel, `dim=(0,2,3)`, $N\times H\times W$ values/mean. Lý do Conv khác: **translation invariance** — cùng filter phải nhìn nhất quán ở mọi vị trí $(h,w)$. | Xem: Câu 31, [[Batch Normalization]]
 - [ ] Tôi hiểu training vs eval mode — và hậu quả khi quên eval
+  - → **Train**: dùng batch stats (noisy) + cập nhật running mean/var (EMA). **Eval**: dùng running stats (deterministic), không cập nhật. Quên `model.eval()` → BN dùng batch test stats → output sai, nếu batch=1 thì activation = 0. | Xem: Câu 33, [[Buổi 33 - Tuần 9]]
 - [ ] Tôi so sánh được BN vs Layer Norm
+  - → **BN**: tính trên batch (nhiều samples, 1 feature), phụ thuộc batch size, train≠eval → dùng cho **CNN**. **LN**: tính trên 1 sample (tất cả features), không phụ thuộc batch, train=eval → dùng cho **Transformer/RNN**. | Xem: Câu 36, [[Buổi 33 - Tuần 9]]
 
 ### ResNet, ResNeXt, DenseNet
-- [ ] Tôi phân biệt degradation problem vs overfitting
+
+- [x] Tôi phân biệt degradation problem vs overfitting
 - [ ] Tôi viết được gradient flow qua residual block
+  - → $\dfrac{\partial L}{\partial x} = \dfrac{\partial L}{\partial y}\left(\dfrac{\partial g(x)}{\partial x} + \mathbf{I}\right)$. Thành phần $+\mathbf{I}$: dù $\partial g/\partial x \approx 0$ (saturated), gradient **vẫn chảy qua** identity → không vanish. Qua $L$ blocks → $2^L$ đường đi song song. | Xem: Câu 40, [[Buổi 34 - Tuần 9]]
 - [ ] Tôi hiểu grouped convolution — tính params giảm g lần
+  - → Chia $c_i$ input channels thành $g$ nhóm độc lập, mỗi nhóm xử lý riêng. Params = $c_i \times c_o \times k^2 / g$ (giảm $g$ lần). Ví dụ: $g=32$ → giảm 32×! Tăng **cardinality** thay vì depth/width. | Xem: Câu 43, [[Buổi 34 - Tuần 9]]
 - [ ] Tôi so sánh được Addition (ResNet) vs Concatenation (DenseNet)
+  - → **Addition** (ResNet): channels giữ nguyên, thông tin "hòa tan" vào nhau, nhẹ. **Concatenation** (DenseNet): channels tăng thêm $k$ mỗi layer ($c_0 + l \times k$), features cũ giữ nguyên explicit → params ít hơn nhưng tốn memory (phải giữ tất cả previous features). | Xem: Câu 45, [[Buổi 35 - Tuần 9]]
 
 ### Design Patterns
+
 - [ ] Tôi kể được 5 design patterns xuyên suốt CNN
-- [ ] Tôi sắp xếp đúng timeline 7+ kiến trúc CNN
+  - → (1) **Stem-Body-Head** (downsampling → feature extraction → classifier). (2) **Channels tăng đôi, Spatial giảm nửa** sau mỗi stage. (3) **1×1 Bottleneck** giảm/tăng channels. (4) **Information Preservation** (skip connection / concatenation). (5) **GAP thay FC** ở head. | Xem: Câu 49, [[Buổi 36 - Tuần 10]]
+- [x] Tôi sắp xếp đúng timeline 7+ kiến trúc CNN
 - [ ] Tôi biết 4 nguyên tắc của RegNet
+  - → (1) Shared bottleneck ratio $k_i = k$. (2) Shared group width $g_i = g$. (3) Increasing width $c_i \leq c_{i+1}$. (4) Increasing depth $d_i \leq d_{i+1}$. Tổng quát hóa từ thực nghiệm trên AnyNet design space. | Xem: Câu 47-48, [[Buổi 36 - Tuần 10]]
 
 ### Kết quả
+
 - **Dưới 15/28**: Cần ôn lại nhiều — tập trung vào phần chưa đánh dấu
 - **15-22/28**: Nền tảng ổn, củng cố chi tiết
 - **23-28/28**: Sẵn sàng cho Chapter 9: Recurrent Neural Networks!
@@ -905,15 +880,15 @@ $$\text{Params} = \frac{c_i \times c_o \times k^2}{g} \quad \text{(giảm } g \t
 
 ## 🔗 Liên kết nhanh
 
-| Giai đoạn | Buổi học |
-|---|---|
-| Builders Guide | [[Buổi 25 - Tuần 7]] |
-| CNN Fundamentals | [[Buổi 26 - Tuần 8]], [[Buổi 27 - Tuần 8]], [[Buổi 28 - Tuần 8]] |
-| Modern CNN (phần 1) | [[Buổi 29 - Tuần 8]], [[Buổi 30 - Tuần 8]], [[Buổi 31 - Tuần 8]], [[Buổi 32 - Tuần 8]] |
-| Advanced CNN | [[Buổi 33 - Tuần 9]], [[Buổi 34 - Tuần 9]], [[Buổi 35 - Tuần 9]] |
-| Design Space | [[Buổi 36 - Tuần 10]] |
-| Tổng ôn trước | [[Tổng ôn Buổi 8-24]] |
-| Concepts | [[Batch Normalization]], [[Residual Connection]], [[Grouped Convolution]], [[Growth Rate (DenseNet)]] |
+| Giai đoạn           | Buổi học                                                                                              |
+| ------------------- | ----------------------------------------------------------------------------------------------------- |
+| Builders Guide      | [[Buổi 25 - Tuần 7]]                                                                                  |
+| CNN Fundamentals    | [[Buổi 26 - Tuần 8]], [[Buổi 27 - Tuần 8]], [[Buổi 28 - Tuần 8]]                                      |
+| Modern CNN (phần 1) | [[Buổi 29 - Tuần 8]], [[Buổi 30 - Tuần 8]], [[Buổi 31 - Tuần 8]], [[Buổi 32 - Tuần 8]]                |
+| Advanced CNN        | [[Buổi 33 - Tuần 9]], [[Buổi 34 - Tuần 9]], [[Buổi 35 - Tuần 9]]                                      |
+| Design Space        | [[Buổi 36 - Tuần 10]]                                                                                 |
+| Tổng ôn trước       | [[Tổng ôn Buổi 8-24]]                                                                                 |
+| Concepts            | [[Batch Normalization]], [[Residual Connection]], [[Grouped Convolution]], [[Growth Rate (DenseNet)]] |
 
 ---
 

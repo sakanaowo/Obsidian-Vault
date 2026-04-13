@@ -23,7 +23,7 @@ status: complete
 
 > **Nguồn:** [d2l.ai — 8.8](https://d2l.ai/chapter_convolutional-modern/cnn-design.html)
 > **Buổi trước:** [[Buổi 35 - Tuần 9]] — Densely Connected Networks (DenseNet)
-> **Buổi sau:** [[Buổi 38 - Tuần 10]] — Working with Sequences (RNN)
+> **Buổi sau:** [[Buổi 37 - Tuần 10]] — Working with Sequences (RNN)
 
 ---
 
@@ -90,13 +90,13 @@ status: complete
 
 Từ AlexNet (2012) đến DenseNet (2017), mỗi kiến trúc mới đều dựa heavily vào **trực giác** của nhà nghiên cứu:
 
-| Kiến trúc | Ý tưởng cốt lõi            | Nguồn gốc ý tưởng                            |
-| --------- | --------------------------- | --------------------------------------------- |
-| AlexNet   | GPU + ReLU + Dropout        | Trực giác: "train trên GPU sẽ nhanh hơn"     |
-| VGG       | Stack 3×3 conv blocks       | Trực giác: "nhiều conv nhỏ > ít conv lớn"    |
-| GoogLeNet | Multi-branch (Inception)    | Trực giác: "multi-scale features tốt hơn"    |
-| ResNet    | Skip connections             | Trực giác: "đường tắt giải quyết gradient"   |
-| DenseNet  | Dense connections            | Trực giác: "feature reuse tối đa"            |
+| Kiến trúc | Ý tưởng cốt lõi          | Nguồn gốc ý tưởng                          |
+| --------- | ------------------------ | ------------------------------------------ |
+| AlexNet   | GPU + ReLU + Dropout     | Trực giác: "train trên GPU sẽ nhanh hơn"   |
+| VGG       | Stack 3×3 conv blocks    | Trực giác: "nhiều conv nhỏ > ít conv lớn"  |
+| GoogLeNet | Multi-branch (Inception) | Trực giác: "multi-scale features tốt hơn"  |
+| ResNet    | Skip connections         | Trực giác: "đường tắt giải quyết gradient" |
+| DenseNet  | Dense connections        | Trực giác: "feature reuse tối đa"          |
 
 > [!WARNING] Vấn đề
 > Mỗi kiến trúc đều cần **nhiều năm nghiên cứu** để phát triển, nhưng không ai biết liệu tổ hợp (depth, width, groups, bottleneck) nào là **tối ưu**. Với mỗi kiến trúc mới, ta lại phải bắt đầu lại từ đầu.
@@ -104,12 +104,14 @@ Từ AlexNet (2012) đến DenseNet (2017), mỗi kiến trúc mới đều dự
 ### 1.2. Hai hướng tiếp cận thay thế
 
 **Hướng 1 — Neural Architecture Search (NAS):**
+
 - Dùng brute-force search, genetic algorithms, reinforcement learning để tìm **kiến trúc tốt nhất**
 - Chi phí cực kỳ đắt (hàng nghìn GPU-hours)
 - Kết quả: một mạng duy nhất (ví dụ: **EfficientNet**)
 - **Hạn chế:** Không học được gì về **tại sao** kiến trúc đó tốt → không generalize sang bài toán khác
 
 **Hướng 2 — Design Spaces (AnyNet → RegNet):**
+
 - Tìm **phân phối tốt** trên không gian kiến trúc thay vì tìm **một kiến trúc tốt nhất**
 - Chi phí rẻ hơn NAS nhiều
 - Kết quả: **bộ nguyên tắc thiết kế** áp dụng được cho nhiều cấu hình
@@ -142,6 +144,7 @@ $$\text{Input: } 224 \times 224 \times 3 \xrightarrow{\text{Conv } 3 \times 3, s
 - Tạo $c_0$ channels ban đầu cho Body
 
 **Body:** 4 stages, mỗi stage:
+
 - Block đầu tiên: stride = 2 (giảm resolution 50%), dùng Conv 1×1 trên residual path
 - Các blocks tiếp theo: stride = 1 (giữ nguyên resolution)
 - Mỗi block là **ResNeXt block** với grouped convolution
@@ -154,12 +157,12 @@ $$\text{Feature maps} \xrightarrow{\text{GAP}} \text{Vector} \xrightarrow{\text{
 
 Mỗi stage $i$ (với $i = 1, 2, 3, 4$) có 4 tham số:
 
-| Tham số | Ký hiệu | Ý nghĩa | Range điển hình |
-| ------- | -------- | -------- | --------------- |
-| Depth | $d_i$ | Số blocks trong stage $i$ | 1–16 |
-| Width | $c_i$ | Số output channels | 8–1024 |
-| Groups | $g_i$ | Số groups cho grouped conv | 1–32 |
-| Bottleneck ratio | $k_i$ | Tỉ lệ nén trong bottleneck | 1–4 |
+| Tham số          | Ký hiệu | Ý nghĩa                    | Range điển hình |
+| ---------------- | ------- | -------------------------- | --------------- |
+| Depth            | $d_i$   | Số blocks trong stage $i$  | 1–16            |
+| Width            | $c_i$   | Số output channels         | 8–1024          |
+| Groups           | $g_i$   | Số groups cho grouped conv | 1–32            |
+| Bottleneck ratio | $k_i$   | Tỉ lệ nén trong bottleneck | 1–4             |
 
 Thêm 1 tham số cho stem: $c_0$ → **Tổng: $4 \times 4 + 1 = 17$ free parameters**.
 
@@ -244,6 +247,7 @@ Trong thực tế, ta dùng **empirical CDF** từ $n$ mạng được sample:
 $$\hat{F}(e, \mathcal{Z}) = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}(e_i \le e)$$
 
 > [!TIP] Cách đọc CDF
+>
 > - CDF dịch sang **trái** → mạng có error thấp hơn → **tốt hơn**
 > - Hai CDF **trùng nhau** → ràng buộc mới **không ảnh hưởng** performance → **an toàn giữ ràng buộc**
 > - CDF dịch sang **phải** → ràng buộc mới **làm tệ hơn** → **loại bỏ ràng buộc**
@@ -286,13 +290,13 @@ _Thu hẹp không gian thiết kế qua 4 bước: mỗi bước loại bỏ b�
 
 ### 3.4. Tổng kết quá trình thu hẹp
 
-| Bước | Không gian | Ràng buộc mới | Free params | Kết quả CDF |
-| ---- | ---------- | ------------- | ----------- | ------------ |
-| 0 | AnyNet$_A$ | — | 17 | Baseline |
-| 1 | AnyNet$_B$ | $k_i = k$ (shared bottleneck) | 14 | = Baseline |
-| 2 | AnyNet$_C$ | $g_i = g$ (shared groups) | 11 | = Baseline |
-| 3 | AnyNet$_D$ | $c_1 \le c_2 \le c_3 \le c_4$ | 11 (constrained) | **Tốt hơn** |
-| 4 | AnyNet$_E$ | $d_1 \le d_2 \le d_3 \le d_4$ | 11 (more constrained) | **Tốt hơn nữa** |
+| Bước | Không gian | Ràng buộc mới                 | Free params           | Kết quả CDF     |
+| ---- | ---------- | ----------------------------- | --------------------- | --------------- |
+| 0    | AnyNet$_A$ | —                             | 17                    | Baseline        |
+| 1    | AnyNet$_B$ | $k_i = k$ (shared bottleneck) | 14                    | = Baseline      |
+| 2    | AnyNet$_C$ | $g_i = g$ (shared groups)     | 11                    | = Baseline      |
+| 3    | AnyNet$_D$ | $c_1 \le c_2 \le c_3 \le c_4$ | 11 (constrained)      | **Tốt hơn**     |
+| 4    | AnyNet$_E$ | $d_1 \le d_2 \le d_3 \le d_4$ | 11 (more constrained) | **Tốt hơn nữa** |
 
 > [!TIP] Insight cốt lõi
 > Bước 1-2 cho thấy: nhiều tham số design **không quan trọng** ở mức per-stage — chia sẻ chúng giữa các stages **không mất gì**. Bước 3-4 cho thấy: **tăng channels và depth theo stage** là nguyên tắc thiết kế **phổ quát** (universal design principle) — không chỉ heuristic mà được xác nhận bằng thống kê.
@@ -325,13 +329,13 @@ với $j$ là block index trong toàn mạng và $c_a > 0$ là slope. Vì mỗi 
 
 Một RegNet 32-layer hiệu quả:
 
-| Tham số | Giá trị | Ý nghĩa |
-| ------- | ------- | -------- |
-| $k$ | 1 | Không dùng bottleneck |
-| $g$ | 16 | Group width = 16 |
+| Tham số | Giá trị               | Ý nghĩa               |
+| ------- | --------------------- | --------------------- |
+| $k$     | 1                     | Không dùng bottleneck |
+| $g$     | 16                    | Group width = 16      |
 | Stage 1 | $d_1 = 4$, $c_1 = 32$ | 4 blocks, 32 channels |
 | Stage 2 | $d_2 = 6$, $c_2 = 80$ | 6 blocks, 80 channels |
-| Stem | $c_0 = 32$ | 32 channels từ stem |
+| Stem    | $c_0 = 32$            | 32 channels từ stem   |
 
 ```python
 class RegNetX32(AnyNet):
@@ -384,12 +388,14 @@ trainer.fit(model, data)
 _Dòng tiến hóa kiến trúc CNN: từ thiết kế thủ công đến Design Spaces, rồi đến Transformers_
 
 **Inductive bias** (thiên kiến quy nạp) của CNN:
+
 - **Locality:** Mỗi neuron chỉ "nhìn" một vùng nhỏ (receptive field)
 - **Translation invariance:** Cùng filter áp dụng ở mọi vị trí
 
 **Vision Transformers** có inductive bias **yếu hơn** (ít giả định hơn) → cần **nhiều dữ liệu hơn** để học, nhưng khi có đủ dữ liệu thì **vượt trội** CNN vì không bị giới hạn bởi giả định cứng.
 
 > [!IMPORTANT] Xu hướng hiện tại (2020+)
+>
 > - **CNN** vẫn tốt cho dataset nhỏ-trung bình, edge devices, real-time applications
 > - **Vision Transformers** dẫn đầu trên large-scale benchmarks (ImageNet, LAION)
 > - **Hybrid architectures** (CNN + Transformer) đang phổ biến: ConvNeXt, CoAtNet
@@ -397,13 +403,13 @@ _Dòng tiến hóa kiến trúc CNN: từ thiết kế thủ công đến Design
 
 ### 5.2. RegNet vs NAS
 
-| Tiêu chí | NAS (EfficientNet) | Design Spaces (RegNet) |
-| -------- | ------------------ | ---------------------- |
-| **Output** | Một mạng tốt nhất | Bộ nguyên tắc thiết kế |
-| **Chi phí** | Cực đắt (nghìn GPU-hours) | Rẻ hơn nhiều |
-| **Insight** | Không — black box | Có — hiểu được **tại sao** |
-| **Generalization** | Khó áp dụng cho bài toán mới | Dễ mở rộng, sáng tạo thêm |
-| **Scalability** | Phải search lại ở scale mới | Nguyên tắc vẫn đúng ở scale lớn |
+| Tiêu chí           | NAS (EfficientNet)           | Design Spaces (RegNet)          |
+| ------------------ | ---------------------------- | ------------------------------- |
+| **Output**         | Một mạng tốt nhất            | Bộ nguyên tắc thiết kế          |
+| **Chi phí**        | Cực đắt (nghìn GPU-hours)    | Rẻ hơn nhiều                    |
+| **Insight**        | Không — black box            | Có — hiểu được **tại sao**      |
+| **Generalization** | Khó áp dụng cho bài toán mới | Dễ mở rộng, sáng tạo thêm       |
+| **Scalability**    | Phải search lại ở scale mới  | Nguyên tắc vẫn đúng ở scale lớn |
 
 ---
 
@@ -411,17 +417,17 @@ _Dòng tiến hóa kiến trúc CNN: từ thiết kế thủ công đến Design
 
 ### 6.1. Bảng so sánh toàn diện
 
-| Kiến trúc | Năm | Key Innovation | Params (tiêu biểu) | Ý tưởng cốt lõi |
-| --------- | ---- | ------------- | ------------------- | ---------------- |
-| **AlexNet** | 2012 | GPU + ReLU + Dropout | ~60M | DL revolution; FC layers quá lớn |
-| **VGG** | 2014 | Stacked 3×3 blocks | ~138M | "Deeper is better" (hạn chế) |
-| **NiN** | 2014 | 1×1 conv + GAP | ~1M | FC → GAP; 1×1 = mlpconv |
-| **GoogLeNet** | 2014 | Inception (multi-branch) | ~5M | Multi-scale + 1×1 bottleneck |
-| **BatchNorm** | 2015 | Normalize activations | — (kỹ thuật) | Train nhanh hơn, ổn định hơn |
-| **ResNet** | 2015 | Skip connections (add) | 25.6M (50) | Cho phép mạng 100+ layers |
-| **ResNeXt** | 2017 | Grouped conv + cardinality | ~25M | "Cardinality > depth/width" |
-| **DenseNet** | 2017 | Dense connections (concat) | 8-20M | Feature reuse tối đa |
-| **RegNet** | 2020 | Design Spaces | ~tùy cấu hình | Nguyên tắc thiết kế phổ quát |
+| Kiến trúc     | Năm  | Key Innovation             | Params (tiêu biểu) | Ý tưởng cốt lõi                  |
+| ------------- | ---- | -------------------------- | ------------------ | -------------------------------- |
+| **AlexNet**   | 2012 | GPU + ReLU + Dropout       | ~60M               | DL revolution; FC layers quá lớn |
+| **VGG**       | 2014 | Stacked 3×3 blocks         | ~138M              | "Deeper is better" (hạn chế)     |
+| **NiN**       | 2014 | 1×1 conv + GAP             | ~1M                | FC → GAP; 1×1 = mlpconv          |
+| **GoogLeNet** | 2014 | Inception (multi-branch)   | ~5M                | Multi-scale + 1×1 bottleneck     |
+| **BatchNorm** | 2015 | Normalize activations      | — (kỹ thuật)       | Train nhanh hơn, ổn định hơn     |
+| **ResNet**    | 2015 | Skip connections (add)     | 25.6M (50)         | Cho phép mạng 100+ layers        |
+| **ResNeXt**   | 2017 | Grouped conv + cardinality | ~25M               | "Cardinality > depth/width"      |
+| **DenseNet**  | 2017 | Dense connections (concat) | 8-20M              | Feature reuse tối đa             |
+| **RegNet**    | 2020 | Design Spaces              | ~tùy cấu hình      | Nguyên tắc thiết kế phổ quát     |
 
 ### 6.2. Các Pattern xuyên suốt
 
@@ -438,27 +444,30 @@ Mọi CNN hiện đại đều có 3 phần này. Stem giảm spatial nhanh (Con
 
 **Pattern 2 — Channel Doubling + Spatial Halving:**
 
-| Stage | Spatial | Channels |
-| ----- | ------- | -------- |
-| 1 | $H/2 \times W/2$ | $C$ |
-| 2 | $H/4 \times W/4$ | $2C$ |
-| 3 | $H/8 \times W/8$ | $4C$ |
-| 4 | $H/16 \times W/16$ | $8C$ |
+| Stage | Spatial            | Channels |
+| ----- | ------------------ | -------- |
+| 1     | $H/2 \times W/2$   | $C$      |
+| 2     | $H/4 \times W/4$   | $2C$     |
+| 3     | $H/8 \times W/8$   | $4C$     |
+| 4     | $H/16 \times W/16$ | $8C$     |
 
 VGG, ResNet, DenseNet, RegNet đều tuân theo pattern này (với các biến thể nhỏ).
 
 **Pattern 3 — Bottleneck (1×1 Conv):**
+
 - NiN: 1×1 conv = mlpconv (thêm non-linearity per pixel)
 - GoogLeNet: 1×1 conv giảm channels trước 3×3 và 5×5
 - ResNet bottleneck: 1×1 → 3×3 → 1×1 (giảm → xử lý → phục hồi)
 - DenseNet-BC: 1×1 giảm channels trước 3×3 trong dense block
 
 **Pattern 4 — Information Preservation:**
+
 - ResNet: **Addition** — giữ identity mapping qua skip connection
 - DenseNet: **Concatenation** — giữ nguyên toàn bộ features trước
 - Cả hai đều giải quyết: làm sao để gradient flow và features **không bị mất** qua mạng sâu
 
 **Pattern 5 — Global Average Pooling thay FC:**
+
 - NiN: đề xuất GAP lần đầu → 0 params ở head
 - GoogLeNet, ResNet, DenseNet, RegNet: đều dùng GAP
 - Lý do: FC layers quá nặng (AlexNet/VGG ~90% params ở FC), GAP loại bỏ hoàn toàn
@@ -560,44 +569,25 @@ graph TD
 
 ## 9. Bảng thuật ngữ
 
-| Thuật ngữ | Tiếng Việt | Định nghĩa ngắn |
-| --------- | ---------- | ---------------- |
-| **Design Space** | Không gian thiết kế | Tập hợp tất cả kiến trúc mạng có thể tạo ra từ một template với các tham số tự do |
-| **AnyNet** | — | Template tổng quát cho CNN (Stem-Body-Head), 17 free params |
-| **RegNet** | — | Kiến trúc CNN tối ưu thu được từ thu hẹp AnyNet design space |
-| **CDF** | Hàm phân phối tích lũy | $F(e) = \Pr(\text{error} \le e)$; dùng để so sánh chất lượng design spaces |
-| **NAS** | Tìm kiếm kiến trúc thần kinh | Phương pháp tự động tìm kiến trúc tối ưu bằng search algorithms |
-| **Design Principle** | Nguyên tắc thiết kế | Quy tắc có thể áp dụng cho toàn bộ họ mạng (e.g., channels tăng dần) |
-| **Bottleneck Ratio** ($k$) | Tỉ lệ cổ chai | Tỉ lệ nén channels bên trong block; $k=1$ = không nén |
-| **Group Width** ($g$) | Độ rộng nhóm | Số channels mỗi group trong grouped convolution |
-| **Inductive Bias** | Thiên kiến quy nạp | Giả định cứng built-in vào kiến trúc (e.g., locality, translation invariance) |
-| **Multi-fidelity Optimization** | Tối ưu đa độ trung thực | Đánh giá bằng proxy rẻ (e.g., train vài epochs) thay vì train đến convergence |
-| **Empirical CDF** | CDF thực nghiệm | $\hat{F}(e) = \frac{1}{n}\sum \mathbf{1}(e_i \le e)$; ước lượng CDF từ sample |
+| Thuật ngữ                       | Tiếng Việt                   | Định nghĩa ngắn                                                                   |
+| ------------------------------- | ---------------------------- | --------------------------------------------------------------------------------- |
+| **Design Space**                | Không gian thiết kế          | Tập hợp tất cả kiến trúc mạng có thể tạo ra từ một template với các tham số tự do |
+| **AnyNet**                      | —                            | Template tổng quát cho CNN (Stem-Body-Head), 17 free params                       |
+| **RegNet**                      | —                            | Kiến trúc CNN tối ưu thu được từ thu hẹp AnyNet design space                      |
+| **CDF**                         | Hàm phân phối tích lũy       | $F(e) = \Pr(\text{error} \le e)$; dùng để so sánh chất lượng design spaces        |
+| **NAS**                         | Tìm kiếm kiến trúc thần kinh | Phương pháp tự động tìm kiến trúc tối ưu bằng search algorithms                   |
+| **Design Principle**            | Nguyên tắc thiết kế          | Quy tắc có thể áp dụng cho toàn bộ họ mạng (e.g., channels tăng dần)              |
+| **Bottleneck Ratio** ($k$)      | Tỉ lệ cổ chai                | Tỉ lệ nén channels bên trong block; $k=1$ = không nén                             |
+| **Group Width** ($g$)           | Độ rộng nhóm                 | Số channels mỗi group trong grouped convolution                                   |
+| **Inductive Bias**              | Thiên kiến quy nạp           | Giả định cứng built-in vào kiến trúc (e.g., locality, translation invariance)     |
+| **Multi-fidelity Optimization** | Tối ưu đa độ trung thực      | Đánh giá bằng proxy rẻ (e.g., train vài epochs) thay vì train đến convergence     |
+| **Empirical CDF**               | CDF thực nghiệm              | $\hat{F}(e) = \frac{1}{n}\sum \mathbf{1}(e_i \le e)$; ước lượng CDF từ sample     |
 
 ---
 
 ## 10. Mapping với D2L gốc
 
-| Section trong D2L | Nội dung tương ứng trong buổi này |
-| ------------------ | --------------------------------- |
-| 8.8 Intro | §1 — Bối cảnh: thiết kế thủ công vs tự động |
-| 8.8.1 AnyNet Design Space | §2 — AnyNet: template, cấu trúc, 17 params |
-| 8.8.2 Distributions and Parameters | §3 — CDF, thu hẹp AnyNet$_A$ → AnyNet$_E$ |
-| 8.8.3 RegNet | §4 — RegNet: 4 nguyên tắc, RegNetX-32 |
-| 8.8.4 Training | §4.4 — Training trên Fashion-MNIST |
-| 8.8.5 Discussion | §5 — CNN vs ViT, RegNet vs NAS |
-| 8.8.6 Exercises | §8 — Exercises |
-| (Mở rộng) | §6 — Tổng ôn Chapter 8: bảng so sánh, patterns |
-
----
-
-> **Tổng kết buổi 36:** Chapter 8.8 đánh dấu sự chuyển mình từ **thiết kế kiến trúc thủ công** (hand-crafted, intuition-driven) sang **thiết kế không gian kiến trúc** (design space design, statistics-driven). AnyNet cung cấp template tổng quát với 17 tham số; bằng phương pháp thu hẹp CDF, ta rút ra 4 nguyên tắc thiết kế phổ quát tạo nên RegNet: shared bottleneck ratio, shared group width, increasing channels, increasing depth. Kết quả không chỉ là một mạng tốt mà là **bộ nguyên tắc** áp dụng được cho mọi quy mô. Đây cũng là bài cuối cùng của Chapter 8 — Modern CNNs, đánh dấu nền tảng vững chắc trước khi chuyển sang Recurrent Neural Networks (Chapter 9).
-
----
-
-## Liên kết
-
-- **Buổi trước**: [[Buổi 35 - Tuần 9]] — 8.7 Densely Connected Networks (DenseNet)
-- **Buổi sau**: [[Buổi 38 - Tuần 10]] — 9.1 Working with Sequences
-- **Concepts**: [[Batch Normalization]], [[Residual Connection]], [[Skip Connection]], [[Grouped Convolution]], [[Growth Rate]]
-- **Source**: [d2l.ai — 8.8 Designing CNN Architectures](https://d2l.ai/chapter_convolutional-modern/cnn-design.html)
+| Section trong D2L                  | Nội dung tương ứng trong buổi này              |
+| ---------------------------------- | ---------------------------------------------- |
+| 8.8 Intro                          | §1 — Bối cảnh: thiết kế thủ công vs tự động    |
+| 8.8.1 AnyNet Design

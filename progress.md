@@ -1,6 +1,23 @@
 ---
 ---
 
+tác vụ: D2L Learning - Tuần 10, Buổi 37 — 9.1 Working with Sequences - 2026-04-13
+nội dung: Đã tạo [[Buổi 37 - Tuần 10]] — Chapter 9.1 Working with Sequences.
+chi tiết:
+
+- Bước chuyển paradigm từ CNN (dữ liệu cố định) sang Sequence (dữ liệu tuần tự)
+- 4 dạng bài toán Sequence: Seq→Fixed, Fixed→Seq, Aligned Seq→Seq, Unaligned Seq→Seq
+- Autoregressive Models: Fixed window ($\tau$) vs Latent autoregressive (hidden state)
+- Chain Rule decomposition — phân rã xác suất đồng thời thành tích xác suất có điều kiện
+- Markov Models bậc 1, $k$, và mapping sang N-gram
+- Thực nghiệm: Linear regression trên sin data, 1-step vs k-step prediction
+- Error accumulation — sai số tăng hàm mũ, bài học interpolation vs extrapolation
+- Stationarity assumption
+- 5 hình ảnh minh họa trong assets/attachments/d2l-buoi-37/
+- Active Recall: 8 câu ôn Buổi 36 (AnyNet/RegNet) + 10 câu chuyên sâu Buổi 37
+- Tạo concept note [[Autoregressive Model]] trong 20_Areas/AI/Concepts/
+- Fix link Buổi 36: "Buổi sau" từ [[Buổi 38]] → [[Buổi 37]] cho đúng số thứ tự
+
 tác vụ: D2L Tổng ôn Buổi 25-36 — Builders Guide + CNN + Modern CNN - 2026-04-12
 nội dung: Đã tạo [[Tổng ôn Buổi 25-36]] — Tổng ôn toàn diện từ Builders Guide đến Modern CNN.
 chi tiết:

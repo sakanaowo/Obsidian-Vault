@@ -10,78 +10,6 @@
             "type": "tabs",
             "children": [
               {
-                "id": "8045f355bbd6e20e",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "10_Projects/D2L/Tổng ôn Tuần 4.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": true,
-                    "backlinkOpts": {
-                      "collapseAll": false,
-                      "extraContext": false,
-                      "sortOrder": "alphabetical",
-                      "showSearch": false,
-                      "searchQuery": "",
-                      "backlinkCollapsed": false,
-                      "unlinkedCollapsed": true
-                    }
-                  },
-                  "icon": "lucide-file",
-                  "title": "Tổng ôn Tuần 4"
-                }
-              },
-              {
-                "id": "44fed39c7bed59ce",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "10_Projects/D2L/Buổi 24 - Tuần 7.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": true,
-                    "backlinkOpts": {
-                      "collapseAll": false,
-                      "extraContext": false,
-                      "sortOrder": "alphabetical",
-                      "showSearch": false,
-                      "searchQuery": "",
-                      "backlinkCollapsed": false,
-                      "unlinkedCollapsed": true
-                    }
-                  },
-                  "icon": "lucide-file",
-                  "title": "Buổi 24 - Tuần 7"
-                }
-              },
-              {
-                "id": "a279a2169f476608",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "00_DailyNote/02-04-2026.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": true,
-                    "backlinkOpts": {
-                      "collapseAll": false,
-                      "extraContext": false,
-                      "sortOrder": "alphabetical",
-                      "showSearch": false,
-                      "searchQuery": "",
-                      "backlinkCollapsed": false,
-                      "unlinkedCollapsed": true
-                    }
-                  },
-                  "icon": "lucide-file",
-                  "title": "02-04-2026"
-                }
-              },
-              {
                 "id": "fcf96b769f9c0b9f",
                 "type": "leaf",
                 "state": {
@@ -304,7 +232,7 @@
                   "type": "markdown",
                   "state": {
                     "file": "10_Projects/D2L/Buổi 34 - Tuần 9.md",
-                    "mode": "source",
+                    "mode": "preview",
                     "source": false,
                     "backlinks": true,
                     "backlinkOpts": {
@@ -320,9 +248,111 @@
                   "icon": "lucide-file",
                   "title": "Buổi 34 - Tuần 9"
                 }
+              },
+              {
+                "id": "f13eb3e66efb7df0",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Buổi 35 - Tuần 9.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Buổi 35 - Tuần 9"
+                }
+              },
+              {
+                "id": "c7a33ac02d6291cd",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Buổi 36 - Tuần 10.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Buổi 36 - Tuần 10"
+                }
+              },
+              {
+                "id": "71bb68f75536904b",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Tổng ôn Buổi 25-36.md",
+                    "mode": "preview",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Tổng ôn Buổi 25-36"
+                }
               }
             ],
             "currentTab": 12
+          },
+          {
+            "id": "1c9132865a79d520",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "11cc8c01db405076",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Tổng ôn Buổi 25-36.md",
+                    "mode": "preview",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Tổng ôn Buổi 25-36"
+                }
+              }
+            ]
           }
         ],
         "direction": "vertical"
@@ -390,7 +420,7 @@
           {
             "id": "8c01bff06eba2261",
             "type": "tabs",
-            "dimension": 54.68468468468468,
+            "dimension": 51.480836236933804,
             "children": [
               {
                 "id": "cb21d001e64c5293",
@@ -409,7 +439,7 @@
           {
             "id": "39cc47149cd52f4d",
             "type": "tabs",
-            "dimension": 45.31531531531531,
+            "dimension": 48.5191637630662,
             "children": [
               {
                 "id": "833b9142351c80b8",
@@ -417,6 +447,7 @@
                 "state": {
                   "type": "backlink",
                   "state": {
+                    "file": "10_Projects/D2L/Tổng ôn Buổi 25-36.md",
                     "collapseAll": true,
                     "extraContext": false,
                     "sortOrder": "alphabetical",
@@ -426,7 +457,7 @@
                     "unlinkedCollapsed": true
                   },
                   "icon": "links-coming-in",
-                  "title": "Backlinks"
+                  "title": "Backlinks for Tổng ôn Buổi 25-36"
                 }
               },
               {
@@ -435,21 +466,12 @@
                 "state": {
                   "type": "outgoing-link",
                   "state": {
+                    "file": "10_Projects/D2L/Tổng ôn Buổi 25-36.md",
                     "linksCollapsed": false,
                     "unlinkedCollapsed": true
                   },
                   "icon": "links-going-out",
-                  "title": "Outgoing links"
-                }
-              },
-              {
-                "id": "4200dd0051346414",
-                "type": "leaf",
-                "state": {
-                  "type": "git-view",
-                  "state": {},
-                  "icon": "git-pull-request",
-                  "title": "Source Control"
+                  "title": "Outgoing links from Tổng ôn Buổi 25-36"
                 }
               },
               {
@@ -473,21 +495,32 @@
                 "state": {
                   "type": "outline",
                   "state": {
-                    "file": "10_Projects/D2L/Buổi 32 - Tuần 8.md",
+                    "file": "10_Projects/D2L/Tổng ôn Buổi 25-36.md",
                     "followCursor": false,
                     "showSearch": false,
                     "searchQuery": ""
                   },
                   "icon": "lucide-list",
-                  "title": "Outline of Buổi 32 - Tuần 8"
+                  "title": "Outline of Tổng ôn Buổi 25-36"
+                }
+              },
+              {
+                "id": "938e08646893d0c1",
+                "type": "leaf",
+                "state": {
+                  "type": "git-view",
+                  "state": {},
+                  "icon": "git-pull-request",
+                  "title": "Source Control"
                 }
               }
             ],
-            "currentTab": 2
+            "currentTab": 4
           }
         ],
         "direction": "horizontal",
-        "width": 568.5
+        "width": 568.5,
+        "collapsed": true
       },
       "left-ribbon": {
         "hiddenItems": {
@@ -502,8 +535,8 @@
           "obsidian-git:Open Git source control": false
         }
       },
-      "active": "2db8bb885d52058e",
-      "mtime": "2026-04-08T18:09:19+07:00",
+      "active": "11cc8c01db405076",
+      "mtime": "2026-04-13T13:04:53+07:00",
       "workspaces-plus:settings-v1": {
         "explorerFoldState": [
           "10_Projects/D2L"
