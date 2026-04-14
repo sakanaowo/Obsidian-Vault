@@ -11,5 +11,5 @@
   "textFontFamily": "SF Pro Display,SF Pro Text",
   "baseFontSize": 17,
   "showViewHeader": true,
-  "showRibbon": true
+  "showRibbon": false
 }

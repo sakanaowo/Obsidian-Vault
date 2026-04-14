@@ -1,6 +1,41 @@
 ---
 ---
 
+tác vụ: D2L Learning - Tuần 11, Buổi 39 — 9.4 Recurrent Neural Networks - 2026-04-14
+nội dung: Đã tạo [[Buổi 39 - Tuần 11]] — Chapter 9.4 Recurrent Neural Networks.
+chi tiết:
+
+- Motivation: N-gram bùng nổ tham số O(|V|^n) → cần latent variable model
+- So sánh MLP hidden layer vs RNN hidden state — phân biệt 2 khái niệm dễ nhầm
+- Công thức cốt lõi RNN: H*t = tanh(X_t W_xh + H*{t-1} W_hh + b_h), O_t = H_t W_hq + b_q
+- Unrolling theo thời gian + Weight Sharing: params cố định bất kể T
+- Concatenation trick: [X_t, H_{t-1}] \* [W_xh; W_hh] — chứng minh + code demo
+- Character-level LM: "machin" → "achine", softmax + cross-entropy mỗi time step
+- Phân tích tham số: d=28, h=256, q=28 → ~80K params, W_hh chiếm 81.8%
+- Tanh vs ReLU trong RNN: bounded, zero-centered, ổn định qua recurrence
+- Vanishing/Exploding gradient: preview hướng giải quyết (LSTM, GRU, Transformer)
+- 5 hình minh họa matplotlib trong assets/attachments/d2l-buoi-39/
+- Active Recall: 8 câu ôn Buổi 38 + 10 câu chuyên sâu Buổi 39
+- Tạo concept note [[Recurrent Neural Network]] trong 20_Areas/AI/Concepts/
+
+tác vụ: D2L Learning - Tuần 10, Buổi 38 — 9.2 Converting Raw Text into Sequence Data & 9.3 Language Models - 2026-04-14
+nội dung: Đã tạo [[Buổi 38 - Tuần 10]] — Chapter 9.2 + 9.3.
+chi tiết:
+
+- Pipeline tiền xử lý text 4 bước: Reading → Preprocessing → Tokenization → Vocab+Indexing
+- 3 cấp độ tokenization: word-level, character-level, subword (BPE) — so sánh trade-offs
+- Lớp Vocab: token_to_idx / idx_to_token, `<unk>` token, min_freq filtering
+- Hàm build: pipeline hoàn chỉnh, character-level → corpus 173K tokens, vocab 28
+- Zipf's Law: phân phối power law, log-log plot, ảnh hưởng đến N-gram sparsity
+- Language Model: ước lượng P(x1,...,xT), chain rule decomposition
+- N-gram Models: unigram/bigram/trigram, MLE counting, data sparsity problem
+- Laplace Smoothing: thêm epsilon vào counts, uniform limit khi epsilon → ∞
+- Perplexity: exp(cross-entropy trung bình), 3 cases (PP=1, PP=|V|, PP=∞)
+- Sequence Partitioning: cắt corpus thành X/Y pairs (Y = X shifted by 1)
+- 5 hình minh họa matplotlib trong assets/attachments/d2l-buoi-38/
+- Active Recall: 7 câu ôn Buổi 37 + 10 câu chuyên sâu Buổi 38
+- Tạo concept note [[Zipf's Law]] trong 20_Areas/AI/Concepts/
+
 tác vụ: D2L Learning - Tuần 10, Buổi 37 — 9.1 Working with Sequences - 2026-04-13
 nội dung: Đã tạo [[Buổi 37 - Tuần 10]] — Chapter 9.1 Working with Sequences.
 chi tiết:
