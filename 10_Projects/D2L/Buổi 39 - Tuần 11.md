@@ -227,7 +227,7 @@ $$O_t = H_t W_{hq} + b_q \tag{9.4.6}$$
 Với $W_{hq} \in \mathbb{R}^{h \times q}$, $b_q \in \mathbb{R}^{1 \times q}$.
 
 ![[assets/attachments/d2l-buoi-39/mlp_vs_rnn.png]]
-_Hình 2: So sánh MLP (trái) và RNN (phải). Khác biệt duy nhất: mũi tên đỏ — recurrent connection truyền $H_{t-1}$ sang $H_t$ qua $W_{hh}$._
+Hình 2: So sánh MLP (trái) và RNN (phải). Khác biệt duy nhất: mũi tên đỏ — recurrent connection truyền $H_{t-1}$ sang $H_t$ qua $W_{hh}$.
 
 ### 3.3 Phân tích sâu: Tại sao thêm $H_{t-1} W_{hh}$ lại đủ mạnh?
 
@@ -263,8 +263,19 @@ Vì hidden state được **nhân đi nhân lại** qua $W_{hh}$ rất nhiều l
 
 RNN "cuộn" (looped) có thể được "mở ra" (unrolled) thành một chuỗi các lớp:
 
+![[assets/attachments/d2l-buoi-39/section4_weight_sharing_explained.png]]
+Hình 3a: Trực quan hóa Phần 4. Bên trái là **1 time step**: input hiện tại $X_t$ và trí nhớ cũ $H_{t-1}$ cùng đi vào để tạo ra trí nhớ mới $H_t$, rồi sinh output $O_t$. Bên phải là **nhiều time steps liên tiếp**: cùng một bộ trọng số $W_{xh}, W_{hh}, W_{hq}$ được dùng lặp lại qua mọi bước thời gian.
+
+> [!NOTE] Cách đọc hình thật nhanh
+>
+> - Mũi tên xanh $W_{xh}$: **đọc thông tin mới** từ input hiện tại.
+> - Mũi tên đỏ $W_{hh}$: **mang trí nhớ cũ** sang bước kế tiếp.
+> - Mũi tên vàng $W_{hq}$: biến hidden state thành **dự đoán output**.
+>
+> Vì các nhãn $W_{xh}, W_{hh}, W_{hq}$ lặp lại y hệt ở $t=1, t=2, t=3$, nên ta nói RNN có **weight sharing**.
+
 ![[assets/attachments/d2l-buoi-39/rnn_unrolled.png]]
-_Hình 3: RNN mở ra theo thời gian. Mỗi cột là 1 time step. Mũi tên đỏ: truyền hidden state. Tất cả time steps CHIA SẺ cùng bộ tham số ($W_{xh}, W_{hh}, W_{hq}$)._
+_Hình 3b: RNN mở ra theo thời gian theo đúng cấu trúc chuẩn của D2L. Mỗi cột là 1 time step. Mũi tên đỏ: truyền hidden state. Tất cả time steps chia sẻ cùng bộ tham số._
 
 ### 4.2 Weight Sharing — Đặc tính then chốt
 
@@ -279,14 +290,127 @@ _Hình 3: RNN mở ra theo thời gian. Mỗi cột là 1 time step. Mũi tên �
 >
 > → Tổng parameters = **cố định**, **không phụ thuộc** vào $T$.
 
-Đây là ưu việt lớn nhất so với N-gram: thay vì $O(|V|^n)$ tham số, RNN chỉ cần $O(d \cdot h + h^2 + h \cdot q)$.
+Đây là ưu việt lớn nhất so với N-gram: thay vì $O(|V|^n)$ tham số, RNN chỉ cần xấp xỉ
 
-**Ví dụ cụ thể:** Với $d = 256$, $h = 512$, $q = 100$:
+$$O(d \cdot h + h^2 + h \cdot q)$$
+
+Nếu viết **đầy đủ cả bias**, tổng số tham số là:
+
+$$d \cdot h + h^2 + h + h \cdot q + q$$
+
+Trong đó:
+
+- $d$: số đặc trưng của **input hiện tại**
+- $h$: số chiều của **bộ nhớ ẩn**
+- $q$: số chiều của **output**
+
+### 4.2.1 Giải thích từng tham số một cách trực quan
+
+> [!NOTE] Hãy nghĩ RNN như một người đang nghe câu chuyện
+>
+> - $W_{xh}$ = cách người đó **hiểu câu vừa nghe**
+> - $W_{hh}$ = cách người đó **giữ hoặc quên trí nhớ cũ**
+> - $b_h$ = độ lệch nền khi cập nhật trí nhớ
+> - $W_{hq}$ = cách biến trí nhớ thành **câu trả lời/dự đoán**
+> - $b_q$ = thiên lệch ban đầu của output
+
+#### 1. $W_{xh} \in \mathbb{R}^{d \times h}$ — ma trận "đọc input hiện tại"
+
+Đây là ma trận biến input $X_t$ từ không gian gốc sang hidden space.
+
+- Nếu input là one-hot character với vocab 28 ký tự, thì $d = 28$
+- Nếu hidden size là 256, thì $W_{xh}$ có shape $(28, 256)$
+- Nghĩa là: mỗi ký tự đầu vào sẽ được ánh xạ thành một tín hiệu cho 256 hidden units
+
+**Hiểu cụ thể hơn:**
+
+- Mỗi **hàng** của $W_{xh}$ tương ứng với một feature đầu vào
+- Mỗi **cột** tương ứng với một hidden neuron
+- Phần tử $W_{xh}[i, j]$ trả lời câu hỏi: feature thứ $i$ của input ảnh hưởng mạnh hay yếu đến hidden unit thứ $j$?
+
+#### 2. $W_{hh} \in \mathbb{R}^{h \times h}$ — ma trận "truyền trí nhớ"
+
+Đây là phần quan trọng nhất của RNN. Nó lấy hidden state cũ $H_{t-1}$ và quyết định trí nhớ nào nên giữ lại, trí nhớ nào nên làm mạnh lên hoặc làm mờ đi.
+
+- Nếu $h = 256$, thì $W_{hh}$ có shape $(256, 256)$
+- Mỗi hidden unit cũ có thể ảnh hưởng đến **mọi** hidden unit mới
+- Đây là lý do $W_{hh}$ thường chiếm phần lớn số tham số
+
+**Diễn giải:**
+$W_{hh}[i, j]$ cho biết hidden unit thứ $i$ ở quá khứ ảnh hưởng bao nhiêu đến hidden unit thứ $j$ ở hiện tại.
+
+Nói ngắn gọn: nếu $W_{xh}$ là "đọc cái mới", thì $W_{hh}$ là "nhớ cái cũ".
+
+#### 3. $b_h \in \mathbb{R}^{1 \times h}$ — bias của hidden state
+
+Bias không phụ thuộc vào input hay hidden state cũ. Nó là độ lệch nền giúp neuron không bị buộc phải đi qua gốc tọa độ.
+
+- Có $h$ giá trị bias, mỗi giá trị ứng với 1 hidden unit
+- Bias giúp mô hình linh hoạt hơn khi học
+
+#### 4. $W_{hq} \in \mathbb{R}^{h \times q}$ — ma trận "ra quyết định"
+
+Sau khi có hidden state $H_t$, ta cần biến nó thành output logits $O_t$.
+
+- Nếu bài toán là character-level prediction với vocab 28 ký tự, thì $q = 28$
+- Với $h = 256$, $W_{hq}$ có shape $(256, 28)$
+- Nó chuyển 256 chiều bộ nhớ thành 28 điểm số, mỗi điểm số ứng với 1 ký tự có thể xuất hiện tiếp theo
+
+#### 5. $b_q \in \mathbb{R}^{1 \times q}$ — bias của output
+
+Bias này giống như "xu hướng mặc định" của mô hình trước khi nhìn vào hidden state.
+
+Ví dụ: trong tiếng Anh, dấu cách hoặc một số chữ cái phổ biến có thể có xác suất nền cao hơn.
+
+### 4.2.2 Một bước tính toán thật sự diễn ra như thế nào?
+
+Giả sử ta đang huấn luyện character-level language model cho từ "machine".
+Ở time step $t = 3$:
+
+- Input hiện tại $X_3$ là ký tự "c"
+- Hidden state cũ $H_2$ đã chứa thông tin về "m" và "a"
+
+RNN tính:
+
+$$H_3 = \tanh(X_3 W_{xh} + H_2 W_{hh} + b_h)$$
+
+Diễn giải theo lời:
+
+1. $X_3 W_{xh}$: mô hình hỏi "ký tự **c** nói gì về trạng thái mới?"
+2. $H_2 W_{hh}$: mô hình hỏi "bộ nhớ về **ma** nên được mang sang thế nào?"
+3. Cộng thêm $b_h$: dịch chuyển nền cho hidden units
+4. Qua $\tanh$: nén kết quả vào khoảng $(-1, 1)$ để ổn định
+5. Sau đó:
+
+$$O_3 = H_3 W_{hq} + b_q$$
+
+- $O_3$ là 28 logits nếu vocab có 28 ký tự
+- Qua softmax, mô hình nhận được xác suất cho ký tự tiếp theo, ví dụ "h"
+
+### 4.2.3 Tại sao số tham số không tăng theo độ dài chuỗi?
+
+Vì ở time step nào ta cũng dùng **chính 5 objects này**:
+
+- $W_{xh}$
+- $W_{hh}$
+- $b_h$
+- $W_{hq}$
+- $b_q$
+
+Chuỗi dài thêm chỉ có nghĩa là ta **dùng lại** chúng thêm nhiều lần, chứ **không tạo ma trận mới**.
+
+Đó chính là meaning của **weight sharing**.
+
+**Ví dụ số cụ thể:** Với $d = 256$, $h = 512$, $q = 100$:
 
 - $W_{xh}$: $256 \times 512 = 131{,}072$
 - $W_{hh}$: $512 \times 512 = 262{,}144$
+- $b_h$: $512$
 - $W_{hq}$: $512 \times 100 = 51{,}200$
-- **Tổng ≈ 444K params** — bất kể chuỗi dài bao nhiêu
+- $b_q$: $100$
+- **Tổng = 131,072 + 262,144 + 512 + 51,200 + 100 = 445,028 params**
+
+Nếu chuỗi dài từ $T = 10$ tăng lên $T = 10000$, tổng số này **vẫn giữ nguyên** là 445,028. Khác biệt duy nhất là ta phải chạy nhiều bước thời gian hơn.
 
 ### 4.3 So sánh paradigm
 

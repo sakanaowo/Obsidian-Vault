@@ -1,6 +1,25 @@
 ---
 ---
 
+tác vụ: D2L Learning - Tuần 11, Buổi 40 — 9.5 RNN Implementation from Scratch - 2026-04-15
+nội dung: Đã tạo [[Buổi 40 - Tuần 11]] — Chapter 9.5 RNN Implementation from Scratch.
+chi tiết:
+
+- Implement RNNScratch: W_xh, W_hh, b_h với nn.Parameter, forward loop qua time steps
+- One-hot encoding: tại sao cần (ordinal/distance bias), shape (batch,T)→(T,batch,|V|), transpose rationale
+- Insight: one-hot × W_xh = chọn 1 hàng → W_xh là embedding matrix → nn.Embedding hiệu quả hơn
+- RNNLMScratch: kết hợp RNN core + output layer (W_hq, b_q), full forward pass
+- Gradient Clipping: ELI5, công thức g←min(1,θ/||g||)·g, Lipschitz continuity (Eq 9.5.1-9.5.3)
+- So sánh gradient clipping vs giảm lr: adaptive intervention chỉ khi cần
+- Training loop 7 bước: data → one-hot → RNN → output → loss → clip → update
+- Hyperparameters: batch=1024, steps=32, hidden=32, lr=1, clip=1 — giải thích lr cao + clipping
+- Decoding: warm-up phase (nạp prefix) + generation phase (argmax autoregressive)
+- Greedy vs sampling decoding + temperature parameter
+- Exercises: 10 bài giải chi tiết (num_steps, embedding, ReLU, bỏ clipping)
+- 5 hình minh họa matplotlib trong assets/attachments/d2l-buoi-40/
+- Active Recall: 8 câu ôn Buổi 39 + 10 câu Buổi 40
+- Tạo concept note [[Gradient Clipping]] trong 20_Areas/AI/Concepts/
+
 tác vụ: D2L Learning - Tuần 11, Buổi 39 — 9.4 Recurrent Neural Networks - 2026-04-14
 nội dung: Đã tạo [[Buổi 39 - Tuần 11]] — Chapter 9.4 Recurrent Neural Networks.
 chi tiết:
