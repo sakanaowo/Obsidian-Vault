@@ -1,6 +1,39 @@
 ---
 ---
 
+tác vụ: D2L Learning - Tuần 12, Buổi 42 — 9.7 Backpropagation Through Time - 2026-04-19
+nội dung: Đã tạo [[Buổi 42 - Tuần 12]] — Chapter 9.7 Backpropagation Through Time (BPTT).
+chi tiết:
+
+- Section lý thuyết thuần (không có code mới) — nền tảng cho mọi hạn chế vanilla RNN
+- Mô hình đơn giản hóa (9.7.1): h*t = f(x_t, h*{t-1}, w_h), gradient ∂L/∂w_h chứa tích Jacobian đệ quy
+- Công thức then chốt (9.7.7): ∂h_t/∂w_h = Σ (Π ∂f/∂h) · ∂f/∂w_h — tích Jacobian gây vanishing/exploding
+- 3 chiến lược: Full (O(T), impractical), Truncated (mặc định, biased nhưng ổn định), Randomized (unbiased, variance cao)
+- BPTT chi tiết (9.7.2): identity activation, công thức (W_hh^T)^k → eigenvalue analysis
+- Vanishing: |λ|<1 → gradient → 0. Exploding: |λ|>1 → gradient → ∞
+- Kết nối code: detach\_() = truncated BPTT, giải thích lý do dùng ở Buổi 40-41
+- Gradient clipping chỉ xử lý exploding, KHÔNG xử lý vanishing → motivate LSTM/GRU (Ch10)
+- Exercises: orthogonal matrix eigenvalue proof, gradient alignment với eigenvector dominant, alternatives to clipping
+- 5 hình minh họa matplotlib: computational graph, 3 truncation strategies, vanishing/exploding eigenvalue plot, gradient chain, detach visualization
+- Active Recall: 10 câu ôn Buổi 41 (nn.RNN API, cuDNN, LazyLinear, swapaxes, 4 thay đổi, 2 bias, RNNCell)
+- Concept note mới: [[Backpropagation Through Time]] trong 20_Areas/AI/Concepts/
+
+tác vụ: D2L Learning - Tuần 11, Buổi 41 — 9.6 Concise Implementation of RNNs - 2026-04-16
+nội dung: Đã tạo [[Buổi 41 - Tuần 11]] — Chapter 9.6 Concise Implementation of Recurrent Neural Networks.
+chi tiết:
+
+- So sánh 4 thay đổi chính: RNN core (nn.RNN), output layer (nn.LazyLinear), return format (stacked tensor), gradient clipping (auto)
+- nn.RNN deep-dive: cuDNN fused kernel, tại sao nhanh hơn scratch (loại bỏ Python loop overhead)
+- swapaxes(0,1) explained: time-first → batch-first convention mismatch
+- nn.LazyLinear: tự suy luận input dim, giảm coupling giữa components
+- nn.RNN parameters: weight_ih, weight_hh, bias_ih, bias_hh — so sánh 2 bias vs 1 bias scratch
+- Data flow comparison: shape step-by-step (batch=1024, T=32, |V|=28, h=32)
+- Training: cùng hyperparameters, comparable perplexity, faster execution
+- Exercises: overfit strategies, autoregressive RNN implementation
+- Khi nào dùng scratch vs high-level (+ nn.RNNCell trung gian)
+- 4 hình minh họa matplotlib trong assets/attachments/d2l-buoi-41/
+- Active Recall: 10 câu ôn Buổi 40 (RNNScratch, one-hot, gradient clipping, training, decoding)
+
 tác vụ: D2L Learning - Tuần 11, Buổi 40 — 9.5 RNN Implementation from Scratch - 2026-04-15
 nội dung: Đã tạo [[Buổi 40 - Tuần 11]] — Chapter 9.5 RNN Implementation from Scratch.
 chi tiết:
