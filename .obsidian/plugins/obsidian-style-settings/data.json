@@ -148,8 +148,8 @@
   "shimmering-focus@@show-suggester-instructions": true,
   "shimmering-focus@@show-new-tab-button": false,
   "shimmering-focus@@hide-pane-relief-focus-lock-status-bar": false,
-  "cupertino@@adaptive-mode-off": false,
-  "cupertino@@tab-floating": false,
+  "cupertino@@adaptive-mode-off": true,
+  "cupertino@@tab-floating": true,
   "cupertino@@hover-ribbon": false,
   "cupertino@@hover-sidedock": false,
   "cupertino@@focus-view": false,
@@ -161,5 +161,6 @@
   "cupertino@@reduce-contrast-change": false,
   "cupertino@@reduce-motion": false,
   "cupertino@@dynamic-type-off": true,
-  "cupertino@@clean-link-off": true
+  "cupertino@@clean-link-off": true,
+  "cupertino@@colorful-frame": false
 }

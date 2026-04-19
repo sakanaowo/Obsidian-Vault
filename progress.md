@@ -1,6 +1,50 @@
 ---
 ---
 
+---
+
+tác vụ: Dịch bài blog Colah "Understanding LSTM Networks" - 2026-04-19
+nội dung: Đã tạo [[Understanding LSTM Networks - Colah]] trong 30_Resources/Webs/.
+chi tiết:
+
+- Dịch toàn bộ bài blog kinh điển của Christopher Olah (2015) sang tiếng Việt
+- Giữ nguyên cấu trúc 7 phần gốc (RNN → Long-Term Dependencies → LSTM → Core Idea → Step-by-Step → Variants → Conclusion)
+- Tải 16 hình minh họa gốc vào assets/attachments/colah-understanding-lstms/
+- Thêm công thức toán (forget gate, input gate, cell update, output gate) cho mỗi bước
+- Thêm ELI5, callout giải thích sâu (vanishing gradient, phép cộng cell state), bảng so sánh GRU vs LSTM
+- Thêm ghi chú bối cảnh lịch sử 2015→2026 (Transformer, self-attention)
+- Liên kết nội bộ tới [[LSTM]], [[GRU]], [[Backpropagation Through Time]], [[Buổi 42]], [[Buổi 43]]
+
+---
+
+tác vụ: D2L Learning - Mở rộng giải thích BPTT - 2026-04-19
+nội dung: Đã cập nhật phần [[Buổi 42 - Tuần 12]], [[Buổi 43 - Tuần 12]] và ghi chú ngày 19-04 để giải thích BPTT kỹ hơn.
+chi tiết:
+
+- Thêm mục giải nghĩa bản chất của $x_t$, $h_t$, $o_t$, loss và gradient
+- Viết lại phần ôn tập theo kiểu từ gốc đến nâng cao để dễ hiểu hơn
+- Bổ sung active recall hôm nay với câu hỏi ngắn và đáp án tự kiểm tra
+- Giải thích cụ thể vai trò của $W_{xh}$, $W_{hh}$, $W_{hq}$ và eigenvalue của $W_{hh}$
+- Làm rõ `detach_()` chỉ cắt gradient, không xóa hidden state
+
+tác vụ: D2L Learning - Tuần 12, Buổi 43 — 10.1 Long Short-Term Memory (LSTM) - 2026-04-20
+nội dung: Đã tạo [[Buổi 43 - Tuần 12]] — Chapter 10.1 Long Short-Term Memory (LSTM). Bắt đầu Chapter 10 — Modern Recurrent Neural Networks.
+chi tiết:
+
+- Kiến trúc ô nhớ có cổng: 3 cổng (quên, đầu vào, đầu ra) + nút ứng viên + 2 trạng thái (C_t, H_t)
+- Công thức cốt lõi: C*t = F_t ⊙ C*{t-1} + I_t ⊙ C̃_t — phép cộng tuyến tính giải quyết vanishing gradient
+- So sánh gradient flow: RNN thường (W_hh^k → vanishing/exploding) vs LSTM (diag(F_t) → kiểm soát được)
+- Cài đặt từ đầu: LSTMScratch với triple() pattern, forward nhận/trả bộ đôi (H, C)
+- Cài đặt gọn: nn.LSTM wrapping, cuDNN fused kernel, so sánh 30 dòng vs 5 dòng
+- Đếm tham số: 4(dh + h² + h) — gấp 4 lần RNN thường
+- Exercises: hyperparameter tuning, GRU/LSTM/RNN chi phí so sánh, tanh lần 2 cho H_t, time series
+- 5 hình minh họa matplotlib: cell architecture, gate behavior, cell state update, RNN vs LSTM gradient, formula summary
+- Active Recall: 10 câu ôn Buổi 42 BPTT (gradient chain, truncation, eigenvalue, detach\_())
+- Concept note mới: [[LSTM]] trong 20_Areas/AI/Concepts/ — giải quyết 15+ unresolved links
+- Áp dụng quy tắc viết mới: tiếng Việt chủ đạo, không trộn lẫn ngôn ngữ gây lú
+
+---
+
 tác vụ: D2L Learning - Tuần 12, Buổi 42 — 9.7 Backpropagation Through Time - 2026-04-19
 nội dung: Đã tạo [[Buổi 42 - Tuần 12]] — Chapter 9.7 Backpropagation Through Time (BPTT).
 chi tiết:

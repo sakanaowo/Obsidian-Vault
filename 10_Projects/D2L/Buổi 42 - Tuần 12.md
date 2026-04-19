@@ -84,6 +84,39 @@ status: complete
 > 3. Tại sao cần LSTM/GRU (Chương 10) — thiết kế để "sửa" vấn đề này
 > 4. `detach_()` trong training code thực ra là truncated BPTT — không phải trick ngẫu nhiên
 
+## 1.1 Tại sao gọi là "Backpropagation Through Time"?
+
+Vì khi huấn luyện RNN, ta **mở vòng lặp theo thời gian** (unroll) thành một chuỗi gồm $T$ bản sao của cùng một cell:
+
+- bước 1: $x_1 \to h_1 \to o_1$
+- bước 2: $x_2$ đi cùng $h_1$ để tạo $h_2 \to o_2$
+- ...
+- bước $T$: $x_T$ đi cùng $h_{T-1}$ để tạo $h_T \to o_T$
+
+Ở chiều thuận, thông tin đi **từ trái sang phải theo thời gian**. Ở chiều ngược, gradient đi **từ loss cuối về các bước trước đó**. Vì gradient phải chui qua cả chuỗi thời gian này, nên mới gọi là **lan truyền ngược xuyên thời gian**.
+
+## 1.2 Từ điển các khái niệm xuất hiện trong BPTT
+
+| Khái niệm                 | Nghĩa đơn giản                                                 | Vai trò trong BPTT                                              |
+| ------------------------- | -------------------------------------------------------------- | --------------------------------------------------------------- |
+| **Time step $t$**         | Vị trí thứ $t$ trong chuỗi                                     | Mỗi bước tạo ra 1 hidden state và có thể tạo 1 loss             |
+| **Unroll**                | Mở vòng lặp RNN thành chuỗi các bước                           | Giúp ta nhìn RNN như một mạng rất sâu để áp dụng backprop       |
+| **Hidden state $h_t$**    | "bộ nhớ tạm" tại thời điểm $t$                                 | Mang thông tin quá khứ sang hiện tại                            |
+| **Shared weights**        | Cùng một bộ trọng số dùng lặp lại ở mọi bước                   | Là lý do gradient phải cộng đóng góp từ nhiều thời điểm         |
+| **Loss $\ell(y_t,o_t)$**  | Mức sai ở bước $t$                                             | Tạo tín hiệu lỗi để cập nhật tham số                            |
+| **Chain rule**            | Quy tắc đạo hàm theo chuỗi phụ thuộc                           | Công cụ toán học cốt lõi để truyền lỗi ngược                    |
+| **Jacobian**              | Ma trận đạo hàm của vector theo vector                         | Đo xem hidden state sau nhạy với hidden state trước tới mức nào |
+| **Long-range dependency** | Quan hệ giữa đầu ra hiện tại và thông tin rất xa trong quá khứ | Thứ mà vanilla RNN thường học rất kém                           |
+| **Bias của gradient**     | Gradient xấp xỉ bị lệch so với gradient thật                   | Xuất hiện trong truncated BPTT                                  |
+| **Variance cao**          | Mỗi lần ước lượng gradient dao động mạnh                       | Là nhược điểm của randomized truncation                         |
+
+> [!NOTE] Phân biệt 2 chữ "backprop"
+>
+> - **Backpropagation** là quy trình lan truyền lỗi ngược để tính gradient.
+> - **Gradient descent** là bước dùng gradient đó để cập nhật tham số.
+>
+> BPTT chỉ làm nhiệm vụ **tính gradient** cho RNN; còn optimizer như SGD/Adam mới là thứ **cập nhật trọng số**.
+
 ---
 
 # PHẦN II — MÔ HÌNH ĐƠN GIẢN HÓA (9.7.1)
@@ -139,6 +172,32 @@ $$\frac{\partial h_t}{\partial w_h} = \sum_{\tau=0}^{t} \left(\prod_{i=\tau+1}^{
 >
 > - Nếu $\left\|\frac{\partial f}{\partial h}\right\| < 1$ → tích → 0 khi $t$ lớn (vanishing)
 > - Nếu $\left\|\frac{\partial f}{\partial h}\right\| > 1$ → tích → $\infty$ khi $t$ lớn (exploding)
+
+### 2.4 Cách đọc công thức (9.7.7) theo ngôn ngữ đời thường
+
+Đừng nhìn công thức rồi hoảng. Hãy đọc nó theo 3 ý sau:
+
+1. **$w_h$ xuất hiện ở mọi time step** vì RNN dùng shared weights.
+2. Muốn biết loss ở bước $t$ trách nhiệm lên $w_h$ thế nào, ta phải xét **mọi nơi trong quá khứ** mà $w_h$ đã tác động vào hidden state.
+3. Từ một thời điểm cũ $\tau$ đi tới hiện tại $t$, tín hiệu lỗi phải đi qua từng mắt xích trung gian, nên xuất hiện tích:
+   $$\prod_{i=\tau+1}^{t} \frac{\partial f(x_i,h_{i-1},w_h)}{\partial h_{i-1}}$$
+
+Nói ngắn gọn: **mỗi đường đi ngược đóng góp một ít gradient**, và BPTT cộng tất cả các đường đi đó lại.
+
+### 2.5 Ví dụ cực nhỏ để thấy vanishing/exploding xuất hiện thế nào
+
+Giả sử ta bỏ hết phi tuyến và dùng mô hình 1 chiều:
+
+$$h_t = w h_{t-1}, \quad h_3 = w^3 h_0$$
+
+Khi đó:
+
+$$\frac{\partial h_3}{\partial h_0} = w^3$$
+
+- Nếu $w = 0.5$ thì $w^3 = 0.125$ — tín hiệu đã nhỏ đi rất mạnh chỉ sau 3 bước.
+- Nếu $w = 2$ thì $w^3 = 8$ — tín hiệu bị phóng đại rất nhanh.
+
+Đây chính là phiên bản tối giản của vấn đề trong RNN thực tế: thay vì một số $w$, ta có cả ma trận $W_{hh}$ và hiện tượng còn mạnh hơn nhiều khi chuỗi dài.
 
 ![[assets/attachments/d2l-buoi-42/gradient_chain.png]]
 _Hình 1: Chuỗi nhân gradient trong BPTT — mỗi số hạng chứa tích Jacobian dài, gây vanishing/exploding._
@@ -326,6 +385,14 @@ for X, Y in data_iter:
 2. Gradient từ minibatch hiện tại **không truyền ngược** qua minibatch trước
 3. Hiệu quả: truncation length $\tau$ = `num_steps` (độ dài mỗi minibatch)
 
+> [!NOTE] Một chỗ rất dễ hiểu nhầm
+> `detach_()` **không xóa ký ức số học** trong hidden state. Giá trị của `state` vẫn được giữ lại để mô hình tiếp tục dùng ở bước sau. Thứ bị cắt chỉ là **đường lan truyền gradient** về quá khứ.
+>
+> Nói cách khác:
+>
+> - **forward memory** vẫn còn,
+> - nhưng **backward credit assignment** bị dừng lại.
+
 ![[assets/attachments/d2l-buoi-42/detach_truncated_bptt.png]]
 _Hình 5: Không detach → Full BPTT (gradient truyền vô hạn). Detach mỗi num_steps → Truncated BPTT (gradient dừng tại checkpoint xanh)._
 
@@ -371,13 +438,13 @@ Khi đó:
 
 $$(W_{hh})^k = Q \Lambda^k Q^{-1} = Q \cdot \text{diag}(\lambda_1^k, \lambda_2^k, \ldots, \lambda_h^k) \cdot Q^{-1}$$
 
-**Hành vi của $\lambda_j^k$:**
+**Hành vi của $\lambda_j^k$: **
 
-| Điều kiện | Hành vi khi $k \to \infty$ | Ý nghĩa cho gradient |
-| --------- | -------------------------- | -------------------- | ------------------- | --------------------------------------------------------- | ----------- | -------------------------------------------------------- |
-| $         | \lambda_j                  | < 1$                 | $\lambda_j^k \to 0$ | Thành phần gradient theo hướng eigenvector $j$ → biến mất |
-| $         | \lambda_j                  | = 1$                 | $                   | \lambda_j^k                                               | = 1$        | Ổn định (lý tưởng)                                       |
-| $         | \lambda_j                  | > 1$                 | $                   | \lambda_j^k                                               | \to \infty$ | Thành phần gradient theo hướng eigenvector $j$ → phát nổ |
+| Trường hợp | Hành vi khi $k \to \infty$ | Ý nghĩa cho gradient |
+| ---------- | -------------------------- | -------------------- | ------------------------- | ----------------------------------------------------------- |
+| Nếu $      | \lambda_j                  | < 1$                 | $\lambda_j^k \to 0$       | Thành phần gradient theo hướng eigenvector $j$ dần biến mất |
+| Nếu $      | \lambda_j                  | = 1$                 | Độ lớn gần như giữ nguyên | Gradient tương đối ổn định                                  |
+| Nếu $      | \lambda_j                  | > 1$                 | $\lambda_j^k \to \infty$  | Thành phần gradient theo hướng eigenvector $j$ phát nổ      |
 
 ### 7.2 Gradient bị "align" với eigenvector lớn nhất
 

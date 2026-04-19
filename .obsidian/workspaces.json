@@ -200,9 +200,57 @@
                   "icon": "lucide-file",
                   "title": "Buổi 40 - Tuần 11"
                 }
+              },
+              {
+                "id": "a1b922f1a187759b",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Buổi 41 - Tuần 11.md",
+                    "mode": "preview",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Buổi 41 - Tuần 11"
+                }
+              },
+              {
+                "id": "ee309fb4e3ec1c9a",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "10_Projects/D2L/Buổi 42 - Tuần 12.md",
+                    "mode": "preview",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "Buổi 42 - Tuần 12"
+                }
               }
             ],
-            "currentTab": 7
+            "currentTab": 9
           }
         ],
         "direction": "vertical"
@@ -383,11 +431,11 @@
           "obsidian-git:Open Git source control": false
         }
       },
-      "active": "938e08646893d0c1",
-      "mtime": "2026-04-16T15:49:54+07:00",
+      "active": "ee309fb4e3ec1c9a",
+      "mtime": "2026-04-18T20:10:01+07:00",
       "workspaces-plus:settings-v1": {
         "explorerFoldState": [
-          "10_Projects"
+          "00_DailyNote"
         ]
       }
     },
