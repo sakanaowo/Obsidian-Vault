@@ -27,6 +27,43 @@ chi tiết:
 - Giải thích cụ thể vai trò của $W_{xh}$, $W_{hh}$, $W_{hq}$ và eigenvalue của $W_{hh}$
 - Làm rõ `detach_()` chỉ cắt gradient, không xóa hidden state
 
+---
+tác vụ: D2L Learning - Tuần 12, Buổi 44 — 10.2 Gated Recurrent Units (GRU) - 2026-04-20
+---
+tác vụ: D2L Learning - Tuần 12, Buổi 45 — 10.3 & 10.4 Deep RNN + Bidirectional RNN - 2026-04-20
+nội dung: Đã viết lại [[Buổi 45 - Tuần 12]] — Chapter 10.3 Deep RNN + 10.4 Bidirectional RNN (phiên bản giải thích sâu).
+chi tiết:
+- Deep RNN: stacking nhiều tầng RNN, mỗi tầng nhận output tầng dưới
+- Công thức: H_t^(l) = phi(H_t^(l-1)W_xh + H_{t-1}^(l)W_hh + b) — 2 nguồn thông tin
+- Inter-layer vs intra-layer: H_t^(l-1) (từ tầng dưới) vs H_{t-1}^(l) (từ bước trước)
+- Siêu tham số: L in [1,8], h in [64,2056], ưu tiên tăng h trước L
+- Cài đặt: StackedRNNScratch với nn.Sequential, forward layer-by-layer
+- nn.GRU nhiều tầng: num_layers param, dropout giữa tầng, lr=2 thay vì lr=4
+- Gradient clipping bắt buộc cho deep RNN, Layer Normalization thay vì BatchNorm
+- Bidirectional RNN: 2 unidirectional chạy ngược chiều, output = concatenation [H→_t; H←_t]
+- Forward H→_t đọc trái→phải (chứa x_1..x_t), Backward H←_t đọc phải→trái (chứa x_T..x_t)
+- Shape: BiRNN output = 2h chiều, Deep BiRNN = 2^L × h chiều
+- Hạn chế BiRNN: cần toàn bộ chuỗi → không real-time, chi phí gấp đôi
+- Ứng dụng: POS tagging, NER, BERT pretraining, machine translation
+- 2 hình D2L: deep-rnn-1.png (kiến trúc deep RNN), bi-rnn-1.png (kiến trúc BiRNN)
+- 2 Mermaid diagrams bổ sung: deep RNN flow, BiRNN flow
+- Active Recall: 10 câu ôn GRU (2 cổng, tổ hợp lồi, cell state, 25% params)
+- Áp dụng quy tắc viết mới: tiếng Việt chủ đạo, giải thích kỹ khái niệm mới
+---
+nội dung: Đã tạo [[Buổi 44 - Tuần 12]] — Chapter 10.2 Gated Recurrent Units (GRU).
+chi tiết:
+- Bối cảnh lịch sử: Cho et al. (2014) đơn giản hóa LSTM thành GRU
+- Kiến trúc 2 cổng: Reset Gate (R_t) + Update Gate (Z_t), bỏ cell state riêng
+- Candidate hidden state: H̃_t = tanh(X_t W_xh + (R_t ⊙ H_{t-1}) W_hh)
+- Công thức cốt lõi: H_t = Z_t ⊙ H_{t-1} + (1 - Z_t) ⊙ H̃_t — tổ hợp lồi
+- So sánh LSTM vs GRU: 3 cổng vs 2, cell state riêng vs không, 4(dh+h²+h) vs 3(dh+h²+h)
+- Cài đặt từ đầu: GRUScratch, triple() pattern, chỉ 1 hidden state H
+- Cài đặt gọn: nn.GRU, so sánh 20 dòng vs 5 dòng
+- Khi nào dùng GRU vs LSTM: chuỗi ngắn/tốc độ vs chuỗi dài/tinh vi
+- 5 hình minh họa từ D2L: 2 cổng, candidate, hidden state, kiến trúc hoàn chỉnh, RNN/GRU/LSTM
+- Active Recall: 10 câu ôn Buổi 43 LSTM (3 cổng, cell state, vanishing gradient, 4× params)
+- Áp dụng quy tắc viết mới: tiếng Việt chủ đạo
+---
 tác vụ: D2L Learning - Tuần 12, Buổi 43 — 10.1 Long Short-Term Memory (LSTM) - 2026-04-20
 nội dung: Đã tạo [[Buổi 43 - Tuần 12]] — Chapter 10.1 Long Short-Term Memory (LSTM). Bắt đầu Chapter 10 — Modern Recurrent Neural Networks.
 chi tiết:

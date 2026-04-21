@@ -206,7 +206,7 @@ MLP xử lý mỗi input $X$ **độc lập**. Nếu ta đưa $X_1, X_2, \ldots,
 
 So sánh MLP (9.4.3) và RNN:
 
-$$\underbrace{H = \phi(X W_{xh} + b_h)}_{\text{MLP: chỉ nhìn input hiện tại}} \quad \longrightarrow \quad \underbrace{H_t = \phi(X_t W_{xh} + H_{t-1} W_{hh} + b_h)}_{\text{RNN: nhìn input hiện tại VÀ quá khứ}} \tag{9.4.5}$$
+$$\underbrace{H = \phi(X W_{xh} + b_h)}_{\text{MLP: chỉ nhìn input hiện tại}} \quad \rightarrow \underbrace{H_t = \phi(X_t W_{xh} + H_{t-1} W_{hh} + b_h)}_{\text{RNN: nhìn input hiện tại VÀ quá khứ}} \tag{9.4.5}$$
 
 **Chỉ thêm DUY NHẤT một thành phần: $H_{t-1} W_{hh}$**
 

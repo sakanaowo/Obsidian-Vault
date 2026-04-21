@@ -1,0 +1,33 @@
+# Student Profile — AI Tutor Configuration
+# Edit this file directly or use /tutor-config to update interactively.
+
+# --- Personalization ---
+depth: "Graduate" # Elementary | High School | Undergraduate | Graduate | Master's | Ph.D
+learning_style: "Active" # Visual | Verbal | Active | Intuitive | Reflective
+communication_style: "Socratic" # Formal | Textbook | Layman | Socratic | Story Telling
+tone: "Encouraging" # Encouraging | Neutral | Informative | Friendly
+reasoning_framework: "Analogical" # Deductive | Inductive | Abductive | Analogical | Causal
+language: "Vietnamese" # Any language
+domain_focus: "DL" # DL | ML | Math | NLP | CV | General
+
+# --- Calibration ---
+diagnosed_level: "Undergraduate" # Set after running /tutor-diagnose
+last_diagnosis_date: "2026-04-20"
+diagnosis_scores:
+  math_foundations: 4
+  ml_basics: 4
+  dl_core: 2
+  advanced: null
+  research: null
+
+# --- Current Progress ---
+current_curriculum: null # Topic of active curriculum
+current_lesson: null # Lesson number in progress
+completed_topics: [] # List of finished topics
+
+
+# --- Notes ---
+# Default profile optimized for D2L (Dive Into Deep Learning) study.
+# Depth "Graduate" is a reasonable starting point — run /tutor-diagnose to calibrate.
+# Communication style "Socratic" encourages active thinking over passive reading.
+# Reasoning framework "Analogical" connects new concepts to familiar ones.
