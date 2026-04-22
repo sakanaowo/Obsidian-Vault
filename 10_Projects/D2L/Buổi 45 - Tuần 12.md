@@ -674,7 +674,7 @@ Bidirectional RNN phù hợp nhất — vì nắm bắt ngữ cảnh hai chiều
 ---
 
 > **Buổi trước:** [[Buổi 44 - Tuần 12]] — 10.2 Gated Recurrent Units (GRU)
-> **Buổi sau:** [[Buổi 46 - Tuần 13]] — 10.5 Machine Translation and the Dataset
+> **Buổi sau:** [[Buổi 47 - Tuần 13]] — 10.6 Encoder-Decoder Architecture
 
 ---
 

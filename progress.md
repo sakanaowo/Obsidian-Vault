@@ -1058,3 +1058,24 @@ chi tiết:
 - Format theo mẫu LIMA và Textbooks papers trong vault.
 
 ---
+
+tác vụ: D2L Learning - Tuần 13, Buổi 48 — 10.7 Sequence-to-Sequence Learning - 2026-04-22
+nội dung: Đã tạo [[Buổi 48 - Tuần 13]] — 10.7 Sequence-to-Sequence Learning (phiên bản giải thích sâu).
+chi tiết:
+
+- 10 phần toàn diện bám sát d2l.ai 10.7: Overview, Teacher Forcing, Encoder, Decoder, Seq2Seq Model, Masked Loss, Training, Prediction, BLEU, Bottleneck/Attention
+- Hai paper nền tảng: Cho et al. (2014) + Sutskever et al. (2014), tại sao reverse source sequence
+- Teacher forcing chi tiết: ELI5, so sánh vs free-running, exposure bias, 4 giải pháp
+- Seq2SeqEncoder: Xavier init, embedding + GRU, shape analysis, forward pass
+- Seq2SeqDecoder: concat context, input_size = embed+hidden, dense projection
+- Data flow minh họa: từng bước context cố định → bottleneck
+- Masked loss: masking strategy, ví dụ số, so sánh ignore_index vs manual mask
+- Training loop: gradient clipping bắt buộc, shift-right, Adam optimizer
+- Prediction: greedy decoding, error accumulation, motivation beam search
+- BLEU: precision n-gram, brevity penalty, ví dụ tính tay, implementation
+- Bottleneck analysis: context vector cố định → attention là giải pháp
+- 6 exercises gốc từ D2L + 6 bài tự kiểm tra
+- 6 hình minh họa matplotlib trong assets/attachments/d2l-buoi-48/ (seq2seq layers, teacher forcing, greedy decoding, BLEU score, masked loss, architecture overview)
+- Active Recall: 10 câu ôn Buổi 47 (Encoder-Decoder, shift-right, masked loss, teacher forcing, BLEU)
+- Áp dụng quy tắc viết mới: tiếng Việt chủ đạo, ELI5 ở mỗi concept, 3 tầng structure
+- Cập nhật AGENTS.md: Python env luôn dùng conda `d2l`

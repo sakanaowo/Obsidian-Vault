@@ -95,7 +95,7 @@ Phân biệt rõ ràng giữa "Ghi chú nguồn" và "Ghi chú khái niệm":
 
 ### TECHNICAL GUIDELINES
 
-- **Python Environment:** Trước khi chạy script Python, LUÔN kích hoạt môi trường conda (`activate conda` hoặc `conda activate`).
+- **Python Environment:** Trước khi chạy script Python, LUÔN kích hoạt môi trường conda `d2l` (`conda activate d2l`). Không chạy bằng Python thông thường hoặc môi trường khác.
 
 ### PDF PROCESSING WORKFLOW
 
