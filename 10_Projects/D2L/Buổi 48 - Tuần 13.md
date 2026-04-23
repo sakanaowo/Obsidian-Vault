@@ -23,7 +23,7 @@ status: complete
 
 > **Nguồn:** [d2l.ai — 10.7](https://d2l.ai/chapter_recurrent-modern/seq2seq.html)
 > **Buổi trước:** [[Buổi 47 - Tuần 13]] — 10.6 Encoder-Decoder Architecture
-> **Buổi sau:** [[Buổi 49 - Tuần 14]] — 10.8 Beam Search
+> **Buổi sau:** [[Buổi 49 - Tuần 13]] — 10.8 Beam Search
 
 ---
 
@@ -141,10 +141,10 @@ Chương 10 — Modern RNN — đã đi một hành trình dài từ vanilla RNN
 
 ### 3.2 Hai chiến lược Training
 
-| Chiến lược | Mô tả | Decoder input tại step $t$ | Ưu điểm | Nhược điểm |
-|---|---|---|---|---|
-| **Teacher Forcing** | Cho ground truth token | $y_{t-1}^{GT}$ | Gradient ổn định, hội tụ nhanh | Exposure bias |
-| **Free-running** | Dùng predicted token | $\hat{y}_{t-1}$ | Mô phỏng inference thực tế | Training khó hơn, có thể diverge |
+| Chiến lược          | Mô tả                  | Decoder input tại step $t$ | Ưu điểm                        | Nhược điểm                       |
+| ------------------- | ---------------------- | -------------------------- | ------------------------------ | -------------------------------- |
+| **Teacher Forcing** | Cho ground truth token | $y_{t-1}^{GT}$             | Gradient ổn định, hội tụ nhanh | Exposure bias                    |
+| **Free-running**    | Dùng predicted token   | $\hat{y}_{t-1}$            | Mô phỏng inference thực tế     | Training khó hơn, có thể diverge |
 
 ### 3.3 Minh họa chi tiết Teacher Forcing
 
@@ -163,9 +163,12 @@ Timestep 4: input="content" (GT), predict "."
 
 **Điểm quan trọng:** Tại mỗi timestep, Decoder được cho **ground truth token của bước trước** — không phải predicted token. Điều này đảm bảo Decoder luôn nhận input đúng trong training, dù inference sẽ khác.
 
-### 3.4 ELI5 — Exposure Bias là gì?
+### 3.4 Exposure Bias là gì?
 
+
+> [!NOTE] ELI5
 > Exposure bias giống như việc dạy con học bơi trong bể nông suốt cả năm, rồi một ngày đột nhiên đưa ra biển. Con chưa bao giờ trải nghiệm sóng thật! Trong training, Decoder luôn nhận ground truth (bể nông). Trong inference, Decoder nhận predicted token (biển thật) — có thể sai → sai tích lũy.
+
 
 **Các giải pháp cho Exposure Bias:**
 
@@ -205,12 +208,12 @@ So sánh:
 def shift_right(Y, bos_token_id, device):
     """
     Shift target sequence right bằng cách thêm BOS ở đầu và bỏ EOS ở cuối.
-    
+
     Args:
         Y: (batch_size, seq_len) — target sequence indices
         bos_token_id: int — index của BOS token
         device: torch.device
-    
+
     Returns:
         dec_input: (batch_size, seq_len) — shifted right input
     """
@@ -221,6 +224,7 @@ def shift_right(Y, bos_token_id, device):
 ```
 
 **Phân tích code:**
+
 - `Y[:, :-1]` — bỏ token cuối cùng (thường là `<eos>`)
 - `torch.cat([bos, ...], dim=1)` — thêm `<bos>` vào đầu
 - Kết quả: mỗi position $t$ nhận ground truth từ position $t-1$
@@ -242,6 +246,7 @@ def shift_right(Y, bos_token_id, device):
 **Encoder làm gì?** Đọc một variable-length sequence $x_1, x_2, ..., x_T$ và biến đổi nó thành **fixed-shape context variable** $\mathbf{c}$.
 
 **Input/Output:**
+
 - **Input**: $x_1, ..., x_T$ — source tokens (variable length)
 - **Output**: $\mathbf{c}$ hoặc $H_T$ — context vector (fixed shape)
 
@@ -259,12 +264,12 @@ Trong paper của Cho et al.: $\mathbf{c}$ có thể được tính bằng cách
 
 ### 5.3 Encoder: Unidirectional vs Bidirectional
 
-|| Unidirectional | Bidirectional |
-|---|---|---|
-| Hidden state $h_t$ phụ thuộc | $x_1, ..., x_t$ | $x_1, ..., x_t, x_{t+1}, ..., x_T$ |
-| Phù hợp cho | Decoder state initialization | NMT, POS tagging |
-| Thông tin | Past context only | Full context (past + future) |
-| Shape | $(T, h)$ | $(T, 2h)$ |
+|                              | Unidirectional               | Bidirectional                      |
+| ---------------------------- | ---------------------------- | ---------------------------------- |
+| Hidden state $h_t$ phụ thuộc | $x_1, ..., x_t$              | $x_1, ..., x_t, x_{t+1}, ..., x_T$ |
+| Phù hợp cho                  | Decoder state initialization | NMT, POS tagging                   |
+| Thông tin                    | Past context only            | Full context (past + future)       |
+| Shape                        | $(T, h)$                     | $(T, 2h)$                          |
 
 > [!NOTE] Trong D2L 10.7
 > D2L sử dụng **unidirectional RNN** cho Encoder. Điều này nghĩa là hidden state tại mỗi bước chỉ chứa thông tin từ **đầu câu đến bước đó**. Decoder "không biết" những từ ở phía sau. Trong MT, điều này có nghĩa là Encoder đọc từ trái sang phải.
@@ -292,10 +297,10 @@ def init_seq2seq(module):
 
 class Seq2SeqEncoder(d2l.Encoder):
     """RNN Encoder cho Sequence-to-Sequence Learning.
-    
+
     Architecture:
         Input tokens → Embedding → GRU → Hidden states + Final state
-    
+
     Args:
         vocab_size: kích thước vocabulary nguồn
         embed_size: chiều embedding vector
@@ -325,16 +330,16 @@ class Seq2SeqEncoder(d2l.Encoder):
         # embedding: (vocab_size, embed_size)
         # embs: (batch_size, num_steps, embed_size)
         embs = self.embedding(X.t().type(torch.int64))
-        
+
         # PyTorch GRU expect (seq_len, batch, input_size)
         # embs: (num_steps, batch_size, embed_size)
-        
+
         # GRU forward
         outputs, state = self.rnn(embs)
-        
+
         # outputs: (num_steps, batch_size, num_hiddens)
         # state: (num_layers, batch_size, num_hiddens)
-        
+
         return outputs, state
 ```
 
@@ -354,7 +359,7 @@ Input:
 
 Step 1: Embedding
   self.embedding(X): (128, 50) × (10000, 256) → (128, 50, 256)
-  
+
 Step 2: Transpose (PyTorch RNN convention)
   X_emb.t(): (50, 128, 256)
 
@@ -369,14 +374,12 @@ Output:
 
 ### 5.6 Tại sao cần Xavier Initialization?
 
-```python
-# Xavier uniform: U(-sqrt(6/(fan_in+fan_out)), sqrt(6/(fan_in+fan_out)))
-# Giúp gradient flow tốt hơn trong deep networks
-# Với RNN, initialization quan trọng vì:
-#   - Vanishing/exploding gradient nhạy cảm với initial weights
-#   - Xavier giữ variance ổn định qua các layers
-#   - Đặc biệt quan trọng với GRU/LSTM vì có nhiều gates
-```
+Xavier uniform: $$U(-\sqrt{\frac {6}{(fan_{in}+fan_{out})}}, \sqrt{\frac{6}{fan_{in}+fan_{out}}})$$
+Giúp gradient flow tốt hơn trong deep networks. Với RNN, initialization quan trọng vì:
+
+- Vanishing/exploding gradient nhạy cảm với initial weights
+- Xavier giữ variance ổn định qua các layers
+- Đặc biệt quan trọng với GRU/LSTM vì có nhiều gates
 
 ---
 
@@ -402,6 +405,7 @@ Decoder RNN biến đổi:
 $$\mathbf{s}_{t'} = g(y_{t'-1}, \mathbf{c}, \mathbf{s}_{t'-1})$$
 
 Trong đó:
+
 - $y_{t'-1}$: ground truth token (training) hoặc predicted token (inference)
 - $\mathbf{c}$: context vector từ Encoder
 - $\mathbf{s}_{t'-1}$: hidden state trước đó
@@ -432,10 +436,10 @@ Vì Decoder state được khởi tạo từ Encoder final state — chúng ph�
 ```python
 class Seq2SeqDecoder(d2l.Decoder):
     """RNN Decoder cho Sequence-to-Sequence Learning.
-    
+
     Architecture:
         Target token → Embedding → Concat with context → GRU → Dense → Vocab logits
-    
+
     Args:
         vocab_size: kích thước vocabulary đích
         embed_size: chiều embedding vector
@@ -459,7 +463,7 @@ class Seq2SeqDecoder(d2l.Decoder):
     def init_state(self, enc_all_outputs, *args):
         """
         Convert encoder outputs → decoder initial state.
-        
+
         Args:
             enc_all_outputs: tuple of (outputs, state) từ encoder
         Returns:
@@ -480,35 +484,35 @@ class Seq2SeqDecoder(d2l.Decoder):
         # X: (batch_size, num_steps)
         # embs: (num_steps, batch_size, embed_size)
         embs = self.embedding(X.t().type(torch.int32))
-        
+
         # Step 2: Extract context from encoder
         enc_output, hidden_state = state
         # enc_output: (num_steps, batch_size, num_hiddens)
         # enc_output[-1]: (batch_size, num_hiddens) — final hidden state
         context = enc_output[-1]
-        
+
         # Step 3: Broadcast context to match sequence length
         # context: (batch_size, num_hiddens)
         # → context: (num_steps, batch_size, num_hiddens)
         context = context.repeat(embs.shape[0], 1, 1)
-        
+
         # Step 4: Concatenate embeddings và context
         # embs:      (num_steps, batch_size, embed_size)
         # context:   (num_steps, batch_size, num_hiddens)
         # → concat:  (num_steps, batch_size, embed_size + num_hiddens)
         embs_and_context = torch.cat((embs, context), -1)
-        
+
         # Step 5: GRU forward
         outputs, hidden_state = self.rnn(embs_and_context, hidden_state)
         # outputs:     (num_steps, batch_size, num_hiddens)
         # hidden_state: (num_layers, batch_size, num_hiddens)
-        
+
         # Step 6: Project to vocabulary
         # outputs: (num_steps, batch_size, num_hiddens)
         # → dense: (num_steps, batch_size, vocab_size)
         outputs = self.dense(outputs).swapaxes(0, 1)
         # outputs: (batch_size, num_steps, vocab_size)
-        
+
         return outputs, [enc_output, hidden_state]
 ```
 
@@ -550,7 +554,7 @@ Giả sử:
 
 Input:
   X: (128, 50) — shifted target tokens
-  
+
 Step 1: Embedding
   self.embedding(X): (128, 50) × (10000, 256) → (128, 50, 256)
   transpose: (50, 128, 256)
@@ -590,7 +594,7 @@ D2L định nghĩa `EncoderDecoder` base class để quản lý luồng dữ li�
 ```python
 class EncoderDecoder(nn.Module):
     """Base class cho toàn bộ Encoder-Decoder model.
-    
+
     Quản lý kết nối giữa Encoder và Decoder:
         1. Encoder đọc source → trả về encoded representation
         2. Decoder init_state() convert encoder outputs → decoder state
@@ -603,7 +607,7 @@ class EncoderDecoder(nn.Module):
 
     def forward(self, enc_X, dec_X, *args):
         """Training forward pass.
-        
+
         Args:
             enc_X: (batch_size, src_len) — source tokens
             dec_X: (batch_size, tgt_len) — shifted target tokens
@@ -613,13 +617,13 @@ class EncoderDecoder(nn.Module):
         """
         # Bước 1: Encoder forward
         enc_outputs, enc_state = self.encoder(enc_X)
-        
+
         # Bước 2: Decoder init state
         dec_state = self.decoder.init_state(enc_outputs, *args)
-        
+
         # Bước 3: Decoder forward
         dec_outputs, dec_state = self.decoder(dec_X, dec_state)
-        
+
         return dec_outputs, dec_state
 ```
 
@@ -628,7 +632,7 @@ class EncoderDecoder(nn.Module):
 ```python
 class Seq2Seq(d2l.EncoderDecoder):
     """RNN Encoder-Decoder cho Sequence-to-Sequence Learning.
-    
+
     Kết hợp Seq2SeqEncoder + Seq2SeqDecoder + masked loss + Adam optimizer.
     """
     def __init__(self, encoder, decoder, tgt_pad, lr):
@@ -659,7 +663,7 @@ Trong một batch, các câu có độ dài khác nhau:
 
 ```
 Câu 1: "je suis"        → [je, suis, <eos>, <pad>, <pad>, ...]  # 6 tokens
-Câu 2: "il est calme"   → [il, est, calme, <eos>, <pad>, ...]   # 6 tokens  
+Câu 2: "il est calme"   → [il, est, calme, <eos>, <pad>, ...]   # 6 tokens
 Câu 3: "merci"         → [merci, <eos>, <pad>, <pad>, <pad>, ...]  # 6 tokens
 ```
 
@@ -674,23 +678,23 @@ Sau khi padding, tất cả câu có cùng độ dài — nhưng padding tokens 
 def masked_loss(Y_hat, Y, tgt_pad):
     """
     Tính cross-entropy loss nhưng bỏ qua padding tokens.
-    
+
     Args:
         Y_hat: (batch_size * num_steps, vocab_size) — predicted logits
         Y:     (batch_size * num_steps,)             — ground truth indices
         tgt_pad: int                                — index của padding token
-    
+
     Returns:
         Scalar loss (trung bình trên non-padding tokens)
     """
     # Tính cross-entropy cho TẤT CẢ positions
     loss_fn = nn.CrossEntropyLoss(reduction='none')
     l = loss_fn(Y_hat, Y)  # l: (batch_size * num_steps,)
-    
+
     # Tạo mask: 1 nơi có token thật, 0 nơi có padding
     mask = (Y.reshape(-1) != tgt_pad).type(torch.float32)
     # mask: (batch_size * num_steps,)
-    
+
     # Nhân loss với mask → padding positions contribute 0
     # Chia cho tổng mask → lấy trung bình trên non-padding tokens
     return (l * mask).sum() / mask.sum()
@@ -729,13 +733,13 @@ loss_fn = nn.CrossEntropyLoss(reduction='none')
 masked_loss = (l * mask).sum() / mask.sum()
 ```
 
-| Tiêu chí | ignore_index | Masking |
-|---|---|---|
-| Code | Đơn giản hơn | Phức tạp hơn |
-| Tính toán | O(n) | O(n) + O(mask) |
-| Hỗ trợ per-token loss | Không | Có |
-| Kết hợp với weighting | Khó | Dễ |
-| Trong D2L | Không dùng | Dùng mask |
+| Tiêu chí              | ignore_index | Masking        |
+| --------------------- | ------------ | -------------- |
+| Code                  | Đơn giản hơn | Phức tạp hơn   |
+| Tính toán             | O(n)         | O(n) + O(mask) |
+| Hỗ trợ per-token loss | Không        | Có             |
+| Kết hợp với weighting | Khó          | Dễ             |
+| Trong D2L             | Không dùng   | Dùng mask      |
 
 ---
 
@@ -755,17 +759,17 @@ from torch import nn
 from d2l import torch as d2l
 
 
-def train_seq2seq(data, net, lr, num_epochs, tgt_vocab, device, 
+def train_seq2seq(data, net, lr, num_epochs, tgt_vocab, device,
                   tgt_pad=None, grad_clip_val=1):
     """Training loop cho Seq2Seq model.
-    
+
     Pipeline:
         1. Load batch (source, shifted_target, labels)
         2. Forward pass
         3. Compute masked loss
         4. Backward pass + gradient clipping
         5. Update weights
-    
+
     Args:
         data: DataLoader chứa MT dataset
         net: Seq2Seq model
@@ -779,43 +783,43 @@ def train_seq2seq(data, net, lr, num_epochs, tgt_vocab, device,
     net.to(device)
     optimizer = torch.optim.Adam(net.parameters(), lr=lr)
     loss_fn = nn.CrossEntropyLoss(reduction='none', ignore_index=tgt_pad)
-    
+
     animator = d2l.Animator(xlabel='epoch', ylabel='loss',
                             xlim=[1, num_epochs])
-    
+
     for epoch in range(num_epochs):
         timer = d2l.Timer()
         metric = d2l.Accumulator(2)  # loss_sum, num_tokens
-        
+
         for batch in data:
             X, src_valid_len, Y, tgt_valid_len = batch
             X, Y = X.to(device), Y.to(device)
-            
+
             # Shift right Y cho Decoder input
             # Y: [y_1, y_2, ..., y_T, <eos>]
             # Y_shifted: [<bos>, y_1, y_2, ..., y_T]
             bos = torch.tensor([tgt_vocab['<bos>']] * Y.shape[0],
                               device=device).reshape(-1, 1)
             Y_input = torch.cat([bos, Y[:, :-1]], dim=1)
-            
+
             # Forward
             Y_hat = net(X, Y_input)
-            
+
             # Loss: flatten predictions và labels
             l = loss_fn(Y_hat, Y.reshape(-1))
             l = l.mean()
-            
+
             # Backward
             optimizer.zero_grad()
             l.backward()
-            
+
             # Gradient clipping — bắt buộc cho Seq2Seq
             torch.nn.utils.clip_grad_norm_(net.parameters(), grad_clip_val)
-            
+
             optimizer.step()
-            
+
             metric.add(l * Y.numel(), Y.numel())
-        
+
         if (epoch + 1) % 10 == 0:
             animator.add(epoch + 1, (metric[0] / metric[1],))
             print(f"Epoch {epoch+1}, Loss: {metric[0] / metric[1]:.4f}")
@@ -838,11 +842,11 @@ torch.nn.utils.clip_grad_norm_(net.parameters(), grad_clip_val=1)
 
 **So sánh clipping strategies:**
 
-| Strategy | Công thức | Khi nào |
-|---|---|---|
-| Gradient Norm Clipping | $g \leftarrow \min(1, \theta/||g||) \cdot g$ | Phổ biến nhất, D2L dùng |
-| Absolute Value Clipping | $g_i \leftarrow \text{clamp}(g_i, -\theta, \theta)$ | ít dùng |
-| No Clipping | — | Chỉ khi gradient ổn định |
+| Strategy                | Công thức                                           | Khi nào                  |     |     |            |                         |
+| ----------------------- | --------------------------------------------------- | ------------------------ | --- | --- | ---------- | ----------------------- |
+| Gradient Norm Clipping  | $g \leftarrow \min(1, \theta/$                      |                          | g   |     | ) \cdot g$ | Phổ biến nhất, D2L dùng |
+| Absolute Value Clipping | $g_i \leftarrow \text{clamp}(g_i, -\theta, \theta)$ | ít dùng                  |     |     |            |                         |
+| No Clipping             | —                                                   | Chỉ khi gradient ổn định |     |     |            |                         |
 
 ### 9.3 Minh họa Training vs Inference
 
@@ -893,7 +897,7 @@ INFERENCE (Autoregressive):
 def predict_seq2seq(net, src_sentence, src_vocab, tgt_vocab, device,
                     num_steps, save_attention_weights=False):
     """Sinh dịch bằng greedy decoding (argmax at each step).
-    
+
     Args:
         net: trained Seq2Seq model
         src_sentence: câu nguồn (string)
@@ -901,46 +905,46 @@ def predict_seq2seq(net, src_sentence, src_vocab, tgt_vocab, device,
         device: torch.device
         num_steps: số bước tối đa sinh
         save_attention_weights: lưu attention weights (cho Chương 11)
-    
+
     Returns:
         translation: câu dịch (string)
         attention_weights: (nếu save_attention_weights=True)
     """
     net.eval()
-    
+
     # Bước 1: Tokenize và encode source
     tokens = src_vocab[src_sentence.lower().split(' ')]
     src_tokens = [src_vocab['<bos>']] + tokens + [src_vocab['<eos>']]
-    
+
     # Encode source
     src_indices = torch.tensor(src_tokens, device=device).unsqueeze(0)
     enc_outputs, enc_state = net.encoder(src_indices)
-    
+
     # Bước 2: Khởi tạo decoder state
     dec_state = net.decoder.init_state([enc_outputs, enc_state])
-    
+
     # Bước 3: Autoregressive generation
     outputs = [tgt_vocab['<bos>']]
     attention_weights = []
-    
+
     for _ in range(num_steps):
         # Predict next token
         Y = torch.tensor([[outputs[-1]]], device=device)
         Y_hat, dec_state = net.decoder(Y, dec_state)
-        
+
         # Greedy: chọn token có probability cao nhất
         predicted_token = Y_hat.argmax(2).item()
-        
+
         # Nếu predict EOS → dừng
         if predicted_token == tgt_vocab['<eos>']:
             break
-        
+
         outputs.append(predicted_token)
-        
+
         # Lưu attention weights (cho Chương 11)
         if save_attention_weights:
             attention_weights.append(net.decoder.attention_weights)
-    
+
     # Bước 4: Convert tokens → words
     translation = tgt_vocab.to_tokens(outputs[1:])  # bỏ <bos>
     return translation, attention_weights
@@ -1027,10 +1031,12 @@ $$\prod_{n=1}^{k} p_n^{1/2^n}$$
 $$BP = \begin{cases} 1 & \text{nếu } c \geq r \\ \exp\left(1 - \frac{r}{c}\right) & \text{nếu } c < r \end{cases}$$
 
 Trong đó:
+
 - $c$ = độ dài predicted sequence
 - $r$ = độ dài reference sequence
 
 **Ý nghĩa:**
+
 - Predicted dài hơn reference → BP = 1 (không phạt)
 - Predicted ngắn hơn reference → BP < 1 (phạt, ngắn hơn nhiều → phạt nặng hơn)
 
@@ -1058,7 +1064,7 @@ Bước 3: Brevity Penalty
 Bước 4: BLEU
   BLEU = BP × p_1^(1/2) × p_2^(1/4) × p_3^(1/8) × p_4^(1/16)
        = 0.716 × (1/3)^0.5 × 0^0.25 × 0^0.125 × 0^0.0625
-       = 0.716 × 0.577 × 0 × ... 
+       = 0.716 × 0.577 × 0 × ...
        = 0.0
 
 → Dịch hoàn toàn sai → BLEU = 0
@@ -1070,47 +1076,47 @@ Bước 4: BLEU
 def bleu(pred_seq, label_seq, k):
     """
     Tính BLEU score cho một cặp predicted - reference.
-    
+
     Args:
         pred_seq: predicted sentence (string)
-        label_seq: reference sentence (string)  
+        label_seq: reference sentence (string)
         k: maximum n-gram order (thường k=2 hoặc k=4)
-    
+
     Returns:
         BLEU score (0-1, thường nhân 100 để báo cáo %)
     """
     pred_tokens = pred_seq.split(' ')
     label_tokens = label_seq.split(' ')
-    
+
     len_pred = len(pred_tokens)
     len_label = len(label_tokens)
-    
+
     # Brevity Penalty
     score = math.exp(min(0, 1 - len_label / len_pred))
-    
+
     # Geometric mean của precisions
     for n in range(1, min(k, len_pred) + 1):
         num_matches = 0  # số n-grams trong pred mà có trong label
         label_subs = collections.defaultdict(int)
-        
+
         # Đếm n-grams trong label
         for i in range(len_label - n + 1):
             ngram = ' '.join(label_tokens[i: i + n])
             label_subs[ngram] += 1
-        
+
         # Đếm matches trong pred (với counting trick để tránh double-count)
         for i in range(len_pred - n + 1):
             ngram = ' '.join(pred_tokens[i: i + n])
             if label_subs[ngram] > 0:
                 num_matches += 1
                 label_subs[ngram] -= 1  # counting trick
-        
+
         # Precision cho n-gram bậc n
         p_n = num_matches / (len_pred - n + 1)
-        
+
         # Cộng vào score với weight = 1/2^n
         score *= math.pow(p_n, math.pow(0.5, n))
-    
+
     return score
 ```
 
@@ -1160,7 +1166,7 @@ Seq2Seq không attention:
 
 Vấn đề: Decoder phải nhét TOÀN BỘ thông tin câu nguồn
          vào một vector C duy nhất.
-         
+
          Câu nguồn dài → thông tin bị nén quá mức → MẤT THÔNG TIN!
 ```
 
@@ -1203,14 +1209,14 @@ Seq2Seq với Attention:
 
 ### 12.4 Attention trong Seq2Seq vs Transformer
 
-|| Seq2Seq Attention (Chương 11) | Transformer (Chương 11) |
-|---|---|---|
-| **Mechanism** | Bahdanau (additive) | Scaled dot-product |
-| **Encoder outputs** | All hidden states $h_i$ | All hidden states |
-| **Query** | Decoder hidden state $s_{t-1}$ | Decoder hidden states |
-| **Key/Value** | Encoder hidden states $h_i$ | Encoder hidden states |
-| **Complexity** | $O(T \times T')$ | $O(T^2)$ per layer |
-| **Long sequences** | Better than no attention | Best |
+|                     | Seq2Seq Attention (Chương 11)  | Transformer (Chương 11) |
+| ------------------- | ------------------------------ | ----------------------- |
+| **Mechanism**       | Bahdanau (additive)            | Scaled dot-product      |
+| **Encoder outputs** | All hidden states $h_i$        | All hidden states       |
+| **Query**           | Decoder hidden state $s_{t-1}$ | Decoder hidden states   |
+| **Key/Value**       | Encoder hidden states $h_i$    | Encoder hidden states   |
+| **Complexity**      | $O(T \times T')$               | $O(T^2)$ per layer      |
+| **Long sequences**  | Better than no attention       | Best                    |
 
 > [!NOTE] Preview Chương 11
 > Attention là cơ chế cho phép Decoder "chú ý" (pay attention) đến các phần khác nhau của câu nguồn tại mỗi bước sinh. Điểm khác biệt với concat context (trong 10.7) là: attention tính **weighted sum có học**, trong đó weights $\alpha_{t,i}$ được tính từ query và keys. Sẽ học chi tiết ở Chương 11.
@@ -1282,6 +1288,7 @@ for config in configs:
 ```
 
 **Observations:**
+
 - Embed/hidden lớn hơn → model mạnh hơn nhưng chậm hơn
 - Nhiều layers hơn → có thể tốt cho long sequences
 - Dropout cao → regularization cho dữ liệu nhỏ
@@ -1297,6 +1304,7 @@ loss_fn = nn.CrossEntropyLoss(reduction='mean')  # ignore mask
 ```
 
 **Expected results:**
+
 - Loss sẽ thấp hơn (vì padding tokens dễ predict → contribute low loss)
 - Nhưng actual translation quality không cải thiện
 - Model có thể học bias về predicting padding → worse generation
@@ -1336,21 +1344,21 @@ def train_free_running(net, data, optimizer, loss_fn, device):
     for batch in data:
         X, Y = batch
         X, Y = X.to(device), Y.to(device)
-        
+
         # Bắt đầu với BOS
         dec_input = torch.full((Y.shape[0], 1), bos_id, device=device)
-        
-        # Teacher forcing: 
+
+        # Teacher forcing:
         # for t in range(num_steps):
         #     Y_hat, state = decoder(dec_input, state)
         #     dec_input = Y[:, t:t+1]  # ground truth
-        
+
         # Free-running:
         for t in range(num_steps):
             Y_hat, state = decoder(dec_input, state)
             predicted = Y_hat.argmax(2)  # greedy
             dec_input = predicted
-        
+
         # Loss: so sánh với ground truth
         l = loss_fn(Y_hat, Y[:, t])
         ...
@@ -1367,7 +1375,7 @@ def train_free_running(net, data, optimizer, loss_fn, device):
 # LSTM: 3 gates (forget, input, output) + cell state
 
 # Cài đặt tương tự, chỉ thay GRU → LSTM
-self.rnn = nn.LSTM(embed_size + num_hiddens, num_hiddens, 
+self.rnn = nn.LSTM(embed_size + num_hiddens, num_hiddens,
                    num_layers, dropout=dropout)
 
 # Hidden state becomes (hidden, cell) tuple
@@ -1403,38 +1411,38 @@ self.dense.weight = self.embedding.weight.T
 
 ## Tổng kết
 
-| Khía cạnh | Nội dung |
-|---|---|
-| **Teacher Forcing** | Cho Decoder thấy GT token tại mỗi step | Ổn định gradient, nhanh hơn |
-| **Encoder** | Embedding + Multi-layer GRU → hidden states + final state | (T, batch, h) + (L, batch, h) |
-| **Decoder** | Embed + Context → GRU → Dense → Vocab | Input: embed+context; Output: (batch, steps, vocab) |
-| **Context cố định** | enc_output[-1] được repeat qua mọi step | ĐÂY LÀ BOTTLENECK → cần Attention |
-| **Masked Loss** | Bỏ qua `<pad>` tokens trong CE | Tránh learning padding |
-| **Gradient Clipping** | $\theta = 1$ norm clipping | Ổn định training |
-| **Greedy Decoding** | argmax tại mỗi step | Nhanh nhưng sub-optimal |
-| **BLEU** | n-gram precision × Brevity Penalty | Đánh giá MT quality |
-| **Bottleneck** | 1 context vector → thông tin mất | Motivation cho Attention (Chương 11) |
+| Khía cạnh             | Nội dung                                                  |
+| --------------------- | --------------------------------------------------------- | --------------------------------------------------- |
+| **Teacher Forcing**   | Cho Decoder thấy GT token tại mỗi step                    | Ổn định gradient, nhanh hơn                         |
+| **Encoder**           | Embedding + Multi-layer GRU → hidden states + final state | (T, batch, h) + (L, batch, h)                       |
+| **Decoder**           | Embed + Context → GRU → Dense → Vocab                     | Input: embed+context; Output: (batch, steps, vocab) |
+| **Context cố định**   | enc_output[-1] được repeat qua mọi step                   | ĐÂY LÀ BOTTLENECK → cần Attention                   |
+| **Masked Loss**       | Bỏ qua `<pad>` tokens trong CE                            | Tránh learning padding                              |
+| **Gradient Clipping** | $\theta = 1$ norm clipping                                | Ổn định training                                    |
+| **Greedy Decoding**   | argmax tại mỗi step                                       | Nhanh nhưng sub-optimal                             |
+| **BLEU**              | n-gram precision × Brevity Penalty                        | Đánh giá MT quality                                 |
+| **Bottleneck**        | 1 context vector → thông tin mất                          | Motivation cho Attention (Chương 11)                |
 
 ---
 
 > **Buổi trước:** [[Buổi 47 - Tuần 13]] — 10.6 Encoder-Decoder Architecture
-> **Buổi sau:** [[Buổi 49 - Tuần 14]] — 10.8 Beam Search
+> **Buổi sau:** [[Buổi 49 - Tuần 13]] — 10.8 Beam Search
 
 ---
 
 ## Thuật ngữ
 
-| Thuật ngữ | Tiếng Anh | Ghi chú |
-|---|---|---|
-| Học với thầy | Teacher Forcing | Cho GT token làm input |
-| Tự chạy | Free-running | Dùng predicted token |
-| Thiên lệch phơi nhiễm | Exposure Bias | Training ≠ Inference |
-| Mặt nạ | Masking | Bỏ qua padding tokens |
-| Cắt gradient | Gradient Clipping | Giới hạn gradient norm |
-| Dịch tham lam | Greedy Decoding | Chọn token tốt nhất tại mỗi bước |
-| Nút thắt cổ chai | Bottleneck | 1 context vector cho tất cả steps |
-| Trao chiếu | Attention | Cơ chế "nhìn lại" câu nguồn |
-| Điểm BLEU | BLEU Score | n-gram precision × BP |
+| Thuật ngữ             | Tiếng Anh         | Ghi chú                           |
+| --------------------- | ----------------- | --------------------------------- |
+| Học với thầy          | Teacher Forcing   | Cho GT token làm input            |
+| Tự chạy               | Free-running      | Dùng predicted token              |
+| Thiên lệch phơi nhiễm | Exposure Bias     | Training ≠ Inference              |
+| Mặt nạ                | Masking           | Bỏ qua padding tokens             |
+| Cắt gradient          | Gradient Clipping | Giới hạn gradient norm            |
+| Dịch tham lam         | Greedy Decoding   | Chọn token tốt nhất tại mỗi bước  |
+| Nút thắt cổ chai      | Bottleneck        | 1 context vector cho tất cả steps |
+| Trao chiếu            | Attention         | Cơ chế "nhìn lại" câu nguồn       |
+| Điểm BLEU             | BLEU Score        | n-gram precision × BP             |
 
 ## Liên kết
 

@@ -1,6 +1,7 @@
 ---
----
-
+title: "D2L Learning Progress"
+tags: [d2l, progress, deep-learning]
+created: 2026-04-13
 ---
 
 tác vụ: Dịch bài blog Colah "Understanding LSTM Networks" - 2026-04-19
@@ -1079,3 +1080,49 @@ chi tiết:
 - Active Recall: 10 câu ôn Buổi 47 (Encoder-Decoder, shift-right, masked loss, teacher forcing, BLEU)
 - Áp dụng quy tắc viết mới: tiếng Việt chủ đạo, ELI5 ở mỗi concept, 3 tầng structure
 - Cập nhật AGENTS.md: Python env luôn dùng conda `d2l`
+
+---
+
+tác vụ: D2L Learning - Tuần 13, Buổi 49 — 10.8 Beam Search - 2026-04-23
+nội dung: Đã tạo [[Buổi 49 - Tuần 13]] — 10.8 Beam Search (phiên bản giải thích sâu).
+chi tiết:
+
+- Fix ảnh d2l-buoi-46: 4 file .svg thực chất là HTML → tạo lại bằng matplotlib
+  - seq2seq.svg, encoder.svg, decoder.svg, mt-seq2seq.svg, mt-transformer.svg
+  - Xóa page.html (236KB HTML, không phải ảnh)
+  - Chỉ giữ lại rnn.svg (đúng định dạng)
+- 3 hình minh họa beam search (d2l-buoi-49/):
+  - greedy-search.svg: Greedy vs Non-Greedy path với ví dụ số cụ thể
+  - exhaustive-search.svg: Cây tìm kiếm $|\mathcal{Y}|^{T'}$ branches
+  - beam-search-comparison.svg: So sánh 3 chiến lược Greedy vs Beam vs Exhaustive
+- Tải ảnh D2L: beam-search.svg (beam k=2, max_len=3, định dạng SVG hợp lệ)
+- 6 phần toàn diện bám sát d2l.ai 10.8:
+  - Phần I: Bài toán giải mã sequence, ký hiệu
+  - Phần II: Greedy Search (ELI5, ví dụ số 0.048 vs 0.054, ưu/nhược)
+  - Phần III: Exhaustive Search (cây, chi phí $V^{T'}$, tại sao không khả thi)
+  - Phần IV: Beam Search (ELI5 k bạn đồng hành, thuật toán, ví dụ k=2)
+  - Phần V: Code PyTorch Beam Search class + shape analysis
+  - Phần VI: Chọn beam size, length normalization chi tiết, sampling so sánh
+  - Phần VII: Bảng tóm tắt, Phần VIII: Exercises
+  - Phần IX: Active Recall + liên kết Buổi 46-47-48-49
+- Giải thích sâu: tại sao Greedy thất bại (local vs global optimum)
+- Log-probability: biến tích thành tổng, tránh underflow
+- Length normalization: $\frac{1}{L^\alpha}\sum \log P$, tại sao $\alpha=0.75$
+- Exercises: beam size calculations, log probability computation, beam search vs GPT sampling
+- Active Recall: 5 câu hỏi ôn tập từ Buổi 46-47-48
+- Fix Buổi 48 link: "Tuần 14" → "Tuần 13" (2 occurrences)
+
+---
+
+tác vụ: Viết lại [[Buổi 49 - Tuần 13]] + Tạo [[Tổng ôn RNN]] - 2026-04-23
+nội dung: Đã viết lại [[Buổi 49 - Tuần 13]] theo chuẩn mới (deep-learning-notes skill) và tạo [[Tổng ôn RNN]] tổng hợp toàn bộ Chương 9 + 10.
+chi tiết:
+
+- Viết lại Buổi 49 (Beam Search) hoàn chỉnh theo chuẩn skill: ELI5, định nghĩa kỹ thuật (WHAT/WHY/Input-Output), từ điển ký hiệu, so sánh, code với comment từng dòng, Reader Checklist
+- Tổng ôn RNN: 12 buổi (38→49), 3 phần chính: Vanilla RNN (N-gram → RNN → BPTT), Modern RNN (LSTM → GRU → Deep/BiRNN), Seq2Seq (Encoder-Decoder → Beam Search)
+- ELI5 và tự trả lời cho mỗi concept
+- Anti-cramming checks cho: weight sharing, gradient clipping, log probability, ignore_index, cell state update (LSTM), convex combination (GRU)
+- 50+ câu hỏi ôn tập (Nhóm A-F), đáp án mẫu cho 3 câu đầu mỗi nhóm
+- Bảng tổng hợp toàn bộ RNN family, Reader Checklist, Tự đánh giá checklist
+- Tạo skill mới: .cursor/skills/deep-learning-notes/ (SKILL.md + PEDAGOGY.md + NOTE_CONVENTIONS.md)
+
