@@ -6,7 +6,7 @@ source: "D2L Chapter 10.8 — Sequence Decoding"
 created: 2026-04-23
 related:
   - "[[Buổi 48 - Tuần 13]]"
-  - "[[Buổi 50 - Tuần 13]]"
+  - "[[Buổi 50 - Tuần 14]]"
   - "[[Buổi 47 - Tuần 13]]"
 ---
 
@@ -136,13 +136,13 @@ $$0.054 > 0.048$$
 
 ## 2.4 Ưu và nhược điểm
 
-| Tiêu chí | Greedy Search |
-|---|---|
-| **Chi phí** | $\mathcal{O}(|\mathcal{Y}| \cdot T')$ — rẻ nhất |
-| **Chất lượng** | Không tối ưu toàn cục |
-| **Tốc độ** | Cực nhanh, inference real-time |
-| **Bộ nhớ** | Chỉ cần giữ 1 beam |
-| **Ứng dụng** | Baseline, các bài toán đơn giản |
+| Tiêu chí       | Greedy Search                                |
+| -------------- | -------------------------------------------- |
+| **Chi phí**    | $\mathcal{O}(\mathcal{Y}\cdot T')$ — rẻ nhất |
+| **Chất lượng** | Không tối ưu toàn cục                        |
+| **Tốc độ**     | Cực nhanh, inference real-time               |
+| **Bộ nhớ**     | Chỉ cần giữ 1 beam                           |
+| **Ứng dụng**   | Baseline, các bài toán đơn giản              |
 
 ---
 
@@ -188,11 +188,11 @@ _Fig 2: Không gian tìm kiếm của Exhaustive Search. Mỗi tầng nhân lên
 - **Giải quyết vấn đề gì?** Tìm sequence tốt hơn Greedy mà không cần duyệt $|\mathcal{Y}|^{T'}$ sequences.
 - **Siêu tham số:** Beam size $k$
 
-| Giá trị $k$ | Ý nghĩa |
-|---|---|
-| $k = 1$ | ≡ Greedy Search |
-| $k = |\mathcal{Y}|$ | ≡ Exhaustive Search (không khả thi) |
-| $k \in [3, 10]$ | Thực tế, cân bằng tốt |
+| Giá trị $k$                        | Ý nghĩa                             |
+| ---------------------------------- | ----------------------------------- |
+| $k = 1$                            | ≡ Greedy Search                     |
+| $k =\mathcal{Y}\cdot T'$ — rẻ nhất | ≡ Exhaustive Search (không khả thi) |
+| $k \in [3, 10]$                    | Thực tế, cân bằng tốt               |
 
 ## 4.2 Chi phí tính toán
 
@@ -386,7 +386,7 @@ def beam_search_decode(
     all_seqs.sort(key=lambda x: x[0], reverse=True)
 
     return [seq for _, seq in all_seqs[:beam_size]]
-```text
+```
 
 ### Phân tích từng dòng
 
@@ -429,7 +429,7 @@ def length_normalized_score(
     lp = log_probs.sum()       # sum of log probs = log of product
     penalty = (length ** alpha)
     return lp / penalty
-```text
+```
 
 | $\alpha$ | Hiệu ứng |
 |---|---|
@@ -456,7 +456,7 @@ k × vocab_size candidates được tạo từ mỗi beam
   → Chọn top-k → k beams mới
                         ↓
 Lặp lại cho đến khi k beams kết thúc
-```text
+```
 
 ---
 
@@ -516,11 +516,11 @@ Trong GPT-2/3, beam search thường **không** được dùng. Tại sao?
 > [!CHECKLIST]-
 > Reader tự kiểm tra:
 >
-> - [ ] Tôi có thể giải thích tại sao Greedy có thể thất bại không?
-> - [ ] Tôi hiểu tại sao $\log$ cần thiết để tránh underflow?
+> - [x] Tôi có thể giải thích tại sao Greedy có thể thất bại không?
+> - [x] Tôi hiểu tại sao $\log$ cần thiết để tránh underflow?
 > - [ ] Tôi biết mỗi tham số trong beam_search_decode có ý nghĩa gì?
-> - [ ] Tôi hiểu tại sao length normalization cần thiết?
-> - [ ] Tôi biết beam size $k=1$ tương đương với chiến lược nào?
+> - [x] Tôi hiểu tại sao length normalization cần thiết?
+> - [x] Tôi biết beam size $k=1$ tương đương với chiến lược nào?
 
 ---
 
@@ -528,7 +528,7 @@ Trong GPT-2/3, beam search thường **không** được dùng. Tại sao?
 > [[Buổi 48 - Tuần 13]] — 10.7 Sequence-to-Sequence Learning (with Attention)
 
 > [!NOTE] Buổi sau
-> [[Buổi 50 - Tuần 13]] — 11.1 Attention Mechanisms
+> [[Buổi 50 - Tuần 14]] — 11.1 Queries, Keys, and Values
 
 ---
 

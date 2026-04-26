@@ -1126,3 +1126,52 @@ chi tiết:
 - Bảng tổng hợp toàn bộ RNN family, Reader Checklist, Tự đánh giá checklist
 - Tạo skill mới: .cursor/skills/deep-learning-notes/ (SKILL.md + PEDAGOGY.md + NOTE_CONVENTIONS.md)
 
+---
+
+tác vụ: D2L Learning - Tuần 14, Buổi 50 — 11.1 Queries, Keys, and Values (viết lại) - 2026-04-23
+nội dung: Viết lại [[Buổi 50 - Tuần 14]] — 11.1 Queries, Keys, and Values (rewrite hoàn chỉnh, đối chiếu với D2L source).
+chi tiết:
+
+- Đối chiếu note cũ với D2L.ai 11.1 source, phát hiện và bổ sung 5 gaps: (1) Motivation fixed-size input problem, (2) Summary/Nadaraya-Watson connection, (3) 4 D2L exercises, (4) D2L Fig 11.1.1, (5) convex cone vs convex combination distinction
+- Thêm Part I: Motivation — từ RNN bottleneck (Buổi 48-49) sang attention, ví dụ số 10 tokens × 256 hidden → mất 90% thông tin
+- Bổ sung connection quan trọng: Attention = Differentiable Nadaraya-Watson estimator (Nadaraya 1964, Watson 1964) — cầu nối sang Buổi 51
+- Tạo 3 hình mới (gen_buoi50_figures_v2.py): d2l-fig-11-1-1 (D2L-style attention mechanism flow), attention-special-cases (4-panel heatmap), attention-database-analogy (Traditional DB vs Attention DB)
+- Phân biệt rõ: Convex cone (chỉ nonnegative) vs Convex combination (nonnegative + sum=1) — tránh nhầm lẫn khi học
+- 4 bài tập D2L 11.1.3: hard attention, chứng minh gradient = covariance, differentiable search engine, SE Networks
+- Giữ ELI5 ở mỗi section, từ điển ký hiệu đầy đủ, Reader Checklist, Active Recall (ôn Buổi 49 + 6 câu mới)
+
+---
+
+tác vụ: D2L Learning - Tuần 14, Buổi 51 — 11.2 Attention Pooling by Similarity (Nadaraya-Watson) - 2026-04-25
+nội dung: Đã tạo [[Buổi 51 - Tuần 14]] — 11.2 Attention Pooling by Similarity.
+chi tiết:
+
+- Giải thích Nadaraya-Watson estimator như tiền thân non-parametric của attention mechanism (Nadaraya 1964, Watson 1964)
+- 4 kernel functions (D2L Eq. 11.2.1): Gaussian, Boxcar, Epanechikov, Constant — với hình dạng và đặc điểm
+- NW Regression Formula (D2L Eq. 11.2.2): $f(q) = \sum_i v_i \cdot \frac{\alpha(q, k_i)}{\sum_j \alpha(q, k_j)}$
+- Dataset demo: $y_i = 2\sin(x_i) + x_i + \epsilon$ với 40 training points
+- Implementation nadaraya_watson() function: tính ma trận khoảng cách, kernel scores, normalize, weighted sum
+- Quan sát quan trọng: Gaussian, Boxcar, Epanechikov cho kết quả gần như giống nhau — kernel shape ít quan trọng bằng việc có kernel
+- Gaussian width $\sigma$ effect: narrow $\sigma$ → local adaptation (overfit noise), wide $\sigma$ → smooth (underfit)
+- Bias-variance trade-off: classic balance giữa fitting local patterns và stability
+- Tạo 6 hình minh họa: kernel-shapes (4 kernels), nw-regression-comparison (4 kernels vs ground truth), nw-attention-weights (4 heatmaps), nw-gaussian-width (4 sigma values), nw-query-diagram (attention lines), nw-vs-learned-attention (hand-crafted vs learned comparison)
+- Active Recall: 5 câu ôn Buổi 50 (QKV, softmax, convex combination, differentiability) + 5 câu mới về NW
+- 6 bài tập D2L 11.2.5: Parzen windows equivalence, SGD for kernel width, MSE minimization, leave-one-out, unit sphere simplification → dot-product attention, consistency và tốc độ giảm scale
+- Connection: Unit sphere simplification $\|\mathbf{x}-\mathbf{x}_i\|^2 = 2 - 2\mathbf{x}^\top\mathbf{x}_i$ → Gaussian kernel reduces to scaled dot-product → foundation của dot-product attention (Buổi 52)
+
+---
+
+tác vụ: D2L Learning - Tuần 14, Buổi 52 — 11.3 Attention Scoring Functions - 2026-04-25
+nội dung: Đã tạo [[Buổi 52 - Tuần 14]] — 11.3 Attention Scoring Functions.
+chi tiết:
+
+- Derivation: Gaussian kernel → Dot Product (D2L 11.3.1): khai triển $-\frac{1}{2}\|q-k\|^2 = q^T k - \frac{1}{2}\|k\|^2 - \frac{1}{2}\|q\|^2$, 3 terms biến mất sau normalization và layer norm
+- Scaled Dot Product: tại sao cần chia $\sqrt{d}$ (D2L 11.3.2) — variance analysis: Var$(q^T k / \sqrt{d}) = 1$ khi q, k i.i.d. $\sim \mathcal{N}(0,1)$. Không chia → Var $= d$ → softmax saturation → gradient vanish
+- Masked Softmax (D2L 11.3.2.1): xử lý variable-length sequences bằng valid_lens, cơ chế -1e6, 1D vs 2D valid_lens formats
+- BMM — Batch Matrix Multiplication (D2L 11.3.2.2): shape analysis, parallel computation
+- DotProductAttention class: Q @ K^T / √d → masked_softmax → dropout → A @ V. Shapes: (batch,n,d) × (batch,m,d) → (batch,n,m) → (batch,n,v)
+- Additive Attention (D2L 11.3.4): cho q ≠ k dimensions, $a(q,k) = w_v^T \tanh(W_q q + W_k k)$, Bahdanau-style scoring
+- So sánh Dot Product vs Additive: 0 params vs MLP params, q=k vs q≠k, O(n·m·d) vs O(n·m·h)
+- Tạo 6 hình: d2l-fig-11-3-1, scaled-dot-product, masked-softmax, dot-product-vs-additive, batch-matrix-multiplication, dot-product-forward-shapes
+- Active Recall: 5 câu ôn Buổi 51 (NW, kernel, variance, unit sphere) + 6 câu mới về scoring functions
+- 3 bài tập D2L 11.3.6: distance-based attention, different dimensions, complexity analysis

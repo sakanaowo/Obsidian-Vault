@@ -28,7 +28,7 @@ File này **dạy lại** từng phần, không chỉ hỏi recall. Nếu thấy
 
 ---
 
-## 🗺️ Bản đồ kiến thức tổng thể
+## Bản đồ kiến thức tổng thể
 
 ```mermaid
 graph TD
@@ -173,11 +173,9 @@ Per-parameter clipping (clamp mỗi thành phần trong $[-\theta, \theta]$) có
 
 ### 2.4 Text Decoding: Warm-up vs Generation
 
-```text
 TRAINING: "machin" → "achine"  (teacher forcing)
 WARM-UP:  encoder nạp prefix vào hidden state
 GENERATION: autoregressive — mỗi step predict rồi feed lại làm input next step
-```text
 
 ---
 
@@ -239,14 +237,16 @@ Gradient clipping chỉ xử lý **exploding** — khi gradient quá lớn, cắ
 
 ### 4.3 Công thức đầy đủ
 
-| Cổng | Công thức | Từ điển ký hiệu |
-|---|---|---|
-| **Forget Gate** | $F_t = \sigma(X_t W_{xf} + H_{t-1} W_{hf} + b_f)$ | Quyết định **quên** bao nhiêu từ $C_{t-1}$ |
-| **Input Gate** | $I_t = \sigma(X_t W_{xi} + H_{t-1} W_{hi} + b_i)$ | Quyết định **ghi** bao nhiêu vào $C_t$ |
-| **Candidate** | $\tilde{C}_t = \tanh(X_t W_{xc} + H_{t-1} W_{hc} + b_c)$ | "Nội dung mới" có thể ghi |
-| **Cell Update** | $C_t = F_t \odot C_{t-1} + I_t \odot \tilde{C}_t$ | **Cốt lõi:** cộng tuyến tính — gradient không bị vanishing |
-| **Output Gate** | $O_t = \sigma(X_t W_{xo} + H_{t-1} W_{ho} + b_o)$ | Quyết định **xuất** bao nhiêu |
-| **Hidden State** | $H_t = O_t \odot \tanh(C_t)$ | Output của LSTM cell |
+![[lstm-3.png]]
+
+| Cổng             | Công thức                                                | Từ điển ký hiệu                                            |
+| ---------------- | -------------------------------------------------------- | ---------------------------------------------------------- |
+| **Forget Gate**  | $F_t = \sigma(X_t W_{xf} + H_{t-1} W_{hf} + b_f)$        | Quyết định **quên** bao nhiêu từ $C_{t-1}$                 |
+| **Input Gate**   | $I_t = \sigma(X_t W_{xi} + H_{t-1} W_{hi} + b_i)$        | Quyết định **ghi** bao nhiêu vào $C_t$                     |
+| **Candidate**    | $\tilde{C}_t = \tanh(X_t W_{xc} + H_{t-1} W_{hc} + b_c)$ | "Nội dung mới" có thể ghi                                  |
+| **Cell Update**  | $C_t = F_t \odot C_{t-1} + I_t \odot \tilde{C}_t$        | **Cốt lõi:** cộng tuyến tính — gradient không bị vanishing |
+| **Output Gate**  | $O_t = \sigma(X_t W_{xo} + H_{t-1} W_{ho} + b_o)$        | Quyết định **xuất** bao nhiêu                              |
+| **Hidden State** | $H_t = O_t \odot \tanh(C_t)$                             | Output của LSTM cell                                       |
 
 ### 4.4 Tại sao LSTM không bị Vanishing Gradient?
 
@@ -285,6 +285,8 @@ $$4 \times (d \cdot h + h \cdot h + h) = 4(dh + h^2 + h)$$
 > GRU giống LSTM nhưng gộp 3 bút thành 2: Reset Gate (quyết định quên hay nhớ) và Update Gate (quyết định giữ hay thay thế). Bỏ sổ nháp riêng — mọi thứ nằm trong cùng hidden state. Ít phím hơn, ít tham số hơn, nhưng vẫn giải quyết vanishing gradient.
 
 ### 5.2 Công thức đầy đủ
+
+![[gru-3.png]]
 
 | Cổng/State | Công thức | Ý nghĩa |
 |---|---|---|
@@ -390,7 +392,7 @@ Encoder:  h_1 → h_2 → h_3 → ... → h_T
 Decoder:    s_1 → s_2 → s_3 → ... → s_T'
             ↑      ↑      ↑
             C      C      C  ← CỐ ĐỊNH cho mọi step!
-```text
+```
 
 Câu nguồn dài → thông tin bị nén vào 1 vector → **mất thông tin** → dịch kém.
 
@@ -426,7 +428,7 @@ loss_fn = nn.CrossEntropyLoss(ignore_index=tgt_pad)
 loss_fn = nn.CrossEntropyLoss(reduction='none')
 mask = (Y.reshape(-1) != tgt_pad).float()
 loss = (l * mask).sum() / mask.sum()
-```text
+```
 
 **Tại sao D2L dùng Cách 2?** Vì Cách 2 cho phép tính per-token loss (để visualize loss distribution). `ignore_index` chỉ đơn giản bỏ qua — không kiểm soát được.
 
@@ -488,16 +490,16 @@ $$\text{Score} = \frac{1}{L^\alpha} \sum_{t=1}^{L} \log P(y_t \mid \ldots)$$
 
 ## 10. Bảng Tổng Hợp Toàn Bộ RNN Family
 
-| Kiến trúc | Vấn đề giải quyết | Cơ chế | Số params | Ứng dụng |
-|---|---|---|---|---|
-| **Vanilla RNN** | Sequential modeling cơ bản | Hidden state recurrence | $2(dh + h^2 + h)$ | Baseline LM |
-| **BPTT** | Gradient qua recurrence | Truncate/Sample chain | — | Training all RNNs |
-| **LSTM** | Vanishing gradient | 3 gates + cell state | $4(dh+h^2+h)$ | Long sequences |
-| **GRU** | LSTM quá phức tạp | 2 gates (reset, update) | $3(dh+h^2+h)$ | Medium sequences |
-| **Deep RNN** | Shallow representation | Stack layers | $\times L$ | Complex patterns |
-| **BiRNN** | Thiếu future context | Bidirectional flow | $\times 2$ | NMT training, NER |
-| **Encoder-Decoder** | Seq2Seq tasks | Encode → Decode | — | MT, summarization |
-| **Beam Search** | Greedy sub-optimal | k-best hypotheses | — | Inference |
+| Kiến trúc           | Vấn đề giải quyết          | Cơ chế                  | Số params         | Ứng dụng          |
+| ------------------- | -------------------------- | ----------------------- | ----------------- | ----------------- |
+| **Vanilla RNN**     | Sequential modeling cơ bản | Hidden state recurrence | $2(dh + h^2 + h)$ | Baseline LM       |
+| **BPTT**            | Gradient qua recurrence    | Truncate/Sample chain   | —                 | Training all RNNs |
+| **LSTM**            | Vanishing gradient         | 3 gates + cell state    | $4(dh+h^2+h)$     | Long sequences    |
+| **GRU**             | LSTM quá phức tạp          | 2 gates (reset, update) | $3(dh+h^2+h)$     | Medium sequences  |
+| **Deep RNN**        | Shallow representation     | Stack layers            | $\times L$        | Complex patterns  |
+| **BiRNN**           | Thiếu future context       | Bidirectional flow      | $\times 2$        | NMT training, NER |
+| **Encoder-Decoder** | Seq2Seq tasks              | Encode → Decode         | —                 | MT, summarization |
+| **Beam Search**     | Greedy sub-optimal         | k-best hypotheses       | —                 | Inference         |
 
 ---
 
@@ -659,7 +661,7 @@ $$\text{Score} = \frac{1}{L^\alpha} \sum_{t=1}^{L} \log P(y_t \mid \ldots)$$
 
 ## Trước khi đóng file, kiểm tra:
 
-```text
+
 CHECKLIST — Kiến thức RNN của tôi có bị nhồi nhét không?
 
 □ Tôi hiểu TẠI SAO LSTM cần cell state (phép cộng → gradient flow)
@@ -672,7 +674,7 @@ CHECKLIST — Kiến thức RNN của tôi có bị nhồi nhét không?
 □ Tôi biết TẠI SAO GRU ít hơn LSTM 25% params
 □ Tôi hiểu TẠI SAO Encoder-Decoder có bottleneck
 □ Tôi hiểu TẠI SAO length normalization cần thiết cho beam search
-```text
+
 
 ---
 
