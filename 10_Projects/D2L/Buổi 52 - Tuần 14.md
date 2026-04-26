@@ -14,10 +14,10 @@ related:
 # Buổi 52 — 11.3 Attention Scoring Functions
 
 > [!NOTE] Mục tiêu buổi học
-> - Hiểu derivation từ Gaussian kernel → scaled dot product attention
-> - Nắm lý do tại sao cần chia $\sqrt{d}$ (variance control)
+> - Hiểu derivation từ Gaussian kernel sang scaled dot product attention
+> - Nắm lý do tại sao cần chia $\sqrt{d}$ (kiểm soát phương sai)
 > - Thực hiện được masked softmax cho variable-length sequences
-> - Hiểu BMM (Batch Matrix Multiplication) cho efficient minibatch computation
+> - Hiểu BMM (Batch Matrix Multiplication) cho tính toán hiệu quả với minibatch
 > - Implement DotProductAttention và AdditiveAttention từ scratch
 > - Phân biệt khi nào dùng dot product vs additive attention
 
@@ -28,39 +28,50 @@ related:
 ### Câu hỏi truy hồi
 
 1. Nadaraya-Watson estimator là gì? Công thức (11.2.2).
-2. 4 kernel functions: Gaussian, Boxcar, Epanechikov, Constant — viết công thức.
+2. Bốn kernel functions: Gaussian, Boxcar, Epanechikov, Constant — viết công thức.
 3. Tại sao Gaussian, Boxcar, Epanechikov cho kết quả regression gần giống nhau?
 4. Bias-variance trade-off của Gaussian width $\sigma$.
 5. Đơn giản hóa Gaussian kernel khi $\|\mathbf{x}\|=1$ (unit sphere). Implication cho attention?
 
 ### Tự trả lời
 
-1. $f(\mathbf{q}) = \sum_i \mathbf{v}_i \cdot \frac{\alpha(\mathbf{q}, \mathbf{k}_i)}{\sum_j \alpha(\mathbf{q}, \mathbf{k}_j)}$. Non-parametric — không có learnable parameters.
+1. $f(\mathbf{q}) = \sum_i \mathbf{v}_i \cdot \frac{\alpha(\mathbf{q}, \mathbf{k}_i)}{\sum_j \alpha(\mathbf{q}, \mathbf{k}_j)}$. Phi tham số — không có learnable parameters.
 2. Gaussian: $\exp(-\|q-k\|^2/2)$, Boxcar: $\mathbb{1}(\|q-k\| \leq 1)$, Epanechikov: $\max(0, 1-\|q-k\|)$, Constant: $1$.
-3. Vì chúng đều "ưu tiên điểm gần hơn điểm xa". Sự khác biệt về functional form ít quan trọng bằng việc có weighting scheme hay không. Constant thất bại vì không có weighting.
-4. Narrow $\sigma$ → low bias, high variance (noise-sensitive). Wide $\sigma$ → high bias, low variance (stable). Optimal ở giữa.
-5. $\|x-x_i\|^2 = 2 - 2x^\top x_i$. Gaussian becomes $\exp(-\sigma^2(1 - x^\top x_i)) \propto \exp(\sigma^2 \cdot x^\top x_i)$. → **Essentially scaled dot-product attention!**
+3. Vì chúng đều "ưu tiên điểm gần hơn điểm xa". Sự khác biệt về functional form ít quan trọng bằng việc có weighting scheme hay không. Constant kernel thất bại vì không có weighting.
+4. Kernel hẹp $\sigma$ → bias thấp, variance cao (nhạy với noise). Kernel rộng $\sigma$ → bias cao, variance thấp (ổn định). Optimal ở giữa.
+5. $\|x-x_i\|^2 = 2 - 2x^\top x_i$. Gaussian becomes $\exp(-\sigma^2(1 - x^\top x_i)) \propto \exp(\sigma^2 \cdot x^\top x_i)$. → **Về bản chất scaled dot-product attention!**
+
+### Liên kết cần ôn lại
+
+- [[Buổi 51 - Tuần 14|Nadaraya-Watson Kernel Regression]]
+- [[Buổi 50 - Tuần 14|QKV — Queries, Keys, and Values]]
 
 ---
 
-# PHẦN I — TỪ GAUSSIAN KERNEL ĐẾN DOT PRODUCT
+# PHẦN I — TỪ GAUSSIAN KERNEL SANG DOT PRODUCT
 
-## 1.1 Derivation: Gaussian → Dot Product (D2L Eq. 11.3.1)
+## 1.1 Derivation: Gaussian sang Dot Product (D2L Eq. 11.3.1)
 
-[!NOTE] ELI5
-> Gaussian kernel đo khoảng cách giữa query và key. Nhưng tính khoảng cách bình phương $\|\mathbf{q} - \mathbf{k}_i\|^2$ tốn $O(d)$ mỗi cặp. Dot product chỉ tốn 1 phép nhân-scaling. Attention hiệu quả hơn khi dùng dot product.
+> [!NOTE] ELI5
+> Gaussian kernel đo khoảng cách giữa query và key. Nhưng tính khoảng cách bình phương $\|\mathbf{q} - \mathbf{k}_i\|^2$ tốn nhiều phép tính. Dot product chỉ tốn một phép nhân. Attention hiệu quả hơn khi dùng dot product.
 
-**Định nghĩa kỹ thuật (D2L 11.3.1):**
+**Định nghĩa kỹ thuật:**
+
+- **Đây là gì?** Sự biến đổi toán học cho thấy Gaussian kernel có thể đơn giản hóa thành dot product giữa query và key.
+- **Input/Output là gì?** Input: Gaussian kernel $-\frac{1}{2}\|\mathbf{q} - \mathbf{k}_i\|^2$. Output: $\mathbf{q}^\top\mathbf{k}_i$ (sau khi loại bỏ các term không đổi).
+- **Giải quyết vấn đề gì?** Giảm độ phức tạp tính toán từ $O(d)$ còn $O(1)$ cho mỗi cặp (query, key).
 
 Khai triển Gaussian kernel theo squared distance:
 
 $$a(\mathbf{q}, \mathbf{k}_i) = -\frac{1}{2} \|\mathbf{q} - \mathbf{k}_i\|^2$$
 
 Khai triển:
+
 $$= -\frac{1}{2}(\|\mathbf{q}\|^2 - 2\mathbf{q}^\top\mathbf{k}_i + \|\mathbf{k}_i\|^2)$$
+
 $$= \mathbf{q}^\top\mathbf{k}_i - \frac{1}{2}\|\mathbf{k}_i\|^2 - \frac{1}{2}\|\mathbf{q}\|^2$$
 
-**3 bước để đơn giản hóa:**
+**Ba bước để đơn giản hóa:**
 
 | Bước | Giải thích | Term biến mất |
 |-------|-----------|--------------|
@@ -74,17 +85,21 @@ $$= \mathbf{q}^\top\mathbf{k}_i - \frac{1}{2}\|\mathbf{k}_i\|^2 - \frac{1}{2}\|\
 
 ## 1.2 Scaled Dot Product — Tại sao cần chia $\sqrt{d}$? (D2L Eq. 11.3.2)
 
-[!NOTE] ELI5
-> Dot product của 2 vectors ngẫu nhiên có "phương sai tăng theo chiều dài". Với $d=512$, dot product có thể lên tới vài trăm — softmax sẽ bão hòa (1 vector chiếm gần như 100% weight). Chia $\sqrt{d}$ giữ phương sai = 1, softmax hoạt động cân bằng.
+> [!NOTE] ELI5
+> Dot product của hai vectors ngẫu nhiên có "phương sai tăng theo chiều dài". Với $d=512$, dot product có thể lên tới vài trăm — softmax sẽ bão hòa (một vector chiếm gần như 100% weight). Chia $\sqrt{d}$ giữ phương sai = 1, softmax hoạt động cân bằng.
 
-**Định nghĩa kỹ thuật (D2L 11.3.2):**
+**Định nghĩa kỹ thuật:**
+
+- **Đây là gì?** Scaled dot product là dot product được chia cho $\sqrt{d}$ để kiểm soát phương sai.
+- **Input/Output là gì?** Input: $\mathbf{q}, \mathbf{k}_i \in \mathbb{R}^d$. Output: scalar score $\mathbf{q}^\top\mathbf{k}_i / \sqrt{d}$.
+- **Giải quyết vấn đề gì?** Ngăn softmax bão hòa (saturation) khi $d$ lớn.
 
 Giả sử $\mathbf{q}, \mathbf{k}_i \in \mathbb{R}^d$ với elements i.i.d. $\sim \mathcal{N}(0, 1)$:
 
 - $\mathbb{E}[\mathbf{q}^\top\mathbf{k}_i] = 0$ (zero mean) ✅
-- $\text{Var}(\mathbf{q}^\top\mathbf{k}_i) = d$ (variance grows with $d$) ❌
+- $\text{Var}(\mathbf{q}^\top\mathbf{k}_i) = d$ (phương sai tăng với $d$) ❌
 
-**Vấn đề:** Khi $d$ lớn (e.g., $d=512$), dot product có thể có giá trị lớn $\sim O(\sqrt{d})$. Softmax của các giá trị lớn và chênh lệch sẽ bão hòa → 1 token chiếm ~100% weight, gradient vanish.
+**Vấn đề:** Khi $d$ lớn (ví dụ: $d=512$), dot product có thể có giá trị lớn $\sim O(\sqrt{d})$. Softmax của các giá trị lớn và chênh lệch sẽ bão hòa → một token chiếm ~100% weight, gradient biến mất.
 
 **Giải pháp:** Chia cho $\sqrt{d}$:
 
@@ -96,15 +111,13 @@ Với scaling này: $\text{Var}\!\left(\frac{\mathbf{q}^\top\mathbf{k}_i}{\sqrt{
 
 $$\alpha(\mathbf{q}, \mathbf{k}_i) = \text{softmax}\!\left(\frac{\mathbf{q}^\top \mathbf{k}_i}{\sqrt{d}}\right) = \frac{\exp(\mathbf{q}^\top \mathbf{k}_i / \sqrt{d})}{\sum_{j=1}^m \exp(\mathbf{q}^\top \mathbf{k}_j / \sqrt{d})}$$
 
-![[assets/attachments/d2l-buoi-52/scaled-dot-product.png]]
-
 > [!CRITICAL]- Tại sao Vaswani et al. (2017) dùng $\sqrt{d_k}$?
 > Vì với standard initialization (mean=0, var=1), dot product variance = $d$. Scaling by $\sqrt{d}$ đưa variance về 1 → softmax scores ở "vùng an toàn" (không quá sharp, không quá flat) → gradient flow tốt.
 >
 > Đây là lý do $\sqrt{d_k}$ xuất hiện trong **attention scaling** của Transformer — không phải magic number mà là variance normalization.
 
 > [!WARNING]- Dấu hiệu nhồi nhét
-> Nếu bạn nhớ "chia $\sqrt{d}$" mà không hiểu tại sao → bạn đang nhồi nhét. Hãy tự hỏi: nếu $d$ rất nhỏ (e.g., $d=2$) thì sao? Dot product variance = 2 → chia $\sqrt{2}$ → variance = 1. Nếu $d=1$ → variance = 1 → không cần chia? Đúng!
+> Nếu bạn nhớ "chia $\sqrt{d}$" mà không hiểu tại sao → bạn đang nhồi nhét. Hãy tự hỏi: nếu $d$ rất nhỏ (ví dụ: $d=2$) thì sao? Dot product variance = 2 → chia $\sqrt{2}$ → variance = 1. Nếu $d=1$ → variance = 1 → không cần chia? Đúng!
 
 ---
 
@@ -112,12 +125,16 @@ $$\alpha(\mathbf{q}, \mathbf{k}_i) = \text{softmax}\!\left(\frac{\mathbf{q}^\top
 
 ## 2.1 Masked Softmax — Xử lý Variable-Length Sequences (D2L 11.3.2.1)
 
-[!NOTE] ELI5
+> [!NOTE] ELI5
 > Khi batch các câu có độ dài khác nhau, ta pad thêm tokens "<blank>". Masked softmax đảm bảo model không "chú ý" vào những tokens pad này — bằng cách set attention score = -1e6 → softmax weight ≈ 0.
 
 **Định nghĩa kỹ thuật:**
 
-Trong NLP, sequences có độ dài khác nhau (batch 3 câu):
+- **Đây là gì?** Masked softmax là softmax được điều chỉnh để bỏ qua các vị trí padding.
+- **Input/Output là gì?** Input: scores matrix với valid_lens chỉ định độ dài hợp lệ. Output: attention weights với các vị trí padding có weight ≈ 0.
+- **Giải quyết vấn đề gì?** Xử lý sequences có độ dài khác nhau trong batch mà không bị ảnh hưởng bởi padding.
+
+Trong NLP, sequences có độ dài khác nhau (batch ba câu):
 
 ```
 Dive  into  Deep    Learning
@@ -126,6 +143,7 @@ Hello world <blank> <blank>
 ```
 
 Các tokens `<blank>` (padding) không mang ý nghĩa. Ta cần giới hạn:
+
 $$\sum_{i=1}^n \alpha(\mathbf{q}, \mathbf{k}_i)\mathbf{v}_i \to \sum_{i=1}^l \alpha(\mathbf{q}, \mathbf{k}_i)\mathbf{v}_i \quad (l \leq n)$$
 
 **Cách implement (D2L):**
@@ -133,9 +151,13 @@ $$\sum_{i=1}^n \alpha(\mathbf{q}, \mathbf{k}_i)\mathbf{v}_i \to \sum_{i=1}^l \al
 ```python
 def masked_softmax(X, valid_lens):
     """Perform softmax operation by masking elements on the last axis.
-    
-    X: 3D tensor (batch_size, n_queries, n_keys)
-    valid_lens: tensor chứa độ dài hợp lệ của mỗi sequence
+
+    Args:
+        X: 3D tensor (batch_size, n_queries, n_keys)
+        valid_lens: tensor chứa độ dài hợp lệ của mỗi sequence
+
+    Returns:
+        softmax(X) với các vị trí masked có weight ≈ 0
     """
     if valid_lens is None:
         return nn.functional.softmax(X, dim=-1)
@@ -147,7 +169,7 @@ def masked_softmax(X, valid_lens):
         else:
             # valid_lens 2D: [batch, n_queries] → mỗi query có độ dài riêng
             valid_lens = valid_lens.reshape(-1)
-        
+
         # Thay thế masked elements bằng -1e6
         # exp(-1e6) ≈ 0 → gradient ≈ 0
         X = _sequence_mask(X.reshape(-1, shape[-1]), valid_lens, value=-1e6)
@@ -169,7 +191,7 @@ def _sequence_mask(X, valid_len, value=0):
 1. Tạo boolean mask: `True` cho positions valid, `False` cho padded
 2. Set attention scores tại masked positions = `-1e6`
 3. Softmax: $\exp(-\text{1e6}) \approx 0$ → attention weight $\approx 0$
-4. Gradient tại masked positions: $\approx 0$ → không affect training
+4. Gradient tại masked positions: $\approx 0$ → không ảnh hưởng training
 
 **Tại sao -1e6?** $\exp(-10^6) \approx 0$ với floating point precision. Gradient cũng $\approx 0$.
 
@@ -180,18 +202,21 @@ def _sequence_mask(X, valid_len, value=0):
 | 1D | `[2, 3]` | `(batch_size,)` | Mỗi example có cùng valid length cho mọi query |
 | 2D | `[[1, 3], [2, 4]]` | `(batch_size, n_queries)` | Mỗi query có độ dài riêng |
 
-![[assets/attachments/d2l-buoi-52/masked-softmax.png]]
-
 ---
 
-## 2.2 Batch Matrix Multiplication (BMM) — Efficient Computation (D2L 11.3.2.2)
+## 2.2 Batch Matrix Multiplication (BMM) — Tính toán Hiệu quả (D2L 11.3.2.2)
 
-[!NOTE] ELI5
+> [!NOTE] ELI5
 > Thay vì loop qua từng query một, BMM cho phép nhân **tất cả queries với tất cả keys cùng lúc** trong một ma trận. GPU parallelize hiệu quả — nhanh hơn loop rất nhiều.
 
-**Định nghĩa kỹ thuật (D2L 11.3.4-11.3.5):**
+**Định nghĩa kỹ thuật:**
+
+- **Đây là gì?** BMM là phép nhân ma trận trên batch of matrices cùng lúc.
+- **Input/Output là gì?** Input: hai tensors 3D $\mathbf{Q} \in \mathbb{R}^{n \times a \times b}$, $\mathbf{K} \in \mathbb{R}^{n \times b \times c}$. Output: $\mathbf{Q}\mathbf{K}^\top \in \mathbb{R}^{n \times a \times c}$.
+- **Giải quyết vấn đề gì?** Tăng tốc độ tính toán attention bằng cách tận dụng GPU parallelism.
 
 $$\mathbf{Q} = [\mathbf{Q}_1, \mathbf{Q}_2, \ldots, \mathbf{Q}_n] \in \mathbb{R}^{n \times a \times b}$$
+
 $$\mathbf{K} = [\mathbf{K}_1, \mathbf{K}_2, \ldots, \mathbf{K}_n] \in \mathbb{R}^{n \times b \times c}$$
 
 $$\text{BMM}(\mathbf{Q}, \mathbf{K}) = [\mathbf{Q}_1\mathbf{K}_1, \mathbf{Q}_2\mathbf{K}_2, \ldots, \mathbf{Q}_n\mathbf{K}_n] \in \mathbb{R}^{n \times a \times c}$$
@@ -209,34 +234,30 @@ d2l.check_shape(torch.bmm(Q, K), (2, 3, 6))  # 2 matrices: each 3x6
 | Loop | `for i in range(n): out[i] = Q[i] @ K[i]` | $n$ matrix multiplications riêng lẻ |
 | BMM | `torch.bmm(Q, K)` | 1 batch operation — GPU parallelizes |
 
-![[assets/attachments/d2l-buoi-52/batch-matrix-multiplication.png]]
-
 ---
 
 # PHẦN III — SCALED DOT PRODUCT ATTENTION (D2L 11.3.3)
 
 ## 3.1 Full Forward Pass — Shape Analysis
 
-[!NOTE] ELI5
-> Dot product attention nhận batch of queries, keys, values → tính scores → softmax → weighted sum → output. Tất cả trong 3 bước matrix operations.
+> [!NOTE] ELI5
+> Dot product attention nhận batch of queries, keys, values → tính scores → softmax → weighted sum → output. Tất cả trong ba bước matrix operations.
 
-**Định nghĩa kỹ thuật (D2L 11.3.6):**
+**Định nghĩa kỹ thuật:**
+
+- **Đây là gì?** Scaled dot product attention là attention mechanism phổ biến nhất trong Transformer.
+- **Input/Output là gì?** Input: $\mathbf{Q} \in \mathbb{R}^{n \times d}$, $\mathbf{K} \in \mathbb{R}^{m \times d}$, $\mathbf{V} \in \mathbb{R}^{m \times v}$. Output: $\mathbb{R}^{n \times v}$.
+- **Giải quyết vấn đề gì?** Tính attention output một cách hiệu quả và khả vi.
 
 Cho $\mathbf{Q} \in \mathbb{R}^{n \times d}$ (queries), $\mathbf{K} \in \mathbb{R}^{m \times d}$ (keys), $\mathbf{V} \in \mathbb{R}^{m \times v}$ (values):
 
 $$\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\!\left(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d}}\right)\mathbf{V} \in \mathbb{R}^{n \times v}$$
 
 **Bước 1:** $\mathbf{S} = \frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d}}$ — scores matrix $(n \times m)$
-**Bước 2:** $\mathbf{A} = \text{masked\_softmax}(\mathbf{S})$ — attention weights $(n \times m)$, rows sum to 1
+**Bước 2:** $\mathbf{A} = \text{masked\_softmax}(\mathbf{S})$ — attention weights $(n \times m)$, các hàng sum = 1
 **Bước 3:** $\mathbf{O} = \mathbf{A}\mathbf{V}$ — output $(n \times v)$
 
-![[assets/attachments/d2l-buoi-52/d2l-fig-11-3-1.png]]
-
-**Shape diagram:**
-
-![[assets/attachments/d2l-buoi-52/dot-product-forward-shapes.png]]
-
-## 3.2 Implementation — DotProductAttention Class
+## 3.2 Implementation — Lớp DotProductAttention
 
 ```python
 class DotProductAttention(nn.Module):
@@ -247,10 +268,12 @@ class DotProductAttention(nn.Module):
 
     def forward(self, queries, keys, values, valid_lens=None):
         """
-        queries:  (batch_size, n_queries, d)
-        keys:     (batch_size, m_keys, d)
-        values:   (batch_size, m_keys, v)
-        valid_lens: (batch_size,) hoặc (batch_size, n_queries)
+        Args:
+            queries:  (batch_size, n_queries, d)
+            keys:     (batch_size, m_keys, d)
+            values:   (batch_size, m_keys, v)
+            valid_lens: (batch_size,) hoặc (batch_size, n_queries)
+
         Returns:  (batch_size, n_queries, v)
         """
         d = queries.shape[-1]
@@ -282,10 +305,14 @@ output = attention(queries, keys, values, valid_lens)
 
 ## 4.1 Khi nào cần Additive Attention?
 
-[!NOTE] ELI5
+> [!NOTE] ELI5
 > Dot product yêu cầu query và key cùng chiều. Additive attention cho phép query và key có **chiều khác nhau** — bằng cách project chúng vào cùng không gian trước khi so sánh.
 
-**Định nghĩa kỹ thuật (D2L 11.3.7):**
+**Định nghĩa kỹ thuật:**
+
+- **Đây là gì?** Additive attention là attention mechanism sử dụng MLP (multi-layer perceptron) để tính similarity score.
+- **Input/Output là gì?** Input: $\mathbf{q} \in \mathbb{R}^q$, $\mathbf{k} \in \mathbb{R}^k$ (có thể $q \neq k$). Output: scalar score.
+- **Giải quyết vấn đề gì?** Xử lý trường hợp query và key có chiều khác nhau.
 
 Cho $\mathbf{q} \in \mathbb{R}^q$ và $\mathbf{k} \in \mathbb{R}^k$ (có thể $q \neq k$):
 
@@ -308,7 +335,7 @@ Trong đó $\mathbf{W}_q \in \mathbb{R}^{h \times q}$, $\mathbf{W}_k \in \mathbb
 | **Dot Product** | $q = k$ (cùng dimension) — Transformer, self-attention |
 | **Additive** | $q \neq k$ (khác dimension) — Bahdanau attention, cross-modal |
 
-## 4.2 Implementation — AdditiveAttention Class
+## 4.2 Implementation — Lớp AdditiveAttention
 
 ```python
 class AdditiveAttention(nn.Module):
@@ -323,9 +350,10 @@ class AdditiveAttention(nn.Module):
 
     def forward(self, queries, keys, values, valid_lens):
         """
-        queries: (batch_size, n_queries, q)
-        keys:    (batch_size, m_keys, k)
-        values:  (batch_size, m_keys, v)
+        Args:
+            queries: (batch_size, n_queries, q)
+            keys:    (batch_size, m_keys, k)
+            values:  (batch_size, m_keys, v)
         """
         queries, keys = self.W_q(queries), self.W_k(keys)
         # Feature expansion: shape (batch, n, 1, h) và (batch, 1, m, h)
@@ -354,8 +382,6 @@ class AdditiveAttention(nn.Module):
 
 ## 5.1 Architecture Comparison
 
-![[assets/attachments/d2l-buoi-52/dot-product-vs-additive.png]]
-
 **So sánh chi tiết:**
 
 | Khía cạnh | Dot Product Attention | Additive Attention |
@@ -369,10 +395,10 @@ class AdditiveAttention(nn.Module):
 | **Introduced** | Vaswani et al. (2017) | Bahdanau et al. (2014) |
 
 > [!KEY]- D2L Note
-> "In practice, the dot product attention is the mainstay of modern Transformer architectures. When queries and keys are vectors of different lengths, we can use the additive attention scoring function instead."
+> "Trong thực tế, dot product attention là mainstay của các kiến trúc Transformer hiện đại. Khi queries và keys là vectors có độ dài khác nhau, chúng ta có thể dùng additive attention scoring function thay thế."
 >
 > Additive attention ra đời trước (2014, Bahdanau), dùng trong early Seq2Seq+attention models. Dot product attention ra đời sau (2017, Vaswani), phổ biến trong Transformer vì:
-> 1. **Không có parameters** — simpler
+> 1. **Không có parameters extra** — simpler
 > 2. **$O(1)$ extra parameters** thay vì MLP overhead
 > 3. **Highly optimized** trên GPU (matrix multiplication rất nhanh)
 
@@ -415,9 +441,13 @@ from torch.nn import functional as F
 # ============================================================
 def masked_softmax(X, valid_lens):
     """Softmax với masking cho padded tokens.
-    
-    X: 3D tensor (batch_size, n_queries, n_keys)
-    valid_lens: (batch_size,) hoặc (batch_size, n_queries)
+
+    Args:
+        X: 3D tensor (batch_size, n_queries, n_keys)
+        valid_lens: (batch_size,) hoặc (batch_size, n_queries)
+
+    Returns:
+        softmax(X) với các vị trí padded có weight ≈ 0
     """
     def _sequence_mask(X, valid_len, value=0):
         maxlen = X.size(1)
@@ -450,13 +480,14 @@ class DotProductAttention(nn.Module):
 
     def forward(self, queries, keys, values, valid_lens=None):
         """
-        Shapes:
-          queries: (batch, n_queries, d)
-          keys:    (batch, m_keys, d)
-          values:  (batch, m_keys, v)
-          valid_lens: (batch,) hoặc (batch, n_queries)
+        Args:
+            queries: (batch, n_queries, d)
+            keys:    (batch, m_keys, d)
+            values:  (batch, m_keys, v)
+            valid_lens: (batch,) hoặc (batch, n_queries)
+
         Returns:
-          (batch, n_queries, v)
+            (batch, n_queries, v)
         """
         d = queries.shape[-1]
         # BMM: Q @ K^T / sqrt(d)
@@ -489,14 +520,14 @@ class AdditiveAttention(nn.Module):
 
 ---
 
-# PHẦN VII — SUMMARY VÀ LIÊN KẾT
+# PHẦN VII — TÓM TẮT VÀ LIÊN KẾT
 
 ## 7.1 Tóm tắt buổi
 
 | Khái niệm | Hiểu | Cần ôn |
 |-----------|------|--------|
-| Gaussian → Dot Product derivation | ✅ | |
-| Tại sao chia $\sqrt{d}$ (variance = 1) | ✅ | |
+| Gaussian sang Dot Product derivation | ✅ | |
+| Tại sao chia $\sqrt{d}$ (phương sai = 1) | ✅ | |
 | Masked softmax (valid_lens, -1e6 trick) | ✅ | |
 | BMM — batch matrix multiplication | ✅ | |
 | DotProductAttention forward pass (shapes) | ✅ | |
@@ -532,7 +563,7 @@ class AdditiveAttention(nn.Module):
 
 1. **Distance-based attention**: Modify `DotProductAttention` để tính distance-based scores thay vì dot product. Gợi ý: chỉ cần squared norms $\|\mathbf{k}_i\|^2$.
 
-2. **Different dimensions**: Modify dot product attention cho phép queries và keys có chiều khác nhau. Gợi ý: dùng matrix $\mathbf{M}$ để project giữa spaces.
+2. **Different dimensions**: Modify dot product attention cho phép queries và keys có chiều khác nhau. Gợi ý: dùng ma trận $\mathbf{M}$ để project giữa spaces.
 
 3. **Complexity analysis**: Phân tích computational cost và memory bandwidth theo $d, v, n, m$. Khi nào trở thành bottleneck? Gợi ý: FlashAttention (Dao et al., 2022) giải quyết memory bottleneck.
 
@@ -550,7 +581,7 @@ class AdditiveAttention(nn.Module):
 
 5. **BMM vs loop: khi nào BMM nhanh hơn?** → BMM nhanh hơn khi $n$ lớn (nhiều matrices trong batch) — GPU parallelizes batch operations. Với $n=1$, overhead của BMM có thể lớn hơn loop đơn giản.
 
-6. **Trong DotProductAttention, attention_weights có shape gì?** → $(batch, n\_queries, m\_keys)$ — mỗi query có $m$ attention weights (1 cho mỗi key). Sau softmax, mỗi hàng sum = 1.
+6. **Trong DotProductAttention, attention_weights có shape gì?** → $(batch, n\_queries, m\_keys)$ — mỗi query có $m$ attention weights (một cho mỗi key). Sau softmax, mỗi hàng sum = 1.
 
 ---
 

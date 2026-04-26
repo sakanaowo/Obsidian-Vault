@@ -18,6 +18,7 @@ Các rules D2L bên dưới (mục **CONTENT DEPTH STANDARDS** và **D2L SESSION
 - Phát hiện user đang "nhồi nhét" — dùng kỹ thuật mà không hiểu bản chất (ví dụ: copy `ignore_index=-100` không rõ tại sao, dùng kỹ thuật mà không biết nó giải quyết vấn đề gì)
 
 Khi kích hoạt, LUÔN đọc và tuân thủ:
+
 - [`.cursor/skills/deep-learning-notes/PEDAGOGY.md`](.cursor/skills/deep-learning-notes/PEDAGOGY.md) — Quy tắc chống nhồi nhét, Concept Probing protocol
 - [`.cursor/skills/deep-learning-notes/NOTE_CONVENTIONS.md`](.cursor/skills/deep-learning-notes/NOTE_CONVENTIONS.md) — Cấu trúc folder, frontmatter schema, templates
 
@@ -40,13 +41,13 @@ Khi viết hoặc tạo mới tài liệu, bạn phải tuân thủ các quy t�
      **Sai:** ELI5 → ngay lập tức công thức/code (người đọc nhảy từ ẩn dụ sang toán, không hiểu gì).
      **Đúng:** ELI5 → "GAP là phép pooling lấy trung bình toàn bộ HxW... Input (C,H,W) → Output (C,1,1)... Thay thế FC layers" → Công thức/code.
 - **Concrete Examples:** Luôn kèm theo ví dụ thực tế, đoạn mã (nếu là code), hoặc tình huống giả định (case study) để minh họa cho lý thuyết.
-- **Visual Examples Rule — BẮT BUỘC khi có biểu đồ:** Ví dụ trực quan phải bám sát nội dung đang học (không lạc đề), ưu tiên dùng plugin `obsidian-functionplot`; sau mỗi plot phải có phần kiểm tra mức dễ hiểu (reader checklist) và giải thích thuật ngữ chuyên ngành xuất hiện trong biểu đồ.
+- **Visual Examples Rule — BẮT BUỘC khi có biểu đồ:** Ví dụ trực quan phải bám sát nội dung đang học (không lạc đề) và **ưu tiên bắt buộc ảnh từ nguồn D2L**. Khi viết notes D2L, không tự vẽ biểu đồ nếu tài liệu gốc đã có hình tương ứng; sau mỗi hình phải có phần kiểm tra mức dễ hiểu (reader checklist) và giải thích thuật ngữ chuyên ngành xuất hiện trong hình.
 - **Evidence & Reasoning:** Mọi khẳng định (Claim) phải đi kèm lập luận (Reasoning). Sử dụng cấu trúc: _"A đúng vì B, được thể hiện qua C"_.
 - **Expansion:** Nếu thông tin đầu vào quá ít, hãy sử dụng kiến thức nền tảng của bạn để mở rộng vấn đề theo hướng học thuật, nhưng phải đánh dấu rõ đâu là phần bạn suy luận thêm.
 - **Session Label — BẮT BUỘC với D2L/học thuật notes:** Mỗi file ghi chú học có nguồn gốc từ một buổi học cụ thể PHẢI có trường `session:` trong YAML frontmatter, ghi rõ: `session: "D2L Tuần X, Buổi Y — Tên chủ đề"`. Không được để trống hoặc bỏ qua field này.
 - **Active Recall Per Session — BẮT BUỘC cho mọi buổi D2L:** Mỗi note buổi học PHẢI có mục `## Active Recall` để ôn lại kiến thức cũ đã tạo từ các buổi trước. Tối thiểu gồm: (1) 5-10 câu hỏi truy hồi không nhìn tài liệu; (2) phần tự trả lời ngắn gọn theo format "Claim -> Reasoning -> Evidence"; (3) danh sách link tới concept notes cần ôn lại (ví dụ: [[Batch Normalization]], [[Overfitting and Underfitting]]). Không được bỏ qua mục này kể cả khi buổi mới tập trung vào kiến thức mới.
 - **Deep Concept Explanation — BẮT BUỘC với khái niệm toán học/thống kê:** Với mọi khái niệm toán học (phương sai, kỳ vọng, gradient, chuẩn, v.v.), PHẢI giải thích đủ 4 tầng: (1) **Bản chất** — tại sao định nghĩa như vậy, không phải tùy tiện (ví dụ: tại sao variance lại bình phương?); (2) **Ví dụ đời thường cụ thể** — gắn với ML/AI nếu có; (3) **Công thức** với giải thích từng ký hiệu; (4) **Ứng dụng thực tế** trong DL — được dùng ở đâu, khi nào.
-- **Illustrative Images — BẮT BUỘC thay vì mô tả văn bản:** Khi giải thích khái niệm trực quan (đồ thị hàm số, kiến trúc mạng, decision boundary, v.v.), PHẢI tạo ảnh minh họa bằng matplotlib/code thay vì chỉ mô tả bằng văn bản (ví dụ: "hình chữ S", "hình chữ V lật" — reader không hình dung được). Lưu ảnh vào `assets/attachments/<context>/` và embed bằng cú pháp `![[path/to/image.png]]`. Mỗi ảnh phải có annotation tiếng Việt trực tiếp trên biểu đồ.
+- **Illustrative Images — BẮT BUỘC thay vì mô tả văn bản:** Khi giải thích khái niệm trực quan trong notes D2L, **PHẢI dùng ảnh từ nguồn D2L (sách/slide gốc)** thay vì tự vẽ. Chỉ khi tài liệu gốc không có hình phù hợp mới được tạo ảnh bổ sung. Lưu ảnh vào `assets/attachments/<context>/` và embed bằng cú pháp `![[path/to/image.png]]`; kèm chú thích ngắn giải thích hình theo ngữ cảnh bài học.
 
 ### D2L SESSION STANDARDS (KHI ĐỌC/GHI FILE TRONG `10_Projects/D2L/`)
 
@@ -70,20 +71,24 @@ related:
 # Buổi N — Tên Chủ Đề
 
 > [!NOTE] Mục tiêu buổi học
+>
 > - [ ] Mục tiêu 1
 > - [ ] Mục tiêu 2
 
 ## Active Recall
 
 ### Câu hỏi truy hồi (không nhìn tài liệu)
+
 1. [Câu hỏi về concept buổi trước]
 2. ...
 
 ### Tự trả lời
+
 - **Q1:** [Claim] → [Reasoning] → [Evidence]
 - ...
 
 ### Liên kết cần ôn lại
+
 - [[Concept A]]
 - [[Concept B]]
 
@@ -107,6 +112,7 @@ related:
 || Concept B | | ❌ |
 
 ## TODO
+
 - [ ] Tạo concept note cho [[Concept X]]
 ```
 
@@ -127,10 +133,10 @@ Tự kiểm tra trước khi lưu:
 
 #### Anti-Cramming Rules (LUÔN ÁP DỤNG KHI THẤY DẤU HIỆU)
 
-| Dấu hiệu nhồi nhét | Cách xử lý |
-|---|---|
-| Copy `ignore_index=-100` không giải thích | Dừng — đọc PEDAGOGY.md — hỏi "tại sao -100?" |
-| Viết công thức không kèm từ điển ký hiệu | Dừng — giải thích từng ký hiệu |
+| Dấu hiệu nhồi nhét                            | Cách xử lý                                     |
+| --------------------------------------------- | ---------------------------------------------- |
+| Copy `ignore_index=-100` không giải thích     | Dừng — đọc PEDAGOGY.md — hỏi "tại sao -100?"   |
+| Viết công thức không kèm từ điển ký hiệu      | Dừng — giải thích từng ký hiệu                 |
 | Dùng "kỹ thuật X" không biết nó giải quyết gì | Dừng — đào sâu bằng Protocol trong PEDAGOGY.md |
 
 ### GUIDELINES FOR WRITING
