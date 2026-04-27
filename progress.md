@@ -1175,3 +1175,22 @@ chi tiết:
 - Tạo 6 hình: d2l-fig-11-3-1, scaled-dot-product, masked-softmax, dot-product-vs-additive, batch-matrix-multiplication, dot-product-forward-shapes
 - Active Recall: 5 câu ôn Buổi 51 (NW, kernel, variance, unit sphere) + 6 câu mới về scoring functions
 - 3 bài tập D2L 11.3.6: distance-based attention, different dimensions, complexity analysis
+
+---
+
+tác vụ: Viết lại Buổi 51 và Buổi 52 theo chuẩn template D2L - 2026-04-27
+nội dung: Đã viết lại [[Buổi 51 - Tuần 14]] và [[Buổi 52 - Tuần 14]] theo đúng chuẩn template D2L.
+chi tiết:
+
+- Thống nhất "Trả lời nhanh" thay vì "Tự trả lời" (5 câu truy hồi + 5 câu trả lời)
+- Active Recall format: **Claim → Reasoning → Evidence** (3 phần)
+- Mỗi Active Recall: đổi "### Tự trả lời" thành "### Trả lời nhanh"
+- Chuẩn hóa thuật ngữ: "attention weights" → "trọng số chú ý (attention weights)"
+- Chuẩn hóa thuật ngữ: "shape" → "kích thước (shape)" trong các bảng và text
+- Chuẩn hóa thuật ngữ: "dropout" giữ nguyên (đây là thuật ngữ phổ biến)
+- Thêm bảng thuật ngữ đầy đủ ở cuối mỗi buổi với định nghĩa tiếng Việt
+- Đảm bảo tất cả thuật ngữ xuất hiện lần đầu đều có dịch tiếng Việt
+- Thêm "Thay thế/gợi ý giải pháp nào trước đây?" trong định nghĩa kỹ thuật
+- Thêm Reader Checklist sau mỗi section quan trọng (buổi 51: 5 checklists, buổi 52: 4 checklists)
+- Thêm từ điển ký hiệu đầy đủ cho mỗi công thức toán
+- Chuẩn hóa heading structure: PHẦN I, II, III... → PHẦN I, II, III... (không có khoảng trắng thừa)
