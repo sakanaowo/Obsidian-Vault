@@ -128,12 +128,14 @@ $$\alpha(\mathbf{q}, \mathbf{k}) \stackrel{\text{def}}{=} \begin{cases} \exp\!\l
 
 ### Bảng so sánh bốn kernels
 
-| Kernel          | Công thức                                                   | Đặc điểm                     | Phạm vi                               | Dạng hình                                             |
-| --------------- | ----------------------------------------------------------- | ---------------------------- | ------------------------------------- | ----------------------------------------------------- |
-| **Gaussian**    | $\exp\!\left(-\frac{\|\mathbf{q}-\mathbf{k}\|^2}{2}\right)$ | Mượt, đường cong hình chuông | Toàn bộ không gian (infinite support) | ![](assets/attachments/d2l-buoi-51/kernel-shapes.png) |
-| **Boxcar**      | $\mathbb{1}(\|\mathbf{q}-\mathbf{k}\| \leq 1)$              | Cứng, "bậc thang"            | Chỉ trong bán kính 1                  |                                                       |
-| **Epanechikov** | $\max(0, 1 - \|\mathbf{q}-\mathbf{k}\|)$                    | Vòm, tuyến tính từng khúc    | Trong bán kính 1, 0 ngoài             |                                                       |
-| **Constant**    | $1$                                                         | Không phân biệt              | Mọi nơi (uniform)                     |                                                       |
+![](assets/attachments/d2l-buoi-51/kernel-shapes.png)
+
+| Kernel          | Công thức                                                   | Đặc điểm                     | Phạm vi                               |
+| --------------- | ----------------------------------------------------------- | ---------------------------- | ------------------------------------- |
+| **Gaussian**    | $\exp\!\left(-\frac{\|\mathbf{q}-\mathbf{k}\|^2}{2}\right)$ | Mượt, đường cong hình chuông | Toàn bộ không gian (infinite support) |
+| **Boxcar**      | $\mathbb{1}(\|\mathbf{q}-\mathbf{k}\| \leq 1)$              | Cứng, "bậc thang"            | Chỉ trong bán kính 1                  |
+| **Epanechikov** | $\max(0, 1 - \|\mathbf{q}-\mathbf{k}\|)$                    | Vòm, tuyến tính từng khúc    | Trong bán kính 1, 0 ngoài             |
+| **Constant**    | $1$                                                         | Không phân biệt              | Mọi nơi (uniform)                     |
 
 **Phân tích hình dạng từng kernel:**
 
