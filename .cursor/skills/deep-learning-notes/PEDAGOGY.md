@@ -1,55 +1,56 @@
-# Pedagogy Guide — Chống Nhồi Nhét & Đào Sâu Kiến Thức
+# Pedagogy Guide — Giải Thích Kĩ & Tránh Rối Não Người Đọc
 
 ## Giới Thiệu
 
-Phần này giải quyết vấn đề cốt lõi: **bạn có xu hướng nhồi nhét kiến thức** — copy công thức, tham số, code mà không hiểu bản chất. Ví dụ thực tế từ vault:
+Phần này giải quyết vấn đề cốt lõi: **agent dùng bừa bãi ngôn ngữ chuyên ngành mà không giải thích**. Ví dụ thực tế từ vault:
 
-- Buổi 47: `ignore_index=-100` xuất hiện trong CrossEntropyLoss mà không hiểu `-100` là gì, tại sao chọn `-100` (không phải `-1` hay `0`), và nó xử lý cái gì.
-- Đã dùng các kỹ thuật NLP mà không hiểu tại sao cần chúng, chỉ biết "làm vậy thì chạy được".
+- Viết "attention weights" mà không giải thích đây là trọng số quyết định mức độ "chú ý" vào mỗi value
+- Viết "BMM" mà không giải thích = Batch Matrix Multiplication (nhân nhiều ma trận cùng lúc)
+- Viết "hidden states" mà không giải thích = vector biểu diễn của một từ/sentence sau khi qua encoder
+- Viết "encoder-decoder attention" mà không giải thích query đến từ đâu, key/value đến từ đâu
+- Vietlish không cần thiết: "ta sẽ compute cái này" thay vì "ta sẽ tính giá trị này"
 
-Skill này bắt buộc **dừng lại và đào sâu** mỗi khi phát hiện pattern nhồi nhét.
+Skill này bắt buộc **giải thích kĩ** mỗi khi dùng thuật ngữ mới.
 
 ---
 
-## Anti-Cramming Rules (5 Quy Tắc Vàng)
+## Giải Thích Kĩ Trước Khi Dùng (5 Quy Tắc Vàng)
 
-### Rule 1: Không Bao Giờ Copy Mà Không Hỏi "Tại Sao"
+### Rule 1: Kiểm Tra Vault Trước
 
-Mỗi khi gặp một tham số, công thức, hoặc kỹ thuật mới:
+**LUÔN kiểm tra vault trước khi định nghĩa concept mới:**
 
 ```text
 TRƯỚC KHI VIẾT: Hỏi 3 câu
-  1. Đây giải quyết vấn đề GÌ?
-  2. Nếu bỏ đi, điều gì sẽ SAI?
-  3. Tại sao lại là THAM SỐ NÀY (giá trị cụ thể)?
+  1. Concept này đã có note trong vault chưa?
+  2. Nếu có → LINK tới nó thay vì định nghĩa lại
+  3. Nếu chưa → tạo stub với định nghĩa đầy đủ
 ```
 
 **Ví dụ sai:**
-> `CrossEntropyLoss(ignore_index=-100)` → copy thẳng vào code, không giải thích.
+> Bahdanau Attention sử dụng encoder-decoder attention với hidden states.
 
 **Ví dụ đúng:**
-> `CrossEntropyLoss(ignore_index=-100)`: Khi token có giá trị -100 xuất hiện trong chuỗi (thường là padding), nó **không đóng góp vào loss**. Tại sao -100? Vì giá trị này nằm ngoài range nhãn hợp lệ [0, num_classes-1], nên PyTorch có thể phân biệt được "nhãn thật" và "padding". Nếu không có `ignore_index`, padding tokens sẽ kéo loss về hướng sai (vì chúng không phải từ thật), và gradient từ chúng sẽ làm hỏng weight updates.
+> Bahdanau Attention (xem [[Buổi 53 - Tuần 14]]) sử dụng encoder-decoder attention. Trong đó:
+> - **Query**: hidden state hiện tại của decoder (vector biểu diễn vị trí đang generate)
+> - **Key/Value**: encoder outputs (vector biểu diễn từng vị trí trong câu nguồn)
 
-### Rule 2: Mỗi Công Thức Phải Có Từ Điển Ký Hiệu
+### Rule 2: Mỗi Thuật Ngữ Phải Có Định Nghĩa
 
-**Template bắt buộc** khi trình bày công thức:
+**Bảng thuật ngữ bắt buộc** khi trình bày nội dung:
 
-```text
-## Công thức
+| Thuật ngữ | Tiếng Việt | Định nghĩa ngắn gọn |
+|-----------|------------|----------------------|
+| Attention weights | Trọng số chú ý | Trọng số $\alpha_i$ quyết định mức độ "chú ý" vào mỗi value |
+| Hidden state | Trạng thái ẩn | Vector biểu diễn của một từ/sentence sau khi qua mạng |
+| Encoder | Bộ mã hóa | Phần mạng xử lý input, sinh ra biểu diễn trung gian |
+| Decoder | Bộ giải mã | Phần mạng sinh ra output từng bước |
+| Query | Truy vấn | Vector biểu diễn "câu hỏi" — muốn tìm thông tin gì |
+| Key | Khóa | Vector biểu diễn "định danh" — mỗi vị trí có một key |
+| Value | Giá trị | Vector biểu diễn "nội dung" — thông tin thực sự cần lấy |
 
-$$
-\mathcal{L} = -\sum_{t=1}^{T} \log \frac{\exp(x_{t,y_t})}{\sum_{c} \exp(x_{t,c})}
-$$
-
-**Từ điển ký hiệu:**
-- $x_{t,y_t}$: ...
-- $T$: ...
-- $c$: ...
-- $\mathcal{L}$: ...
-```
-
-**Sai:** Viết công thức rồi bỏ qua, người đọc tự hiểu.
-**Đúng:** Giải thích từng ký hiệu, không ký hiệu nào được bỏ qua.
+**Sai:** Viết thuật ngữ rồi bỏ qua, người đọc tự hiểu.
+**Đúng:** Mỗi thuật ngữ phải có định nghĩa bằng tiếng Việt, hoặc link tới concept note.
 
 ### Rule 3: ELI5 Trước, Toán Sau
 
@@ -65,60 +66,62 @@ Mỗi concept mới phải được so sánh với ít nhất 1 concept đã h�
 ## So Sánh
 
 | Khía cạnh | [Concept cũ] | [Concept mới] |
-|---|---|---|
-| Vấn đề giải quyết | ... | ... |
-| Cơ chế | ... | ... |
-| Khi nào dùng | ... | ... |
+|-----------|--------------|---------------|
+| Query đến từ đâu | Decoder | Decoder |
+| Key/Value đến từ đâu | Encoder | Encoder |
+| Mục đích | Gen câu mới | Align input-output |
 ```
 
-### Rule 5: Edge Cases và Failure Modes
+### Rule 5: Giải Thích Rõ Ràng Từng Bước Trong Code
 
-Mỗi kỹ thuật phải nêu rõ:
+Mỗi dòng code phải có comment giải thích:
 
-- Khi nào nó **không hoạt động**?
-- Điều gì xảy ra nếu **bỏ nó đi**?
-- Có **trade-off** gì không?
+```python
+# Sai: không comment
+outputs = torch.bmm(attn_weights, values)
+
+# Đúng: có comment
+# BMM: nhân trọng số chú ý (attn_weights) với values
+# attn_weights: (batch, n_queries, m_keys)
+# values: (batch, m_keys, v)
+# outputs: (batch, n_queries, v)
+outputs = torch.bmm(attn_weights, values)
+```
 
 ---
 
 ## Concept Probing (Khoan Đào Khái Niệm)
 
-Khi phát hiện một concept chưa hiểu rõ, sử dụng protocol sau:
+Khi phát hiện một concept chưa rõ ràng, sử dụng protocol sau:
 
 ### Bước 1: Nhận Diện — Đây Là Loại Concept Gì?
 
 | Loại | Câu hỏi cần trả lời | Ví dụ |
 | --- | --- | --- |
-| **Tham số/Hyperparameter** | Nó điều khiển cái gì? Giá trị mặc định có hợp lý không? | `ignore_index`, `dropout`, `learning_rate` |
-| **Cơ chế/Thuật toán** | Nó làm gì với input? Tại sao cần làm vậy? | attention, gradient clipping, padding |
-| **Kiến trúc/Module** | Nó được ghép nối thế nào? Input/output shape gì? | LSTM cell, embedding layer, linear layer |
-| **Mất mát/Loss** | Nó đo lường cái gì? Tại sao dùng thay vì cái khác? | CrossEntropyLoss, BCE |
-| **Tập dữ liệu/Data** | Dữ liệu được tổ chức thế nào? Preprocessing gì? | vocabulary, tokenization, padding |
+| **Thuật ngữ** | Đây là gì? Tiếng Việt là gì? | "attention weights" = trọng số chú ý |
+| **Cơ chế** | Nó làm gì với input? Tại sao cần làm vậy? | encoder-decoder attention = align source-target |
+| **Kiến trúc** | Nó được ghép nối thế nào? Input/output là gì? | Seq2Seq với attention |
+| **Thuật ngữ vị trí** | Query/Key/Value đến từ đâu trong mạng? | Decoder/Encoder |
 
 ### Bước 2: Tìm Nguồn Gốc — Vấn Đề Nào Sinh Ra Concept Này?
 
 Hỏi: **"Concept này được tạo ra để giải quyết vấn đề gì?"**
 
-- Tìm paper gốc hoặc bài blog giải thích
-- Tìm commit history / release notes (với code library)
-- Hỏi: "Trước khi có concept này, người ta xử lý vấn đề này thế nào?"
+**Ví dụ — Encoder-Decoder Attention:**
 
-**Ví dụ — `ignore_index`:**
-
-- Vấn đề gốc: CrossEntropyLoss nhận mọi token trong batch, bao gồm padding. Padding không phải từ thật → loss bị noise.
-- Giải pháp cũ (thủ công): Mask array, nhân loss với mask.
-- Giải pháp hiện tại: `ignore_index` — PyTorch tự bỏ qua.
-- Tại sao -100? Convention từ thư viện. Có thể dùng bất kỳ giá trị ngoài range nhãn.
+- Vấn đề gốc: Seq2Seq cũ (Buổi ...) chỉ dùng last encoder hidden state → bottleneck thông tin khi câu nguồn dài.
+- Giải pháp: Cho decoder "nhìn" vào tất cả encoder hidden states, nhưng tập trung vào những phần liên quan (attention).
+- Query đến từ decoder, Key/Value đến từ encoder.
 
 ### Bước 3: Kiểm Tra Hiểu — 5 Câu Hỏi Cuối Cùng
 
 Trước khi kết luận đã hiểu, trả lời đủ 5 câu:
 
-1. **Giải thích bằng ẩn dụ đời thường**: "ignore_index giống như... [ẩn dụ]"
-2. **Định nghĩa kỹ thuật**: "Nó làm [X] với [input], trả về [output]"
-3. **Mục đích tồn tại**: "Nó tồn tại vì [vấn đề A], thay thế cách cũ [B]"
-4. **Tham số có ý nghĩa gì**: "Giá trị -100 có nghĩa là [Y], có thể thay bằng [Z] nếu..."
-5. **Edge case**: "Nếu tất cả tokens trong batch đều bị ignore, loss sẽ..."
+1. **Giải thích bằng ẩn dụ đời thường**: "Encoder-decoder attention giống như... [ẩn dụ]"
+2. **Định nghĩa bằng tiếng Việt**: "Đây là cơ chế cho phép [X] nhìn vào [Y] để [Z]"
+3. **Ai là Query, Key, Value**: "Query = [đến từ đâu], Key/Value = [đến từ đâu]"
+4. **Vấn đề nó giải quyết**: "Nó tồn tại vì [vấn đề A], thay thế cách cũ [B]"
+5. **So sánh với concept đã biết**: "Khác self-attention (Buổi 55) ở chỗ..."
 
 Nếu câu nào không trả lời được → tìm hiểu thêm trước khi viết.
 
@@ -131,7 +134,7 @@ Sau khi hoàn thành note, tự kiểm tra mức độ hiểu theo taxonomy:
 - **[Nhớ]** Có định nghĩa? Có công thức?
 - **[Hiểu]** Có ELI5? Có giải thích bằng lời?
 - **[Áp dụng]** Có ví dụ code hoạt động?
-- **[Phân tích]** Có so sánh với cái khác? Có phân tích failure modes?
+- **[Phân tích]** Có so sánh với cái khác? Có giải thích rõ Query/Key/Value?
 - **[Đánh giá]** Có nêu trade-off? Có đưa ra lựa chọn khi nào dùng cái nào?
 - **[Sáng tạo]** Có suy luận mở rộng? Có ứng dụng ngoài bài học?
 
@@ -148,6 +151,49 @@ Thêm vào cuối mỗi section quan trọng:
 > Reader tự kiểm tra:
 >
 > - [ ] Tôi có thể giải thích concept này cho một người bạn không?
-> - [ ] Tôi biết mỗi tham số/giá trị đại diện cho cái gì chưa?
+> - [ ] Tôi biết Query đến từ đâu, Key/Value đến từ đâu?
 > - [ ] Tôi hiểu tại sao cần dùng nó, không phải chỉ "làm vậy thì chạy" chứ?
+> - [ ] Tôi phân biệt được concept này với concept đã biết?
 ```
+
+---
+
+## Common Pitfalls — Những Lỗi Thường Gặp
+
+### Lỗi 1: Không giải thích thuật ngữ
+
+**Sai:**
+> Bahdanau Attention sử dụng additive attention để compute alignment scores.
+
+**Đúng:**
+> Bahdanau Attention (xem [[Buổi 53]]) sử dụng additive attention — một cách tính điểm tương đồng (alignment score) giữa query và key bằng MLP thay vì dot product.
+
+### Lỗi 2: Không chỉ rõ Query/Key/Value đến từ đâu
+
+**Sai:**
+> Encoder-decoder attention cho phép decoder nhìn vào encoder.
+
+**Đúng:**
+> Encoder-decoder attention:
+> - **Query**: hidden state hiện tại của decoder (vector biểu diễn vị trí đang sinh)
+> - **Key/Value**: encoder outputs (vector biểu diễn từng vị trí trong câu nguồn)
+> - **Output**: weighted sum của encoder outputs — thông tin "liên quan" từ câu nguồn
+
+### Lỗi 3: Vietlish không cần thiết
+
+**Sai:**
+> Ta sẽ compute attention scores rồi softmax để normalize.
+
+**Đúng:**
+> Ta sẽ tính các điểm tương đồng (attention scores) giữa query và mỗi key, rồi dùng softmax để normalize thành trọng số chú ý (attention weights).
+
+### Lỗi 4: Wikilink tới concept chưa tồn tại
+
+**Sai:**
+> Xem [[Attention Mechanism]] để biết thêm.
+
+**Đúng:**
+> Nếu concept note chưa tồn tại → tạo stub ngay lập tức với:
+> - Định nghĩa ngắn gọn
+> - TODO để phát triển sau
+> - Link từ note hiện tại

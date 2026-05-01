@@ -80,6 +80,8 @@ related:
 > [!KEY]- Key Insight (D2L)
 >
 > "Người đọc tinh ý có thể tự hỏi tại sao chúng ta đi sâu vào một phương pháp đã hơn nửa thế kỷ tuổi. Thứ nhất, đây là một trong những tiền thân sớm nhất của attention mechanisms hiện đại. Thứ hai, nó rất tốt cho việc trực quan hóa. Thứ ba, và quan trọng không kém, nó cho thấy **giới hạn của attention mechanisms được thiết kế thủ công**. Một chiến lược tốt hơn nhiều là **học cơ chế này**, bằng cách học các biểu diễn cho queries và keys."
+>
+> Đặc biệt, xem [[Buổi 53 - Tuần 14|Bahdanau Attention]] để thấy cách attention được ứng dụng trong Seq2Seq với encoder-decoder architecture.
 
 > [!CHECKLIST]-
 > Reader tự kiểm tra:

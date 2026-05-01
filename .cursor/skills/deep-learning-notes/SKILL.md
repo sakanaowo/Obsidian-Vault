@@ -1,6 +1,6 @@
 ---
 name: deep-learning-notes
-description: Tạo ghi chú học tập sâu cho môn Deep Learning (D2L). Tự động trigger khi tạo note trong 10_Projects/D2L, 20_Areas, 30_Resources, hoặc bất kỳ file nào có tag #d2l, #deep-learning, #machine-learning. Khi phát hiện người dùng đang "nhồi nhét" một concept mà không hiểu bản chất (ví dụ: copy công thức ignore_index mà không biết nó là gì, dùng kỹ thuật mà không hiểu tại sao), agent phải dừng lại và đào sâu. Đọc và tuân thủ AGENTS.md cùng các skill files trong thư mục này.
+description: Tạo ghi chú học tập sâu cho môn Deep Learning (D2L). Tự động trigger khi tạo/sửa note trong 10_Projects/D2L, 20_Areas/AI/Concepts/, 30_Resources/, hoặc bất kỳ file nào có tag #d2l, #deep-learning, #machine-learning, #nlp. Luôn kiểm tra vault để reference tới concept notes có sẵn thay vì tự định nghĩa lại. Giải thích kĩ từng concept, tránh dùng bừa bãi ngôn ngữ chuyên ngành mà không định nghĩa — nếu dùng thuật ngữ mà người đọc chưa biết, họ sẽ bị rối não. Đọc và tuân thủ AGENTS.md cùng các skill files trong thư mục này.
 ---
 
 # Deep Learning Notes — Hướng Dẫn Tạo Ghi Chú Học Tập Sâu
@@ -9,12 +9,17 @@ description: Tạo ghi chú học tập sâu cho môn Deep Learning (D2L). Tự 
 
 Luôn đọc các file hướng dẫn bổ sung trước khi viết nội dung:
 
-- [PEDAGOGY.md](PEDAGOGY.md) — Quy tắc chống nhồi nhét, cách khoan凿 khái niệm chưa hiểu
+- [PEDAGOGY.md](PEDAGOGY.md) — Quy tắc giải thích kĩ, kiểm tra concept trước khi reference, tránh ngôn ngữ chuyên ngành gây rối
 - [NOTE_CONVENTIONS.md](NOTE_CONVENTIONS.md) — Cấu trúc folder, frontmatter schema, template
 
 ## Tổng Quan
 
-Skill này giúp tạo ghi chú học tập cho môn Deep Learning (D2L — Dive into Deep Learning) tại `10_Projects/D2L/`. Nó bổ sung và mở rộng [AGENTS.md](../AGENTS.md) với trọng tâm **chống nhồi nhét kiến thức** — đây là vấn đề cốt lõi: khi gặp một concept mới (như `ignore_index` trong Buổi 47, hoặc bất kỳ tham số/kỹ thuật nào), bạn có xu hướng copy công thức/code mà không hiểu nó tồn tại để giải quyết vấn đề gì, hoạt động ra sao, và khi nào thì dùng.
+Skill này giúp tạo ghi chú học tập cho môn Deep Learning (D2L — Dive into Deep Learning) tại `10_Projects/D2L/`. Nó bổ sung và mở rộng [AGENTS.md](../AGENTS.md) với trọng tâm **giải thích kĩ thay vì nhồi nhét** — đây là vấn đề cốt lõi: khi gặp một concept mới (như `ignore_index` trong Buổi 47, hoặc bất kỳ tham số/kỹ thuật nào), agent có xu hướng **dùng bừa bãi ngôn ngữ chuyên ngành** mà không giải thích, **không kiểm tra vault** xem concept đó đã có note chưa, và **mặc định người đọc tự biết** — dẫn đến:
+
+- Vietlish (tiếng Việt + English lẫn lộn) không cần thiết
+- Thuật ngữ chuyên ngành xuất hiện mà không định nghĩa
+- Wikilink để trống hoặc chỉ tạo stub mà không giải thích
+- Không reference tới concept notes có sẵn trong vault
 
 ## Trigger Conditions
 
@@ -34,24 +39,25 @@ Tự động kích hoạt khi:
 2. Xác định các concept từ buổi trước liên quan đến nội dung mới.
 3. Chuẩn bị bộ câu hỏi Active Recall cho mục `## Active Recall`.
 
-### Bước 2: Phân Tích Nội Dung Mới
+### Bước 2: Kiểm Tra Vault Trước Khi Viết
 
-Với mỗi concept mới xuất hiện trong bài giảng:
+**QUAN TRỌNG:** Trước khi định nghĩa bất kỳ concept nào, LUÔN kiểm tra:
 
-1. **Nhận diện**: Đây là concept gì? (Thuật ngữ, tham số, kỹ thuật, công thức?)
-2. **Đặt câu hỏi gốc**: Tại sao nó tồn tại? (XEM [PEDAGOGY.md](PEDAGOGY.md) — Anti-Cramming Rules)
-3. **Tìm prerequisite**: Cần hiểu gì TRƯỚC khi hiểu concept này?
-4. **Kiểm tra vault**: Concept này đã có note chưa? Link hay tạo mới?
+1. **Concept này đã có note chưa?** → Nếu có, LINK tới nó thay vì định nghĩa lại
+2. **Thuật ngữ nào cần giải thích?** → Nếu dùng thuật ngữ mà chưa định nghĩa trong vault, phải giải thích NGAY
+3. **Có wikilink chết không?** → Tạo stub hoặc reference đúng
 
-> [!WARNING]- Cảnh báo: Dấu hiệu nhồi nhét
+> [!WARNING]- Cảnh báo: Dùng bừa bãi ngôn ngữ chuyên ngành
 >
 > Nếu bạn phát hiện mình đang:
 >
-> - Copy `ignore_index=-100` vào code mà không giải thích `-100` là gì, tại sao dùng, xử lý cái gì
-> - Viết công thức mà không nói rõ mỗi ký hiệu đại diện cho cái gì
-> - Dùng "kỹ thuật X" mà không biết nó giải quyết vấn đề cụ thể nào
+> - Viết "attention weights" mà không giải thích nó là gì (trọng số chú ý = trọng số quyết định mức độ "chú ý" vào mỗi value)
+> - Viết "BMM" mà không giải thích = Batch Matrix Multiplication (nhân nhiều ma trận cùng lúc)
+> - Viết "QKV" mà không reference tới Buổi 50
+> - Viết "hidden states" mà không giải thích = vector biểu diễn của một từ/sentence sau khi qua encoder
+> - Dùng Vietlish không cần thiết: "ta sẽ compute cái này" thay vì "ta sẽ tính giá trị này"
 >
-> **DỪNG LẠI NGAY.** Đọc [PEDAGOGY.md](PEDAGOGY.md) phần **Concept Probing** trước khi tiếp tục.
+> **DỪNG LẠI NGAY.** Đọc [PEDAGOGY.md](PEDAGOGY.md) phần **Giải Thích Kĩ Trước Khi Dùng** trước khi tiếp tục.
 
 ### Bước 3: Viết Nội Dung
 
