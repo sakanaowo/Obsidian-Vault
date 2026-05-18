@@ -1194,3 +1194,24 @@ chi tiết:
 - Thêm Reader Checklist sau mỗi section quan trọng (buổi 51: 5 checklists, buổi 52: 4 checklists)
 - Thêm từ điển ký hiệu đầy đủ cho mỗi công thức toán
 - Chuẩn hóa heading structure: PHẦN I, II, III... → PHẦN I, II, III... (không có khoảng trắng thừa)
+
+---
+
+tác vụ: D2L Learning - Tuần 14, Buổi 54 — 11.5 Multi-Head Attention - 2026-05-02
+nội dung: Đã tạo [[Buổi 54 - Tuần 14]] — 11.5 Multi-Head Attention.
+chi tiết:
+
+- Active Recall: 5 câu ôn Buổi 53 (Bahdanau QKV, bottleneck, additive scoring, context vector, encoder-decoder vs self-attention)
+- Giải thích tại sao cần nhiều heads — single-head chỉ học được 1 loại dependency
+- Ví dụ: "The bank of the river" — 1 head không thể capture cả syntax và semantics
+- Công thức cho một head (D2L Eq. 11.5.1): $\mathbf{h}_i = f(\mathbf{W}_i^{(q)}\mathbf{q}, \mathbf{W}_i^{(k)}\mathbf{k}, \mathbf{W}_i^{(v)}\mathbf{v})$
+- Công thức output cuối cùng (D2L Eq. 11.5.2): $\mathbf{o} = \mathbf{W}_o [\mathbf{h}_1; ...; \mathbf{h}_h]$
+- Tại sao chia chiều cho h: giữ tổng chiều = d, giảm computation từ $d^2$ xuống $d^2/h$
+- Implementation chi tiết: MultiHeadAttention class với 4 linear layers (W_q, W_k, W_v, W_o)
+- transpose_qkv: reshape để tính attention song song cho nhiều heads
+- transpose_output: reverse của transpose_qkv
+- valid_lens xử lý: repeat_interleave cho mỗi head
+- So sánh: Single-head vs Multi-head vs Bahdanau attention
+- Sơ đồ minh họa multi-head attention flow
+- Bảng thuật ngữ đầy đủ: multi-head attention, head, subspace, concatenation
+
