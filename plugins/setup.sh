@@ -107,16 +107,18 @@ install_project() {
     log_step "Installing Project"
 
     cd "${PROJECT_ROOT}"
+    
+    log_info "Project root: $(pwd)"
 
     python -m pip install --upgrade pip
 
-    if [[ -f "requirements.txt" ]]; then
-        log_info "Installing requirements.txt..."
-        pip install -r requirements.txt
+    if [[ -f "requirements-ssh.txt" ]]; then
+        log_info "Installing requirements..."
+        pip install -r requirements-ssh.txt
     fi
 
     log_info "Installing project in editable mode..."
-    pip install -e .
+    # pip install -e .
 
     log_info "Project installed."
 }
