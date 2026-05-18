@@ -22,7 +22,7 @@ set -euo pipefail
 # =============================================================================
 
 CONDA_ENV_NAME="wood"
-PYTHON_VERSION="3.10"
+PYTHON_VERSION="3.11"
 PROJECT_ROOT="${HOME}/woodbench"
 EXPERIMENTS_DIR="${HOME}/experiments/woodbench"
 DATA_DIR="${PROJECT_ROOT}/data"
