@@ -125,7 +125,13 @@ collect_tokens() {
         fi
     fi
 
-    export HF_TOKEN="$HF_TOKEN_VAL"
+    # Export tokens (only if non-empty)
+    if [[ -n "${HF_TOKEN_VAL}" ]]; then
+        export HF_TOKEN="$HF_TOKEN_VAL"
+    fi
+    if [[ -n "${GITHUB_TOKEN_VAL}" ]]; then
+        export GITHUB_TOKEN_VAL
+    fi
 }
 
 # =============================================================================
@@ -135,6 +141,7 @@ collect_tokens() {
 detect_env() {
     log_step "Environment Detection"
 
+    # shellcheck disable=SC1091
     local gpu_info
     gpu_info=$(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null || echo "not available")
     echo "  OS:           $(uname -s) $(uname -r)"
@@ -145,10 +152,12 @@ detect_env() {
     echo "  RAM:          $(free -h | awk '/^Mem:/ {print $2}')"
     echo "  GPU:          $gpu_info"
     echo "  conda:        $(command -v conda &>/dev/null && conda --version || echo 'not found')"
+    # shellcheck disable=SC1091
     echo "  huggingface_hub: $(python -c 'import huggingface_hub; print(huggingface_hub.__version__)' 2>/dev/null || echo 'not found')"
     echo "  htop:         $(command -v htop &>/dev/null && echo 'installed' || echo 'not found')"
     echo "  nvtop:        $(command -v nvtop &>/dev/null && echo 'installed' || echo 'not found')"
 
+    # shellcheck disable=SC1091
     local conda_envs
     conda_envs=$(conda env list 2>/dev/null | awk 'NR>1 {print $1}' || echo "")
     if echo "$conda_envs" | grep -q "^${CONDA_ENV_NAME}$"; then
@@ -385,6 +394,7 @@ verify_setup() {
     conda activate "${CONDA_ENV_NAME}" 2>/dev/null || true
 
     # Conda env
+    # shellcheck disable=SC1091
     if conda env list 2>/dev/null | grep -q "^${CONDA_ENV_NAME} "; then
         log_info "Conda env '${CONDA_ENV_NAME}': OK"
     else
@@ -438,6 +448,26 @@ verify_setup() {
 }
 
 # =============================================================================
+# Help
+# =============================================================================
+
+show_help() {
+    echo "Usage: $0 [OPTION]"
+    echo ""
+    echo "Options:"
+    echo "  --full     Full setup: system + conda + deps + repo + dataset"
+    echo "  --deps     Conda environment + Python packages only"
+    echo "  --check    Check current environment status"
+    echo "  --help     Show this help"
+    echo ""
+    echo "No option: Interactive mode (asks for tokens, then runs --full)"
+    echo ""
+    echo "Environment variables (override prompts):"
+    echo "  GITHUB_TOKEN    GitHub personal access token"
+    echo "  HF_TOKEN        HuggingFace user access token"
+}
+
+# =============================================================================
 # Main
 # =============================================================================
 
@@ -467,6 +497,7 @@ main() {
             ;;
 
         --deps)
+            collect_tokens
             create_dirs
             setup_conda_env
             verify_setup
@@ -478,23 +509,12 @@ main() {
             ;;
 
         --help|-h)
-            echo "Usage: $0 [OPTION]"
-            echo ""
-            echo "Options:"
-            echo "  --full     Full setup: system + conda + deps + repo + dataset"
-            echo "  --deps     Conda environment + Python packages only"
-            echo "  --check    Check current environment status"
-            echo "  --help     Show this help"
-            echo ""
-            echo "No option: Interactive mode (asks for tokens, then runs --full)"
-            echo ""
-            echo "Environment variables (override prompts):"
-            echo "  GITHUB_TOKEN    GitHub personal access token"
-            echo "  HF_TOKEN        HuggingFace user access token"
+            show_help
             exit 0
             ;;
 
-        interactive|)
+        interactive|"")
+            # Match both "interactive" and empty string
             collect_tokens
             detect_env
 
