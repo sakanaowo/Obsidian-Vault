@@ -8,7 +8,8 @@
   "jupymd",
   "obsidian-functionplot",
   "obsidian-image-toolkit",
-  "vertical-tabs",
   "calendar",
-  "media-extended"
+  "media-extended",
+  "vertical-tabs",
+  "highlightr-plugin"
 ]
