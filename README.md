@@ -3,33 +3,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Screen -->
-    <dimen name="screen_padding_horizontal">16dp</dimen>
-    <dimen name="screen_padding_vertical">16dp</dimen>
+    <!-- Base calculator button -->
+    <style name="CalculatorButtonBase">
 
-    <!-- Generic spacing -->
-    <dimen name="spacing_4">4dp</dimen>
-    <dimen name="spacing_8">8dp</dimen>
-    <dimen name="spacing_12">12dp</dimen>
-    <dimen name="spacing_16">16dp</dimen>
-    <dimen name="spacing_20">20dp</dimen>
-    <dimen name="spacing_24">24dp</dimen>
-    <dimen name="spacing_32">32dp</dimen>
+        <item name="android:layout_height">
+            @dimen/calculator_button_height
+        </item>
 
-    <!-- Top buttons -->
-    <dimen name="top_button_size">52dp</dimen>
-    <dimen name="top_button_icon_size">24dp</dimen>
+        <item name="android:textColor">
+            @color/calculator_text_primary
+        </item>
 
-    <!-- Calculator buttons -->
-    <dimen name="calculator_button_height">68dp</dimen>
-    <dimen name="calculator_button_radius">34dp</dimen>
-    <dimen name="calculator_button_gap">8dp</dimen>
+        <item name="android:fontFamily">
+            sans
+        </item>
 
-    <!-- Text -->
-    <dimen name="text_expression">20sp</dimen>
-    <dimen name="text_result">68sp</dimen>
-    <dimen name="text_button_number">30sp</dimen>
-    <dimen name="text_button_operator">34sp</dimen>
-    <dimen name="text_button_function">24sp</dimen>
+        <item name="android:textAllCaps">
+            false
+        </item>
+
+        <item name="android:gravity">
+            center
+        </item>
+
+        <item name="android:padding">
+            0dp
+        </item>
+
+        <!-- Prevent theme tint from overriding drawable -->
+        <item name="android:backgroundTint">
+            @null
+        </item>
+
+    </style>
+
+
+    <!-- Number -->
+    <style
+        name="CalculatorButtonNumber"
+        parent="CalculatorButtonBase">
+
+        <item name="android:background">
+            @drawable/bg_button_number
+        </item>
+
+        <item name="android:textSize">
+            @dimen/text_button_number
+        </item>
+
+    </style>
+
+
+    <!-- Function -->
+    <style
+        name="CalculatorButtonFunction"
+        parent="CalculatorButtonBase">
+
+        <item name="android:background">
+            @drawable/bg_button_function
+        </item>
+
+        <item name="android:textSize">
+            @dimen/text_button_function
+        </item>
+
+    </style>
+
+
+    <!-- Operator -->
+    <style
+        name="CalculatorButtonOperator"
+        parent="CalculatorButtonBase">
+
+        <item name="android:background">
+            @drawable/bg_button_operator
+        </item>
+
+        <item name="android:textSize">
+            @dimen/text_button_operator
+        </item>
+
+    </style>
 
 </resources>
