@@ -1,0 +1,501 @@
+Tiếp tục đúng thứ tự sang Bước 7.5 — HistoryAdapter.
+
+Theo thiết kế đã chốt, History dùng danh sách để hiển thị HistoryItem, mỗi item có expression, result, timestamp; phần giao diện row đã được dựng ở item_history.xml.  
+
+Ở bước này ta chỉ làm:
+
+HistoryManager.getAll()
+        ↓
+List<HistoryItem>
+        ↓
+HistoryAdapter
+        ↓
+item_history.xml
+        ↓
+Expression + Result
+
+Chưa dựng Bottom Sheet và chưa nối btnHistory.
+
+Bước 7.5 — Implement HistoryAdapter.java
+
+File:
+
+app/src/main/java/com/example/calculator/ui/adapter/HistoryAdapter.java
+
+Thay toàn bộ nội dung bằng:
+
+package com.example.calculator.ui.adapter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import com.example.calculator.R;
+import com.example.calculator.model.HistoryItem;
+import java.util.ArrayList;
+import java.util.List;
+/**
+ * Adapter hiển thị Calculation History.
+ *
+ * Input:
+ *
+ * List<HistoryItem>
+ *
+ * Output:
+ *
+ * item_history.xml
+ *
+ * Adapter chỉ chịu trách nhiệm:
+ *
+ * - Inflate layout
+ * - Bind expression
+ * - Bind result
+ * - Forward long-click event
+ *
+ * Adapter không trực tiếp thao tác SharedPreferences.
+ */
+public class HistoryAdapter
+        extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
+    // Danh sách đang được hiển thị.
+    private final List<HistoryItem> items =
+            new ArrayList<>();
+    // Callback dùng cho thao tác xóa item sau này.
+    private final OnHistoryItemLongClickListener longClickListener;
+    /**
+     * Callback long press.
+     *
+     * HistoryBottomSheet sẽ implement callback này
+     * ở bước Delete sau.
+     */
+    public interface OnHistoryItemLongClickListener {
+        void onHistoryItemLongClick(
+                HistoryItem item
+        );
+    }
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
+    public HistoryAdapter(
+            List<HistoryItem> initialItems,
+            OnHistoryItemLongClickListener longClickListener
+    ) {
+        this.longClickListener =
+                longClickListener;
+        if (initialItems != null) {
+            items.addAll(
+                    initialItems
+            );
+        }
+    }
+    // =========================================================
+    // CREATE VIEW HOLDER
+    // =========================================================
+    @NonNull
+    @Override
+    public HistoryViewHolder onCreateViewHolder(
+            @NonNull ViewGroup parent,
+            int viewType
+    ) {
+        View itemView =
+                LayoutInflater
+                        .from(parent.getContext())
+                        .inflate(
+                                R.layout.item_history,
+                                parent,
+                                false
+                        );
+        return new HistoryViewHolder(
+                itemView
+        );
+    }
+    // =========================================================
+    // BIND
+    // =========================================================
+    @Override
+    public void onBindViewHolder(
+            @NonNull HistoryViewHolder holder,
+            int position
+    ) {
+        HistoryItem item =
+                items.get(position);
+        holder.bind(
+                item,
+                longClickListener
+        );
+    }
+    // =========================================================
+    // COUNT
+    // =========================================================
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+    // =========================================================
+    // UPDATE DATA
+    // =========================================================
+    /**
+     * Thay toàn bộ dữ liệu hiện tại.
+     *
+     * Sau này dùng khi:
+     *
+     * - mở History
+     * - delete item
+     * - clear all
+     */
+    public void submitList(
+            List<HistoryItem> newItems
+    ) {
+        items.clear();
+        if (newItems != null) {
+            items.addAll(
+                    newItems
+            );
+        }
+        notifyDataSetChanged();
+    }
+    // =========================================================
+    // VIEW HOLDER
+    // =========================================================
+    static class HistoryViewHolder
+            extends RecyclerView.ViewHolder {
+        private final TextView tvExpression;
+        private final TextView tvResult;
+        public HistoryViewHolder(
+                @NonNull View itemView
+        ) {
+            super(itemView);
+            tvExpression =
+                    itemView.findViewById(
+                            R.id.tvHistoryExpression
+                    );
+            tvResult =
+                    itemView.findViewById(
+                            R.id.tvHistoryResult
+                    );
+        }
+        /**
+         * Bind một HistoryItem vào row.
+         */
+        public void bind(
+                HistoryItem item,
+                OnHistoryItemLongClickListener longClickListener
+        ) {
+            tvExpression.setText(
+                    item.getExpression()
+            );
+            tvResult.setText(
+                    item.getResult()
+            );
+            /*
+             * Chuẩn bị interaction xóa item.
+             *
+             * Chưa trực tiếp delete tại Adapter.
+             *
+             * Adapter chỉ báo ngược event cho
+             * HistoryBottomSheet.
+             */
+            if (longClickListener != null) {
+                itemView.setOnLongClickListener(view -> {
+                    longClickListener
+                            .onHistoryItemLongClick(
+                                    item
+                            );
+                    return true;
+                });
+            } else {
+                itemView.setOnLongClickListener(
+                        null
+                );
+            }
+        }
+    }
+}
+
+⸻
+
+7.5.1 — Adapter này đang làm gì?
+
+Khi có dữ liệu:
+
+List<HistoryItem> history =
+        historyManager.getAll();
+
+ví dụ:
+
+[
+    HistoryItem(
+        expression = "20 ÷ 5",
+        result = "4"
+    ),
+    HistoryItem(
+        expression = "25 × 4",
+        result = "100"
+    )
+]
+
+Adapter sẽ tạo:
+
+RecyclerView
+│
+├── item_history.xml
+│      20 ÷ 5
+│      4
+│
+└── item_history.xml
+       25 × 4
+       100
+
+Dữ liệu mới nhất vẫn nằm trên cùng vì HistoryManager.add() đã insert tại index:
+
+history.add(
+        0,
+        newItem
+);
+
+⸻
+
+7.5.2 — Tại sao Adapter không gọi HistoryManager.delete()?
+
+Không làm kiểu:
+
+itemView.setOnLongClickListener(view -> {
+    historyManager.delete(
+            item.getId()
+    );
+    return true;
+});
+
+Vì Adapter không nên biết:
+
+SharedPreferences
+HistoryManager
+Storage
+
+Kiến trúc đúng:
+
+User long press
+        ↓
+HistoryAdapter
+        ↓
+callback
+        ↓
+HistoryBottomSheet
+        ↓
+HistoryManager.delete(id)
+        ↓
+HistoryAdapter.submitList(...)
+
+Như vậy:
+
+HistoryAdapter
+= render UI
+HistoryManager
+= persistence
+HistoryBottomSheet
+= điều phối interaction
+
+Đúng với cấu trúc component đã chốt từ đầu.  
+
+⸻
+
+7.5.3 — submitList() dùng để làm gì?
+
+Sau này khi mở History:
+
+adapter.submitList(
+        historyManager.getAll()
+);
+
+Sau khi xóa:
+
+historyManager.delete(
+        item.getId()
+);
+adapter.submitList(
+        historyManager.getAll()
+);
+
+Sau Clear All:
+
+historyManager.clear();
+adapter.submitList(
+        historyManager.getAll()
+);
+
+Flow:
+
+Storage thay đổi
+      ↓
+getAll()
+      ↓
+submitList()
+      ↓
+RecyclerView refresh
+
+Ở MVP dùng:
+
+notifyDataSetChanged();
+
+là đủ.
+
+Chưa cần:
+
+DiffUtil
+ListAdapter
+Paging
+
+vì History tối đa chỉ khoảng:
+
+100 items
+
+theo thiết kế hiện tại.  
+
+⸻
+
+7.5.4 — Chưa xử lý timestamp
+
+Hiện HistoryItem có:
+
+getTimestamp()
+
+nhưng Adapter chưa dùng.
+
+Đây là chủ ý.
+
+Hiện tại:
+
+HistoryAdapter
+    ↓
+chỉ render calculation row
+
+Ở Bottom Sheet sau này:
+
+timestamp
+    ↓
+group/display section
+    ↓
+Previous 7 Days
+Previous 30 Days
+
+Không nhét logic phân nhóm thời gian vào HistoryViewHolder.
+
+⸻
+
+7.5.5 — Không sửa MainActivity
+
+Ở checkpoint này:
+
+MainActivity.java
+
+giữ nguyên phiên bản Bước 7.3.
+
+Vẫn có:
+
+private HistoryManager historyManager;
+
+và:
+
+calculateAndSaveHistory();
+
+Nhưng chưa có:
+
+HistoryAdapter
+
+trong MainActivity.
+
+Đây là đúng.
+
+⸻
+
+7.5.6 — Không sửa HistoryBottomSheet.java
+
+File này vẫn có thể đang là skeleton:
+
+package com.example.calculator.ui;
+public class HistoryBottomSheet {
+}
+
+Chưa extends BottomSheetDialogFragment.
+
+Bước đó làm sau khi layout Bottom Sheet hoàn chỉnh.
+
+⸻
+
+7.5.7 — Build checkpoint
+
+Chạy:
+
+Build
+→ Make Project
+
+Điều kiện pass:
+
+[ ] HistoryAdapter.java compile
+[ ] HistoryViewHolder compile
+[ ] R.layout.item_history resolve
+[ ] tvHistoryExpression resolve
+[ ] tvHistoryResult resolve
+[ ] HistoryItem import đúng
+[ ] Basic Calculator vẫn hoạt động
+[ ] Save History vẫn hoạt động
+[ ] App không crash khi mở
+
+Trường hợp Android Studio báo:
+
+Cannot resolve symbol RecyclerView
+
+hoặc:
+
+package androidx.recyclerview.widget does not exist
+
+thì dừng tại checkpoint này, chưa tự thêm dependency ngẫu nhiên.
+
+Điều đó có nghĩa project hiện tại chưa có RecyclerView dependency. Khi đó cần kiểm tra đúng cấu trúc Gradle hiện tại:
+
+build.gradle.kts
+
+hoặc:
+
+build.gradle
+
+rồi mới thêm dependency tương ứng, tránh làm lệch cấu hình project.
+
+Nếu RecyclerView compile bình thường thì không sửa Gradle.
+
+⸻
+
+Trạng thái sau Bước 7.5
+
+M2 — HISTORY
+[✓] 7.1 HistoryItem
+     ├── id
+     ├── expression
+     ├── result
+     └── timestamp
+[✓] 7.2 HistoryManager
+     ├── add
+     ├── getAll
+     ├── delete
+     ├── clear
+     └── local persistence
+[✓] 7.3 Save after "="
+[✓] 7.4 History Item UI
+[✓] 7.5 HistoryAdapter
+     ├── RecyclerView.Adapter
+     ├── ViewHolder
+     ├── expression binding
+     ├── result binding
+     ├── submitList()
+     └── long-click callback prepared
+[ ] 7.6 History Bottom Sheet UI
+        ↓
+[ ] 7.7 HistoryBottomSheet logic
+        ↓
+[ ] 7.8 Connect btnHistory
+        ↓
+[ ] 7.9 Delete / Clear
+        ↓
+[ ] 7.10 Persistence + Final Test
+
+Sau khi Bước 7.5 build pass, 7.6 sẽ thay bottom_sheet_history.xml để tạo sheet thật gồm drag handle, tiêu đề History, Clear, nút đóng, RecyclerView và empty state No calculations yet.
